@@ -1,0 +1,8 @@
+main: ovh.tgrhavoc.mvpgadgets.MVPGadgets
+name: MVPGadgets
+version: 1.0
+
+commands:
+    mvpgadgets:
+        aliases: [mvp, mvpg]
+        description: The main commmand for MVPGadgets!
