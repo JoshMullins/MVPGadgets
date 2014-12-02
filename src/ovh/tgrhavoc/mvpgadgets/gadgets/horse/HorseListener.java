@@ -30,7 +30,7 @@ public class HorseListener implements Listener {
 	public void playerInteractWithEntity(PlayerInteractEntityEvent event){
 		if (event.getRightClicked() instanceof Horse){
 			Horse h = (Horse)event.getRightClicked();
-			if (h.isCustomNameVisible() && h.getCustomName().contains("'s horse")){
+			if (h.isCustomNameVisible() && h.getCustomName().contains(player.getName())){
 				h.setPassenger(event.getPlayer());
 				event.setCancelled(true);
 			}
