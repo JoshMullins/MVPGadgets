@@ -3,6 +3,9 @@ name: MVPGadgets
 version: 1.0
 
 commands:
-    mvpgadgets:
-        aliases: [mvp, mvpg]
-        description: The main commmand for MVPGadgets!
+  mvpgadgets:
+    aliases: [mvp, mvpg]
+    description: The main commmand for MVPGadgets!
+  launchmob:
+    aliases: [launch, lmob, lm]
+    description: Launch a creature that explodes!
