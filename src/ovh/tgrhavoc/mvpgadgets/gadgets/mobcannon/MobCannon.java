@@ -37,7 +37,7 @@ import com.darkblade12.particleeffect.ParticleEffect;
 /**
  * 
  * @author pookeythekid
- * @version 0.0.2
+ * @version 0.0.3
  *
  */
 public class MobCannon implements CommandExecutor, Listener {
@@ -138,81 +138,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	 */
 	public MobCannon(JavaPlugin plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
 
-		this.plugin = plugin;
-
-		HashMap<String, EntityType> tempMap = new HashMap<String, EntityType>();
-
-		for (EntityType eType : mobAliases.keySet()) {
-
-			if (eType.equals(EntityType.ENDER_DRAGON) || eType.equals(EntityType.WITHER))
-
-				continue;
-
-			if (!giants && eType.equals(EntityType.GIANT))
-
-				continue;
-
-			for (String name : mobAliases.get(eType)) {
-
-				if (!tempMap.containsKey(name.toLowerCase())) {
-
-					tempMap.put(name.toLowerCase(), eType);
-
-				}
-
-			}
-
-			if (!tempMap.containsKey(eType.toString().toLowerCase()))
-
-				tempMap.put(eType.toString().toLowerCase(), eType);
-
-			if (!tempMap.containsKey(eType.toString().replace("_", "").toLowerCase()))
-
-				tempMap.put(eType.toString().replace("_", "").toLowerCase(), eType);
-
-		}
-
-		usedNames = tempMap;
-
-
-		PluginManager pm = plugin.getServer().getPluginManager();
-
-		pm.registerEvents(this, plugin);
-
-		Permission launchCommand = new Permission("mvpgadgets.launchmob");
-
-		Permission randomLaunch = new Permission("mvpgadgets.launchmob.random");
-
-		Permission allMobLaunch = new Permission("mvpgadgets.launchmob.all");
-
-		Permission allLaunchers = new Permission("mvpgadgets.launchmob.*");
-
-		pm.addPermission(launchCommand);
-
-		pm.getPermission("mvpgadgets.launchmob").setDefault(PermissionDefault.OP);
-
-		pm.addPermission(randomLaunch);
-
-		pm.getPermission("mvpgadgets.launchmob.random").setDefault(PermissionDefault.OP);
-
-		pm.addPermission(allMobLaunch);
-
-		pm.getPermission("mvpgadgets.launchmob.all").setDefault(PermissionDefault.OP);
-
-		pm.addPermission(allLaunchers);
-
-		pm.getPermission("mvpgadgets.launchmob.*").setDefault(PermissionDefault.OP);
-
-		pm.getPermission("mvpgadgets.launchmob").addParent(randomLaunch, true);
-
-		pm.getPermission("mvpgadgets.launchmob").addParent(allMobLaunch, true);
-
-		pm.getPermission("mvpgadgets.launchmob").addParent(allLaunchers, true);
-
-		pm.getPermission("mvpgadgets.launchmob.random").addParent(allLaunchers, true);
-
-		pm.getPermission("mvpgadgets.launchmob.all").addParent(allLaunchers, true);
-
+		mobCannon(plugin, mobAliases, giants);
 
 	}
 
