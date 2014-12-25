@@ -26,6 +26,8 @@ public class MVPGadgets extends JavaPlugin {
 		registerGadgets();
 		
 		registerGadetEvents();
+		
+		getCommand("launchmob").setExecutor(new MobCannon(this, null));
 	}
 	
 	private void registerGadgets() {
