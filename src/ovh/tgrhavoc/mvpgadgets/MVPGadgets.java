@@ -25,6 +25,8 @@ public class MVPGadgets extends JavaPlugin {
 		
 		registerGadgets();
 		
+		loadGadgetClasses();
+		
 		registerGadetEvents();
 		
 		getCommand("launchmob").setExecutor(new MobCannon(this, null));
@@ -49,5 +51,45 @@ public class MVPGadgets extends JavaPlugin {
 	public List<Gadget> getGadgets(){
 		return availableGadgets;
 	}
+	
+	    //Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+    private void loadGadgetClasses() {
+        File basePath = new File(this.getDataFolder() + "/mods");
+        File[] files = new File(this.getDataFolder() + "/mods").listFiles();
+
+        boolean shouldLoad = true;
+
+        ClassLoader cl = null;
+
+        try {
+            URL url = basePath.toURL();
+            URL[] urls = new URL[]{url};
+            cl = new URLClassLoader(urls);
+        } catch (Exception e) {
+            shouldLoad = false;
+            e.printStackTrace();
+        }
+
+        if (shouldLoad) {
+            for (File file : files) {
+                String fileName = file.getName();
+                //If it is not a .class file contiue to the next entry.
+                if (!fileName.split(".")[fileName.split(".").length].equals(".class")) continue;
+
+                try {
+
+                    Class clazz = cl.loadClass(fileName.replace(".class",""));
+                    //Our .class file extends Gadget
+                    if(clazz.isAssignableFrom(Gadget.class)){
+                        Gadget gadget = (Gadget) clazz.newInstance();
+                        addGadget(gadget);
+                    }
+
+                } catch (Exception e) {
+
+                }
+            }
+        }
+    }
 
 }
