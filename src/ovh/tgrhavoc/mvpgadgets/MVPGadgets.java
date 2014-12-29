@@ -1,16 +1,16 @@
 package ovh.tgrhavoc.mvpgadgets;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.pookeythekid.MobCannon.MobCannon;
+import net.minecraft.util.org.apache.commons.lang3.ObjectUtils.Null;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
@@ -19,6 +19,7 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadgetListener;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseListener;
+import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
@@ -28,17 +29,46 @@ public class MVPGadgets extends JavaPlugin {
 	public void onEnable(){
 		Bukkit.getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
-		registerGadgets();
+		//registerGadgets();
 		
-		loadGadgetClasses();
+		//loadGadgetClasses();
 		
-		registerGadetEvents();
+		//registerGadetEvents();
 		
 		getCommand("launchmob").setExecutor(new MobCannon(this, null));
+		
+		test();
+	}
+	
+	private void test(){
+		for (String s: JarUtil.getGadetClasses(this.getDataFolder().getParent() + "/MVPGadgets.jar")){
+			try {
+				System.out.println("Constructing... " + s);
+				
+				if (s.contains("\\$[0-9]"))
+					System.out.println("Found funny class: " + s);
+				
+				Class<?> gadgetClass = Class.forName(s);
+				Constructor<?> constr = gadgetClass.getConstructor();
+				Gadget gadgetFromClass = null;
+				if (constr.getParameterTypes().length > 0){
+					System.out.println("Found aruments for " + s);
+					for (Class<?> c: constr.getParameterTypes()){
+						System.out.println("Name: " + c.getName());
+					}
+				}else{ // No constructor args
+					gadgetFromClass = (Gadget)constr.newInstance();
+				}
+				 
+				addGadget(gadgetFromClass);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void registerGadgets() {
-		addGadget(new GUIGadget(new ItemStack(Material.CHEST)));
+		addGadget(new GUIGadget());
 		addGadget(new HorseGadget());
 	}
 
