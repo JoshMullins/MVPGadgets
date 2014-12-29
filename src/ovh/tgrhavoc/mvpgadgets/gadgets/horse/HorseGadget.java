@@ -14,6 +14,7 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 public class HorseGadget extends Gadget{
 	
 	public HorseGadget(){
+		super();
 		ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (byte)100);
 		setItemStack(ChatColor.AQUA + "Spawn Horse" + ChatColor.GREEN, is);
 	}

@@ -10,6 +10,7 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 public class GUIGadget extends Gadget {
 	
 	public GUIGadget() {
+		super();
 		setItemStack(ChatColor.GOLD + "Open" + ChatColor.GREEN +" Gadget"+ChatColor.GOLD+" Selector"
 				+ChatColor.BLUE, new ItemStack(Material.CHEST));
 		isGUI = true;

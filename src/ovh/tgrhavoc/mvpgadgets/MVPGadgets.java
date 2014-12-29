@@ -23,7 +23,7 @@ import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
-	List<Gadget> availableGadgets = new ArrayList<Gadget>();
+	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
 
 	
 	public void onEnable(){
@@ -33,11 +33,12 @@ public class MVPGadgets extends JavaPlugin {
 		
 		//loadGadgetClasses();
 		
-		//registerGadetEvents();
+		test();
+		
+		registerGadetEvents();
 		
 		getCommand("launchmob").setExecutor(new MobCannon(this, null));
 		
-		test();
 	}
 	
 	private void test(){
@@ -53,14 +54,13 @@ public class MVPGadgets extends JavaPlugin {
 				Gadget gadgetFromClass = null;
 				if (constr.getParameterTypes().length > 0){
 					System.out.println("Found aruments for " + s);
-					for (Class<?> c: constr.getParameterTypes()){
-						System.out.println("Name: " + c.getName());
-					}
-				}else{ // No constructor args
+					
+				}else{ // No constructor args (Assume it's a gadget)
 					gadgetFromClass = (Gadget)constr.newInstance();
 				}
 				 
-				addGadget(gadgetFromClass);
+				//addGadget(gadgetFromClass);
+				System.out.println("Just added a gadget " + gadgetFromClass);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -75,6 +75,12 @@ public class MVPGadgets extends JavaPlugin {
 	private void registerGadetEvents() {
 		Bukkit.getPluginManager().registerEvents(new GUIGadgetListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new HorseListener(this), this);
+	}
+	
+	public static void addGadgetStatic(Gadget g){
+		if (availableGadgets.contains(g))
+			return;
+		availableGadgets.add(g);
 	}
 
 	public void addGadget(Gadget g){
