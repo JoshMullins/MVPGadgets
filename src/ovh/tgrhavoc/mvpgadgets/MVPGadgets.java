@@ -74,7 +74,7 @@ public class MVPGadgets extends JavaPlugin {
             for (File file : files) {
                 String fileName = file.getName();
                 //If it is not a .class file contiue to the next entry.
-                if (!fileName.split(".")[fileName.split(".").length].equals(".class")) continue;
+                if (!fileName.split(".")[fileName.split(".").length - 1].equals(".class")) continue;
 
                 try {
 
