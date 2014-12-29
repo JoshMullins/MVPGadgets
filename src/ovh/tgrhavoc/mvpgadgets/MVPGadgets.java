@@ -29,11 +29,11 @@ public class MVPGadgets extends JavaPlugin {
 	public void onEnable(){
 		Bukkit.getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
-		//registerGadgets();
+		registerGadgets();
 		
 		//loadGadgetClasses();
 		
-		test();
+		//test();
 		
 		registerGadetEvents();
 		
@@ -41,7 +41,8 @@ public class MVPGadgets extends JavaPlugin {
 		
 	}
 	
-	private void test(){
+	@Deprecated
+	public void test(){
 		for (String s: JarUtil.getGadetClasses(this.getDataFolder().getParent() + "/MVPGadgets.jar")){
 			try {
 				System.out.println("Constructing... " + s);

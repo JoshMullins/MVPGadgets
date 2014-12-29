@@ -4,14 +4,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
-
 public abstract class Gadget {
 	
 	protected ItemStack gadgetItem;
 	
 	public Gadget(){
-		MVPGadgets.addGadgetStatic(this);
+		//MVPGadgets.addGadgetStatic(this);
+		//TODO: Do some basic gadget loading stuff, maybe?
 	}
 	
 	public boolean isGUI = false;
