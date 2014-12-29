@@ -1,7 +1,12 @@
 package ovh.tgrhavoc.mvpgadgets;
 
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.pookeythekid.MobCannon.MobCannon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -52,7 +57,7 @@ public class MVPGadgets extends JavaPlugin {
 		return availableGadgets;
 	}
 	
-	    //Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
     private void loadGadgetClasses() {
         File basePath = new File(this.getDataFolder() + "/mods");
         File[] files = new File(this.getDataFolder() + "/mods").listFiles();
