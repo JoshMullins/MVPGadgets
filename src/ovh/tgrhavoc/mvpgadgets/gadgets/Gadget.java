@@ -8,6 +8,11 @@ public abstract class Gadget {
 	
 	protected ItemStack gadgetItem;
 	
+	public Gadget(){
+		//MVPGadgets.addGadgetStatic(this);
+		//TODO: Do some basic gadget loading stuff, maybe?
+	}
+	
 	public boolean isGUI = false;
 	
 	public abstract void execute(Player player);
