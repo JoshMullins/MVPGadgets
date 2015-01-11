@@ -29,7 +29,7 @@ public class GadgetHandler implements Listener{
 	@EventHandler
 	public void playerJoinEvent(PlayerJoinEvent e){
 		//Used to give the player the GUI when they spawn
-		e.getPlayer().getInventory().setItem(4, (new GUIGadget(new ItemStack(Material.CHEST))).getItemStack());
+		e.getPlayer().getInventory().setItem(4, (new GUIGadget()).getItemStack());
 	}
 	
 	@EventHandler

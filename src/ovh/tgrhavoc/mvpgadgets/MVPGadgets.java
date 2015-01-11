@@ -1,11 +1,16 @@
 package ovh.tgrhavoc.mvpgadgets;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.pookeythekid.MobCannon.MobCannon;
+import net.minecraft.util.org.apache.commons.lang3.ObjectUtils.Null;
+
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
@@ -14,10 +19,11 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadgetListener;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseListener;
+import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
-	List<Gadget> availableGadgets = new ArrayList<Gadget>();
+	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
 
 	
 	public void onEnable(){
@@ -25,21 +31,57 @@ public class MVPGadgets extends JavaPlugin {
 		
 		registerGadgets();
 		
-		loadGadgetClasses();
+		//loadGadgetClasses();
+		
+		//test();
 		
 		registerGadetEvents();
 		
 		getCommand("launchmob").setExecutor(new MobCannon(this, null));
+		
+	}
+	
+	@Deprecated
+	public void test(){
+		for (String s: JarUtil.getGadetClasses(this.getDataFolder().getParent() + "/MVPGadgets.jar")){
+			try {
+				System.out.println("Constructing... " + s);
+				
+				if (s.contains("\\$[0-9]"))
+					System.out.println("Found funny class: " + s);
+				
+				Class<?> gadgetClass = Class.forName(s);
+				Constructor<?> constr = gadgetClass.getConstructor();
+				Gadget gadgetFromClass = null;
+				if (constr.getParameterTypes().length > 0){
+					System.out.println("Found aruments for " + s);
+					
+				}else{ // No constructor args (Assume it's a gadget)
+					gadgetFromClass = (Gadget)constr.newInstance();
+				}
+				 
+				//addGadget(gadgetFromClass);
+				System.out.println("Just added a gadget " + gadgetFromClass);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private void registerGadgets() {
-		addGadget(new GUIGadget(new ItemStack(Material.CHEST)));
+		addGadget(new GUIGadget());
 		addGadget(new HorseGadget());
 	}
 
 	private void registerGadetEvents() {
 		Bukkit.getPluginManager().registerEvents(new GUIGadgetListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new HorseListener(this), this);
+	}
+	
+	public static void addGadgetStatic(Gadget g){
+		if (availableGadgets.contains(g))
+			return;
+		availableGadgets.add(g);
 	}
 
 	public void addGadget(Gadget g){
@@ -52,7 +94,7 @@ public class MVPGadgets extends JavaPlugin {
 		return availableGadgets;
 	}
 	
-	    //Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
     private void loadGadgetClasses() {
         File basePath = new File(this.getDataFolder() + "/mods");
         File[] files = new File(this.getDataFolder() + "/mods").listFiles();

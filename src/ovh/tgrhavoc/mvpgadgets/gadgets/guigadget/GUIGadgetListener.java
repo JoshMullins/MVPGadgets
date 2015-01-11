@@ -19,6 +19,7 @@ public class GUIGadgetListener implements Listener {
 
 	public GUIGadgetListener(MVPGadgets mainPlugin) {
 		this.mainPlugin = mainPlugin; 
+		
 		int slot = 0;
 		//Bukkit.broadcastMessage( ((16/9) +1) +"");
 		guiInv = Bukkit.createInventory(null, (9 * ((mainPlugin.getGadgets().size()/9)+1)), "Select a gadget:");

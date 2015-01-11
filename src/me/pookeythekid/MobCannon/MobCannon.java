@@ -17,6 +17,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
@@ -525,7 +526,13 @@ public class MobCannon implements CommandExecutor, Listener {
 				}
 
 				entity.setVelocity(ploc.getDirection().multiply(2));
-
+				
+				//TGRHavoc: Set the heal to the maximum it can so that the
+				//Entity won't die and drop items (Issue #7 https://github.com/JOSHSLAYDE/MVPGadgets/issues/7)
+				Damageable entityD = (Damageable)entity;
+				entityD.setMaxHealth(Double.MAX_VALUE);
+				entityD.setHealth(Double.MAX_VALUE);
+				
 				final Entity entity2 = entity;
 
 				new BukkitRunnable() {
