@@ -529,8 +529,11 @@ public class MobCannon implements CommandExecutor, Listener {
 				
 				//TGRHavoc: Set the heal to the maximum it can so that the
 				//Entity won't die and drop items (Issue #7 https://github.com/JOSHSLAYDE/MVPGadgets/issues/7)
-				Damageable entityD = (Damageable)entity;
+				
+				Damageable entityD = (Damageable) entity;
+				
 				entityD.setMaxHealth(Double.MAX_VALUE);
+				
 				entityD.setHealth(Double.MAX_VALUE);
 				
 				final Entity entity2 = entity;
@@ -650,6 +653,12 @@ public class MobCannon implements CommandExecutor, Listener {
 				}
 
 			}
+			
+			Damageable entityD = (Damageable) entity;
+			
+			entityD.setMaxHealth(Double.MAX_VALUE);
+			
+			entityD.setHealth(Double.MAX_VALUE);
 
 			final Entity entity2 = entity;
 
