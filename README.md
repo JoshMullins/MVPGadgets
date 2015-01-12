@@ -2,10 +2,15 @@ MVP Gadgets
 ------------
 ## Current Developers:
 [pookeythekid](https://github.com/pookeythekid)
+
 [TGRHavoc](https://github.com/TGRHavoc)
+
 [JOSHLAYDE](https://github.com/JOSHLAYDE)
+
 [97WaterPolo](https://github.com/97WaterPolo)
+
 [TheFreakLord](http://github.com/TheFreakLord)
+
 
 ## Features:
 
