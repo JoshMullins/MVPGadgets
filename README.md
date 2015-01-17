@@ -22,14 +22,7 @@ MVP Gadgets
 6. Melon Bomb (ex. The dropping/throwing of a melon and it exploding into glistening melons.)
 7. Flame Thrower (ex. A item exerting fire towards other players, mobs, or ground.)
 8. Black Hole (ex. A collection of black and grey particles to symbolize a black hole.)
-9. Disguises
-  1. Blaze
-  2. Sheep
-  3. Wolf
-  4. Iron Golem
-  5. Zombie
-  6. Skeleton
-10. Mounts:
+9. Mounts:
   1. Normal Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE**
   2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.)
   3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.)
