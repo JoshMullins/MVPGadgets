@@ -127,11 +127,9 @@ public class MobCannon implements CommandExecutor, Listener {
 			if (!giants && eType == EntityType.GIANT)
 				continue;
 
-			for (String name : mobAliases.get(eType)) {
-				if (!tempMap.containsKey(name.toLowerCase())) {
+			for (String name : mobAliases.get(eType))
+				if (!tempMap.containsKey(name.toLowerCase()))
 					tempMap.put(name.toLowerCase(), eType);
-				}
-			}
 
 			if (!tempMap.containsKey(eType.toString().toLowerCase()))
 				tempMap.put(eType.toString().toLowerCase(), eType);
@@ -150,19 +148,21 @@ public class MobCannon implements CommandExecutor, Listener {
 		Permission allMobLaunch = new Permission("mvpgadgets.launchmob.all");
 		Permission allLaunchers = new Permission("mvpgadgets.launchmob.*");
 
-		pm.addPermission(launchCommand);
-		pm.getPermission("mvpgadgets.launchmob").setDefault(PermissionDefault.OP);
-		pm.addPermission(randomLaunch);
-		pm.getPermission("mvpgadgets.launchmob.random").setDefault(PermissionDefault.OP);
-		pm.addPermission(allMobLaunch);
-		pm.getPermission("mvpgadgets.launchmob.all").setDefault(PermissionDefault.OP);
-		pm.addPermission(allLaunchers);
-		pm.getPermission("mvpgadgets.launchmob.*").setDefault(PermissionDefault.OP);
-		pm.getPermission("mvpgadgets.launchmob").addParent(randomLaunch, true);
-		pm.getPermission("mvpgadgets.launchmob").addParent(allMobLaunch, true);
-		pm.getPermission("mvpgadgets.launchmob").addParent(allLaunchers, true);
-		pm.getPermission("mvpgadgets.launchmob.random").addParent(allLaunchers, true);
-		pm.getPermission("mvpgadgets.launchmob.all").addParent(allLaunchers, true);
+		launchCommand.setDefault(PermissionDefault.OP);
+        randomLaunch.setDefault(PermissionDefault.OP);
+        allMobLaunch.setDefault(PermissionDefault.OP);
+        allLaunchers.setDefault(PermissionDefault.OP);
+
+        launchCommand.addParent(randomLaunch, true);
+        launchCommand.addParent(allMobLaunch, true);
+        launchCommand.addParent(allLaunchers, true);
+        randomLaunch.addParent(allLaunchers, true);
+        allMobLaunch.addParent(allLaunchers, true);
+
+        pm.addPermission(launchCommand);
+        pm.addPermission(randomLaunch);
+        pm.addPermission(allMobLaunch);
+        pm.addPermission(allLaunchers);
 	}
 
 
@@ -173,15 +173,16 @@ public class MobCannon implements CommandExecutor, Listener {
 				return true;
 			}
 
-			if (!(sender instanceof Player))
-				sender.sendMessage("Nope. You're a console.");
-			else {
-				if (args.length < 1)
-					launchMob("", (Player) sender, usedNames);
+			if (!(sender instanceof Player)) {
+                sender.sendMessage("Nope. You're a console.");
+                return true;
+            }
 
-				else if (args.length > 0)
-					launchMob(args[0], (Player) sender, usedNames);
-			}
+			if (args.length < 1)
+				launchMob("", (Player) sender, usedNames);
+
+            else
+				launchMob(args[0], (Player) sender, usedNames);
 		}
 
 		return true;
@@ -196,7 +197,7 @@ public class MobCannon implements CommandExecutor, Listener {
 					return;
 				}
 
-				Creature creature;
+				Creature creature = null;
 				Entity entity;
 
 				final Location ploc = p.getLocation();
@@ -215,12 +216,10 @@ public class MobCannon implements CommandExecutor, Listener {
 				case "blaze":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.BLAZE);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "cave_spider":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.CAVE_SPIDER);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "chicken":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.CHICKEN);
@@ -231,17 +230,14 @@ public class MobCannon implements CommandExecutor, Listener {
 				case "creeper":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.CREEPER);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "enderman":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.ENDERMAN);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "giant":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.GIANT);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "horse":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.HORSE);
@@ -277,7 +273,6 @@ public class MobCannon implements CommandExecutor, Listener {
 				case "pig_zombie":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.PIG_ZOMBIE);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "sheep":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SHEEP);
@@ -285,23 +280,19 @@ public class MobCannon implements CommandExecutor, Listener {
 				case "silverfish":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SILVERFISH);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "skeleton":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SKELETON);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "snowman":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SNOWMAN);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					snowmen.add((Snowman) creature);
 					break;
 				case "spider":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SPIDER);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "squid":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.SQUID); // Note: Squids aren't affected by setVelocity
@@ -312,20 +303,19 @@ public class MobCannon implements CommandExecutor, Listener {
 				case "witch":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.WITCH);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "wolf":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.WOLF);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				case "zombie":
 					entity = p.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE);
 					creature = (Creature) entity;
-					creature.setTarget(null);
 					break;
 				}
 
+                if(creature != null)
+                    creature.setTarget(null);
 				entity.setVelocity(ploc.getDirection().multiply(2));
 				
 				//TGRHavoc: Set the heal to the maximum it can so that the
@@ -349,7 +339,6 @@ public class MobCannon implements CommandExecutor, Listener {
 							blockstate.update(true, true);
 						}
 					}
-
 				}.runTaskLater(plugin, 20);
 			} else
 				p.sendMessage(ChatColor.RED + "Mob name '" + mobName + "' is invalid.");
@@ -360,10 +349,9 @@ public class MobCannon implements CommandExecutor, Listener {
 			}
 
 			ArrayList<EntityType> eList = new ArrayList<EntityType>();
-			for (EntityType eType : map.values()) {
+			for (EntityType eType : map.values())
 				if (!eList.contains(eType) && eType != EntityType.GIANT)
 					eList.add(eType);
-			}
 
 			final Location ploc = p.getLocation();
 			Location spawnLoc = ploc.add(0, 2, 0);
@@ -428,18 +416,12 @@ public class MobCannon implements CommandExecutor, Listener {
 	}
 
 	public boolean inputNameValid(String name, Map<String, EntityType> map) {
-		boolean valid = false;
-
-		if (map.containsKey(name.toLowerCase()))
-			valid = true;
-
-		return valid;
+		return map.containsKey(name.toLowerCase());
 	}
 
 	public String getNameFrom(String name, Map<String, EntityType> map) {
-		if (inputNameValid(name, map)) {
+		if (inputNameValid(name, map))
 			return map.get(name.toLowerCase()).toString().toLowerCase();
-		}
 
 		return null;
 	}
