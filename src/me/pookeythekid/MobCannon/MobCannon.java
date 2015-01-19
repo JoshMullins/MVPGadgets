@@ -1,12 +1,6 @@
 package me.pookeythekid.MobCannon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -356,10 +350,21 @@ public class MobCannon implements CommandExecutor, Listener {
 
 			final Location ploc = p.getLocation();
 			Location spawnLoc = ploc.add(0, 2, 0);
-			EntityType eType = eList.get(rand.nextInt(eList.size()));
 
-			while (!p.hasPermission("mvpgadgets.launchmob." + getNameFrom(eType.toString(), map)))
-				eType = eList.get(rand.nextInt(eList.size()));
+            List<EntityType> tempEList = new ArrayList<>();
+            tempEList.addAll(eList);
+            Iterator<EntityType> it = tempEList.iterator();
+
+            while(it.hasNext())
+                if(!p.hasPermission("mvpgadgets.launchmob." + getNameFrom(it.next().toString(), map)))
+                    it.remove();
+
+            if(tempEList.isEmpty()) {
+                p.sendMessage(ChatColor.RED + "You do not have permission for any mobs.");
+                return;
+            }
+
+            EntityType eType = tempEList.get(rand.nextInt(tempEList.size()));
 
 			Entity entity;
 			entity = p.getWorld().spawnEntity(spawnLoc, eType);
@@ -376,11 +381,11 @@ public class MobCannon implements CommandExecutor, Listener {
 			if (entity.getType().equals(EntityType.OCELOT)) {
 				entity.remove();
 				Ocelot ocelot = (Ocelot) p.getWorld().spawnEntity(spawnLoc, EntityType.OCELOT);
-				ocelot.setCatType(Ocelot.Type.values()[rand.nextInt(Ocelot.Type.values().length)]);
 				ocelot.setTamed(true);
 
-				while (ocelot.getCatType().equals(Ocelot.Type.WILD_OCELOT))
-					ocelot.setCatType(Ocelot.Type.values()[rand.nextInt(Ocelot.Type.values().length)]);
+                List<Ocelot.Type> catTypes = Arrays.asList(Ocelot.Type.values());
+                catTypes.remove(Ocelot.Type.WILD_OCELOT);
+                ocelot.setCatType(catTypes.get(rand.nextInt(catTypes.size())));
 
 				if (rand.nextBoolean())
 					ocelot.setBaby();
