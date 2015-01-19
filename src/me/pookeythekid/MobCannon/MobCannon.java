@@ -56,32 +56,36 @@ public class MobCannon implements CommandExecutor, Listener {
 	 */
 	public MobCannon(JavaPlugin plugin, Set<EntityType> blacklist) {
 		Map<EntityType, Set<String>> map = new HashMap<>();
-		Set<String> names = new HashSet<>();
 
-		map.put(EntityType.BAT, names);
-		map.put(EntityType.BLAZE, names);
-		map.put(EntityType.CAVE_SPIDER, names);
-		map.put(EntityType.CHICKEN, names);
-		map.put(EntityType.COW, names);
-		map.put(EntityType.CREEPER, names);
-		map.put(EntityType.ENDERMAN, names);
-		map.put(EntityType.GIANT, names);
-		map.put(EntityType.HORSE, names);
-		map.put(EntityType.IRON_GOLEM, names);
-		map.put(EntityType.MUSHROOM_COW, names);
-		map.put(EntityType.OCELOT, names);
-		map.put(EntityType.PIG, names);
-		map.put(EntityType.PIG_ZOMBIE, names);
-		map.put(EntityType.SHEEP, names);
-		map.put(EntityType.SILVERFISH, names);
-		map.put(EntityType.SKELETON, names);
-		map.put(EntityType.SNOWMAN, names);
-		map.put(EntityType.SPIDER, names);
-		map.put(EntityType.SQUID, names);
-		map.put(EntityType.VILLAGER, names);
-		map.put(EntityType.WITCH, names);
-		map.put(EntityType.WOLF, names);
-		map.put(EntityType.ZOMBIE, names);
+		EntityType[] types = {
+                EntityType.BAT,
+                EntityType.BLAZE,
+                EntityType.CAVE_SPIDER,
+                EntityType.CHICKEN,
+                EntityType.COW,
+                EntityType.CREEPER,
+                EntityType.ENDERMAN,
+                EntityType.GIANT,
+                EntityType.HORSE,
+                EntityType.IRON_GOLEM,
+                EntityType.MUSHROOM_COW,
+                EntityType.OCELOT,
+                EntityType.PIG,
+                EntityType.PIG_ZOMBIE,
+                EntityType.SHEEP,
+                EntityType.SILVERFISH,
+                EntityType.SKELETON,
+                EntityType.SNOWMAN,
+                EntityType.SPIDER,
+                EntityType.SQUID,
+                EntityType.VILLAGER,
+                EntityType.WITCH,
+                EntityType.WOLF,
+                EntityType.ZOMBIE
+        };
+
+        for(EntityType type : types)
+            map.put(type, new HashSet<String>());
 
 		if (blacklist != null) {
 			for (EntityType eType : map.keySet()) {
