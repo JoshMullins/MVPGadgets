@@ -117,7 +117,12 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * @param giants - Defines whether the plugin allows giants (hundred-foot-tall zombies) or not.
 	 */
 	public void mobCannon(JavaPlugin plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
-		this.plugin = plugin;
+        if(plugin == null)
+            throw new IllegalArgumentException("plugin cannot be null!");
+        if(mobAliases == null)
+            throw new IllegalArgumentException("mobAliases cannot be null!");
+
+        this.plugin = plugin;
 
 		HashMap<String, EntityType> tempMap = new HashMap<String, EntityType>();
 
