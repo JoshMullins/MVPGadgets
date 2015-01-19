@@ -43,11 +43,10 @@ import com.darkblade12.particleeffect.ParticleEffect;
  */
 public class MobCannon implements CommandExecutor, Listener {
 
-	public JavaPlugin plugin;
-	public static Map<String, EntityType> usedNames = new HashMap<>();
+	private JavaPlugin plugin;
+	private Map<String, EntityType> usedNames = new HashMap<>();
 	private List<Snowman> snowmen = new ArrayList<>();
 	private List<BlockState> blockList = new ArrayList<>();
-
 
 	/**
 	 * Simplest constructor. Will add EntityTypes and mob aliases to the class by itself, instead of having them inputted. Use the other constructor to customize mob aliases.
