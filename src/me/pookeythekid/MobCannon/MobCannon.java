@@ -127,10 +127,10 @@ public class MobCannon implements CommandExecutor, Listener {
 		HashMap<String, EntityType> tempMap = new HashMap<String, EntityType>();
 
 		for (EntityType eType : mobAliases.keySet()) {
-			if (eType.equals(EntityType.ENDER_DRAGON) || eType.equals(EntityType.WITHER))
+			if (eType == EntityType.ENDER_DRAGON || eType == EntityType.WITHER)
 				continue;
 
-			if (!giants && eType.equals(EntityType.GIANT))
+			if (!giants && eType == EntityType.GIANT)
 				continue;
 
 			for (String name : mobAliases.get(eType)) {
