@@ -85,14 +85,8 @@ public class MobCannon implements CommandExecutor, Listener {
         };
 
         for(EntityType type : types)
-            map.put(type, new HashSet<String>());
-
-		if (blacklist != null) {
-			for (EntityType eType : map.keySet()) {
-				if (blacklist.contains(eType))
-					map.remove(eType);
-			}
-		}
+            if(blacklist == null || !blockList.contains(type))
+                map.put(type, new HashSet<String>());
 
 		mobCannon(plugin, map, false);
 	}
