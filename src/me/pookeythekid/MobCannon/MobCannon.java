@@ -47,6 +47,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	private Map<String, EntityType> usedNames = new HashMap<>();
 	private List<Snowman> snowmen = new ArrayList<>();
 	private List<BlockState> blockList = new ArrayList<>();
+    private final Random rand = new Random();
 
 	/**
 	 * Simplest constructor. Will add EntityTypes and mob aliases to the class by itself, instead of having them inputted. Use the other constructor to customize mob aliases.
@@ -252,9 +253,9 @@ public class MobCannon implements CommandExecutor, Listener {
 					break;
 				case "ocelot":
 					Ocelot ocelot = (Ocelot) p.getWorld().spawnEntity(spawnLoc, EntityType.OCELOT);
-					ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
+					ocelot.setCatType(Ocelot.Type.values()[rand.nextInt(Ocelot.Type.values().length)]);
 					ocelot.setTamed(true);
-					if (new Random().nextBoolean() && !ocelot.getCatType().equals(Ocelot.Type.WILD_OCELOT))
+					if (rand.nextBoolean() && !ocelot.getCatType().equals(Ocelot.Type.WILD_OCELOT))
 						ocelot.setBaby();
 					entity = (Entity) ocelot;
 					for (Entity e : ploc.getChunk().getEntities()) {
@@ -355,10 +356,10 @@ public class MobCannon implements CommandExecutor, Listener {
 
 			final Location ploc = p.getLocation();
 			Location spawnLoc = ploc.add(0, 2, 0);
-			EntityType eType = eList.get(new Random().nextInt(eList.size()));
+			EntityType eType = eList.get(rand.nextInt(eList.size()));
 
 			while (!p.hasPermission("mvpgadgets.launchmob." + getNameFrom(eType.toString(), map)))
-				eType = eList.get(new Random().nextInt(eList.size()));
+				eType = eList.get(rand.nextInt(eList.size()));
 
 			Entity entity;
 			entity = p.getWorld().spawnEntity(spawnLoc, eType);
@@ -375,13 +376,13 @@ public class MobCannon implements CommandExecutor, Listener {
 			if (entity.getType().equals(EntityType.OCELOT)) {
 				entity.remove();
 				Ocelot ocelot = (Ocelot) p.getWorld().spawnEntity(spawnLoc, EntityType.OCELOT);
-				ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
+				ocelot.setCatType(Ocelot.Type.values()[rand.nextInt(Ocelot.Type.values().length)]);
 				ocelot.setTamed(true);
 
 				while (ocelot.getCatType().equals(Ocelot.Type.WILD_OCELOT))
-					ocelot.setCatType(Ocelot.Type.values()[new Random().nextInt(Ocelot.Type.values().length)]);
+					ocelot.setCatType(Ocelot.Type.values()[rand.nextInt(Ocelot.Type.values().length)]);
 
-				if (new Random().nextBoolean())
+				if (rand.nextBoolean())
 					ocelot.setBaby();
 
 				entity = (Entity) ocelot;
