@@ -5,7 +5,7 @@ MVP Gadgets
 
 [TGRHavoc](https://github.com/TGRHavoc)
 
-[JOSHLAYDE](https://github.com/JOSHLAYDE)
+[JOSHSLAYDE](https://github.com/JOSHSLAYDE)
 
 [97WaterPolo](https://github.com/97WaterPolo)
 
