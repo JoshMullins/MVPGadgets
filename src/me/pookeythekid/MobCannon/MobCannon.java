@@ -41,7 +41,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	private Map<String, EntityType> usedNames = new HashMap<>();
 	private List<Snowman> snowmen = new ArrayList<>();
 	private List<BlockState> blockList = new ArrayList<>();
-    private final Random rand = new Random();
+    	private final Random rand = new Random();
 
 	/**
 	 * Simplest constructor. Will add EntityTypes and mob aliases to the class by itself, instead of having them inputted. Use the other constructor to customize mob aliases.
@@ -80,7 +80,7 @@ public class MobCannon implements CommandExecutor, Listener {
         };
 
         for(EntityType type : types)
-            if(blacklist == null || !blockList.contains(type))
+            if(blacklist == null || !blacklist.contains(type))
                 map.put(type, new HashSet<String>());
 
 		mobCannon(plugin, map, false);
