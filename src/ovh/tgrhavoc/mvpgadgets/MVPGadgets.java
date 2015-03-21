@@ -27,7 +27,7 @@ public class MVPGadgets extends JavaPlugin {
 
 	
 	public void onEnable(){
-		Bukkit.getPluginManager().registerEvents(new GadgetHandler(this), this);
+		getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
 		registerGadgets();
 		
@@ -74,8 +74,8 @@ public class MVPGadgets extends JavaPlugin {
 	}
 
 	private void registerGadetEvents() {
-		Bukkit.getPluginManager().registerEvents(new GUIGadgetListener(this), this);
-		Bukkit.getPluginManager().registerEvents(new HorseListener(this), this);
+		getPluginManager().registerEvents(new GUIGadgetListener(this), this);
+		getPluginManager().registerEvents(new HorseListener(this), this);
 	}
 	
 	public static void addGadgetStatic(Gadget g){
