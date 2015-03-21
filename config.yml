@@ -1,0 +1,49 @@
+## Mob Cannon Settings ##
+
+# Available mob types (caps don't matter):
+# BAT
+# BLAZE
+# CAVE_SPIDER
+# CHICKEN
+# COW
+# CREEPER
+# ENDERMAN
+# GIANT
+# HORSE
+# IRON_GOLEM
+# MUSHROOM_COW
+# OCELOT
+# PIG
+# PIG_ZOMBIE
+# SHEEP
+# SILVERFISH
+# SKELETON
+# SNOWMAN
+# SPIDER
+# SQUID (Notice: Squid doens't launch very far, just spawns and drops.)
+# VILLAGER
+# WITCH
+# WOLF
+# ZOMBIE
+
+# Enabling this means the plugin will use all of the mobs above except for
+# the ones you list in the blacklist below.
+# Setting this to false means you'll have to individually list off the mobs
+# and their alternate names in the later settings.
+simpleBlacklist: true
+
+# Which of the mobs above should be impossible to use?
+# If simpleBlacklist is set to false, this will still override the mobs you
+# have listed below. If you want mobs listed below to be usable, be sure that
+# they're not present in this list.
+blacklist:
+- GIANT
+
+# Alternate names for creatures. List them off in the pattern shown below.
+# If you want the default name for a mob to be the only option, you must
+# fill in that default name, however redundant it may look.
+# Here are some examples, keep them if you want to.
+OCELOT:
+- cat
+PIG:
+- pig
