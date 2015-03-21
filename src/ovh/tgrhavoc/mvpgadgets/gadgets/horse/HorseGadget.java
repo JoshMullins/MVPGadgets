@@ -1,5 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.horse;
 
+import java.util.Random;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.AnimalTamer;
@@ -31,7 +33,7 @@ public class HorseGadget extends Gadget{
 		}
 		Horse horse = (Horse)player.getWorld().spawnEntity(player.getLocation(), EntityType.HORSE);
 		horse.setTamed(true);
-		horse.setVariant(Horse.Variant.SKELETON_HORSE);
+		horse.setVariant(Horse.Variant.values()[new Random().nextInt(Horse.Variant.values().length)]); //Spawn random horse type
 		horse.setOwner((AnimalTamer)player);
 		horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 		horse.setCustomName(player.getName() +"'s horse");

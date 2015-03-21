@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.pookeythekid.MobCannon.MobCannon;
-import net.minecraft.util.org.apache.commons.lang3.ObjectUtils.Null;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,57 +23,23 @@ import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 public class MVPGadgets extends JavaPlugin {
 	
 	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
-
 	
 	public void onEnable(){
 		saveDefaultConfig();
 		
-		getPluginManager().registerEvents(new GadgetHandler(this), this);
+		getServer().getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
 		registerGadgets();
-		
-		//loadGadgetClasses();
-		
-		//test();
-		
 		registerGadetEvents();
+		
 		
 		MobCannon mobCannon = new MobCannon(this, null);
 		mobCannon.reloadCannon();
-		
 		getCommand("mobcannon").setExecutor(mobCannon);
 		getCommand("mobcannonreload").setExecutor(mobCannon);
 		getCommand("launchmob").setExecutor(mobCannon);
 		getCommand("moblist").setExecutor(mobCannon);
 		getCommand("mobnames").setExecutor(mobCannon);
-		
-	}
-	
-	@Deprecated
-	public void test(){
-		for (String s: JarUtil.getGadetClasses(this.getDataFolder().getParent() + "/MVPGadgets.jar")){
-			try {
-				System.out.println("Constructing... " + s);
-				
-				if (s.contains("\\$[0-9]"))
-					System.out.println("Found funny class: " + s);
-				
-				Class<?> gadgetClass = Class.forName(s);
-				Constructor<?> constr = gadgetClass.getConstructor();
-				Gadget gadgetFromClass = null;
-				if (constr.getParameterTypes().length > 0){
-					System.out.println("Found aruments for " + s);
-					
-				}else{ // No constructor args (Assume it's a gadget)
-					gadgetFromClass = (Gadget)constr.newInstance();
-				}
-				 
-				//addGadget(gadgetFromClass);
-				System.out.println("Just added a gadget " + gadgetFromClass);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	private void registerGadgets() {
@@ -83,8 +48,8 @@ public class MVPGadgets extends JavaPlugin {
 	}
 
 	private void registerGadetEvents() {
-		getPluginManager().registerEvents(new GUIGadgetListener(this), this);
-		getPluginManager().registerEvents(new HorseListener(this), this);
+		getServer().getPluginManager().registerEvents(new GUIGadgetListener(this), this);
+		getServer().getPluginManager().registerEvents(new HorseListener(this), this);
 	}
 	
 	public static void addGadgetStatic(Gadget g){
@@ -104,6 +69,7 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+	@Deprecated
     private void loadGadgetClasses() {
         File basePath = new File(this.getDataFolder() + "/mods");
         File[] files = new File(this.getDataFolder() + "/mods").listFiles();
@@ -143,4 +109,30 @@ public class MVPGadgets extends JavaPlugin {
         }
     }
 
+	@Deprecated
+	public void test(){
+		for (String s: JarUtil.getGadetClasses(this.getDataFolder().getParent() + "/MVPGadgets.jar")){
+			try {
+				System.out.println("Constructing... " + s);
+				
+				if (s.contains("\\$[0-9]"))
+					System.out.println("Found funny class: " + s);
+				
+				Class<?> gadgetClass = Class.forName(s);
+				Constructor<?> constr = gadgetClass.getConstructor();
+				Gadget gadgetFromClass = null;
+				if (constr.getParameterTypes().length > 0){
+					System.out.println("Found aruments for " + s);
+					
+				}else{ // No constructor args (Assume it's a gadget)
+					gadgetFromClass = (Gadget)constr.newInstance();
+				}
+				 
+				//addGadget(gadgetFromClass);
+				System.out.println("Just added a gadget " + gadgetFromClass);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -30,7 +30,7 @@ MVP Gadgets
   5. Zombie
   6. Skeleton
 10. Mounts:
-  1. Normal Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE**
-  2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.)
-  3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.)
+  1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE**
+  2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE**
+  3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE**
 
