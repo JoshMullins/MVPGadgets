@@ -14,10 +14,10 @@ MVP Gadgets
 
 ## Features:
 
-1. Personalized Chat Configuration (i.e. The ability to change response messages when equipping, un-equipping, and purchasing gadgets.) **DONE (See #21)**
-2. GUI Menu Configuration (i.e. The ability to change the names of the items in the GUI.) **DONE (See #21)**
+1. Personalized Chat Configuration (i.e. The ability to change response messages when equipping, un-equipping, and purchasing gadgets.) **DONE** (See #21)
+2. GUI Menu Configuration (i.e. The ability to change the names of the items in the GUI.) **DONE** (See #21)
 3. Permission Per Gadget (i.e. The requirement of a permission to use a certain gadget.)
-4. Mob Cannon (Allow player to launch mobs at random or allow them to select the mob) - **DONE (See #17)**
+4. Mob Cannon (Allow player to launch mobs at random or allow them to select the mob) - **DONE** (See #17)
 5. Paintball Gun (ex. A horse amour being right clicked towards blocks and temporarily changing the block into a colored wool.)
 6. Melon Bomb (ex. The dropping/throwing of a melon and it exploding into glistening melons.)
 7. Flame Thrower (ex. A item exerting fire towards other players, mobs, or ground.)
@@ -30,7 +30,7 @@ MVP Gadgets
   5. Zombie
   6. Skeleton
 10. Mounts:
-  1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE (See #21)**
-  2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE (See #21)**
-  3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE (See #21)**
+  1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE** (See #21)
+  2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE** (See #21)
+  3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE** (See #21)
 
