@@ -27,6 +27,8 @@ public class MVPGadgets extends JavaPlugin {
 
 	
 	public void onEnable(){
+		saveDefaultConfig();
+		
 		getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
 		registerGadgets();
@@ -37,7 +39,14 @@ public class MVPGadgets extends JavaPlugin {
 		
 		registerGadetEvents();
 		
-		getCommand("launchmob").setExecutor(new MobCannon(this, null));
+		MobCannon mobCannon = new MobCannon(this, null);
+		mobCannon.reloadCannon();
+		
+		getCommand("mobcannon").setExecutor(mobCannon);
+		getCommand("mobcannonreload").setExecutor(mobCannon);
+		getCommand("launchmob").setExecutor(mobCannon);
+		getCommand("moblist").setExecutor(mobCannon);
+		getCommand("mobnames").setExecutor(mobCannon);
 		
 	}
 	
