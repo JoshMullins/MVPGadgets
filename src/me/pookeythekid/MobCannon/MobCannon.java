@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -33,8 +32,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 
 import com.darkblade12.particleeffect.ParticleEffect;
 
@@ -45,8 +45,15 @@ import com.darkblade12.particleeffect.ParticleEffect;
  *
  */
 public class MobCannon implements CommandExecutor, Listener {
+	
+	final String BASE_PATH = "Messages.MobCannon";
+	final String MOBCANNON = BASE_PATH +".mobcannon";
+	final String MOBCANNONRELOAD = BASE_PATH +".mobcannonreload";
+	final String MOBLIST = BASE_PATH +".moblist";
+	final String MOBNAMES = BASE_PATH +".mobnames";
+	final String LAUNCHMOBS = BASE_PATH+".launchmob";
 
-	private JavaPlugin plugin;
+	private MVPGadgets plugin;
 	public Map<String, EntityType> usedNames = new HashMap<>();
 	private List<Snowman> snowmen = new ArrayList<>();
 	private List<BlockState> blockList = new ArrayList<>();
@@ -62,7 +69,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * @param plugin The plugin that's using this cannon.
 	 * @param blacklist A Set of EntityTypes to remove from the default settings.
 	 */
-	public MobCannon(JavaPlugin plugin, Set<EntityType> blacklist) {
+	public MobCannon(MVPGadgets plugin, Set<EntityType> blacklist) {
 		mobCannon(plugin, blacklist);
 	}
 
@@ -72,7 +79,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * @param plugin The plugin that's using this cannon.
 	 * @param blacklist A Set of EntityTypes to remove from the default settings.
 	 */
-	public void mobCannon(JavaPlugin plugin, Set<EntityType> blacklist) {
+	public void mobCannon(MVPGadgets plugin, Set<EntityType> blacklist) {
 		Map<EntityType, Set<String>> map = new HashMap<>();
 
 		// Casting Entity to Creature doesn't work with setting targets for other creatures.
@@ -123,7 +130,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> String will work, since the default names (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
 	 * @param giants Defines whether the plugin allows giants (hundred-foot-tall zombies) or not. Giants are not at all recommended.
 	 */
-	public MobCannon(JavaPlugin plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
+	public MobCannon(MVPGadgets plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
 		mobCannon(plugin, mobAliases, giants);
 	}
 
@@ -134,7 +141,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> will work, since the default names (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
 	 * @param giants Defines whether the plugin allows giants (hundred-foot-tall zombies) or not.
 	 */
-	public void mobCannon(JavaPlugin plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
+	public void mobCannon(MVPGadgets plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
 		if(plugin == null)
 			throw new IllegalArgumentException("plugin cannot be null!");
 		else
@@ -280,12 +287,12 @@ public class MobCannon implements CommandExecutor, Listener {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("launchmob")) {
 			if (!sender.hasPermission("mvpgadgets.mobcannon.launchmob")) {
-				sender.sendMessage(ChatColor.RED + "You don't have permission to launch mobs.");
+				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH+".NO_PERMISSION"));
 				return true;
 			}
 
 			if (!(sender instanceof Player)) {
-				sender.sendMessage("Nope. You're a console.");
+				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".CONSOLE"));
 				return true;
 			}
 
@@ -298,26 +305,26 @@ public class MobCannon implements CommandExecutor, Listener {
 
 		if (cmd.getName().equalsIgnoreCase("mobcannon")) {
 			if (sender.hasPermission("mvpgadgets.mobcannon.use")) {
-				sender.sendMessage(ChatColor.GREEN + "MobCannon Commands");
-				sender.sendMessage(ChatColor.YELLOW + "/mobcannon (mbc) - This help menu.");
+				sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON + ".TITLE"));
+				sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON + ".HELP"));
 				if (sender.hasPermission("mobcannon.reload"))
-					sender.sendMessage(ChatColor.YELLOW + "/mobcannonreload (mobcannonrl, mcreload, mcrl) - Reload the MobCannon config.");
+					sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON + ".RELOAD"));
 				if (sender.hasPermission("mobcannon.launchmob"))
-					sender.sendMessage(ChatColor.YELLOW + "/launchmob (launch, lmob, lm) [mob name] - Launch a mob.");
+					sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON+".LAUNCH_MOB"));
 				if (sender.hasPermission("mobcannon.moblist"))
-					sender.sendMessage(ChatColor.YELLOW + "/moblist - List all available mob projectiles.");
+					sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON+ ".MOBLIST"));
 				if (sender.hasPermission("mobcannon.mobnames"))
-					sender.sendMessage(ChatColor.YELLOW + "/mobnames <mob name> - Get all alternate names for the given mob.");
+					sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON + ".MOBNAMES"));
 			} else
-				sender.sendMessage(ChatColor.RED + "You don't have permission to perform this command.");
+				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("mobcannonreload")) {
 			if (sender.hasPermission("mvpgadgets.mobcannon.reload")) {
 				reloadCannon();
-				sender.sendMessage(ChatColor.GREEN + "MobCannon reloaded.");
+				sender.sendMessage(plugin.getMessageFromConfig(MOBCANNONRELOAD + ".RELOADED"));
 			} else
-				sender.sendMessage(ChatColor.RED + "You don't have permission to perform this command.");
+				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("moblist")) {
@@ -328,13 +335,14 @@ public class MobCannon implements CommandExecutor, Listener {
 						mobNames.append(name.toLowerCase() + ", ");
 				}
 				if (mobNames.length() == 0) {
-					sender.sendMessage(ChatColor.RED + "You do not have permission for any mobs.");
+					sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
 					return true;
 				}
 				mobNames.setLength(mobNames.length() - 2); // Remove the extra comma and space at the end
-				sender.sendMessage(ChatColor.AQUA + "Available mob projectiles: " + mobNames.toString());
+				sender.sendMessage(
+						plugin.getMessageFromConfig(MOBLIST + ".AVAILABLE_MOBS").replace("{MOB_NAMES}", mobNames.toString()));
 			} else
-				sender.sendMessage(ChatColor.RED + "You don't have permission to perform this command.");
+				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("mobnames")) {
@@ -352,11 +360,12 @@ public class MobCannon implements CommandExecutor, Listener {
 							names.setLength(0);
 							names.append("None");
 						}
-						sender.sendMessage(ChatColor.AQUA + "Alternate names for " + args[0] + ": " + names.toString());
+						sender.sendMessage(plugin.getMessageFromConfig(MOBNAMES + ".ALTERNATIVE_NAMES")
+								.replace("{NAME}", args[0]).replace("{NAMES}", names.toString()));
 					} else
-						sender.sendMessage(ChatColor.RED + "Not a valid mob name.");
+						sender.sendMessage(plugin.getMessageFromConfig(MOBNAMES + ".INVALID_MOB").replace("{NAME}", args[0]));
 				} else
-					sender.sendMessage(ChatColor.RED + "Too few arguments. Usage: /mobnames <mob name>");
+					sender.sendMessage(plugin.getMessageFromConfig(MOBNAMES + ".LITTLE_ARGUMENTS"));
 			}
 		}
 
@@ -404,7 +413,7 @@ public class MobCannon implements CommandExecutor, Listener {
 			if (inputNameValid(mobName, map)) {
 				if (!p.hasPermission("mvpgadgets.mobcannon.launchmob." + getNameFrom(mobName, map))
 						&& !p.hasPermission("mvpgadgets.mobcannon.launchmob.all")) {
-					p.sendMessage(ChatColor.RED + "You don't have permission to launch a(n) " + mobName);
+					p.sendMessage(plugin.getMessageFromConfig(LAUNCHMOBS + ".NO_PERMISSION_MOB").replace("{MOB_NAME}", mobName));
 					return;
 				}
 
@@ -523,7 +532,7 @@ public class MobCannon implements CommandExecutor, Listener {
 					creature.setTarget(null);
 				entity.setVelocity(ploc.getDirection().multiply(2));
 
-				//TGRHavoc: Set the heal to the maximum it can so that the
+				//TGRHavoc: Set the health to the maximum it can so that the
 				//Entity won't die and drop items (Issue #7 https://github.com/JOSHSLAYDE/MVPGadgets/issues/7)
 
 				Damageable entityD = (Damageable) entity;
@@ -546,10 +555,10 @@ public class MobCannon implements CommandExecutor, Listener {
 					}
 				}.runTaskLater(plugin, 20);
 			} else
-				p.sendMessage(ChatColor.RED + "Mob name '" + mobName + "' is invalid.");
+				p.sendMessage(plugin.getMessageFromConfig(LAUNCHMOBS + ".INVALID_MOB").replace("{MOB_NAME}", mobName));
 		} else {
 			if (!p.hasPermission("mvpgadgets.mobcannon.launchmob.random")) {
-				p.sendMessage(ChatColor.RED + "You must specify a creature to launch.");
+				p.sendMessage(plugin.getMessageFromConfig(LAUNCHMOBS +".SPECIFY_MOB"));
 				return;
 			}
 
@@ -570,7 +579,7 @@ public class MobCannon implements CommandExecutor, Listener {
 					it.remove();
 
 			if(tempEList.isEmpty()) {
-				p.sendMessage(ChatColor.RED + "You do not have permission for any mobs.");
+				p.sendMessage(plugin.getMessageFromConfig(LAUNCHMOBS +".NO_PERMISSION"));
 				return;
 			}
 

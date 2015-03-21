@@ -1,6 +1,10 @@
 package ovh.tgrhavoc.mvpgadgets;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -10,6 +14,8 @@ import java.util.List;
 import me.pookeythekid.MobCannon.MobCannon;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
@@ -24,14 +30,21 @@ public class MVPGadgets extends JavaPlugin {
 	
 	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
 	
+	YamlConfiguration messages;
+	
 	public void onEnable(){
 		saveDefaultConfig();
+		
+		try {
+			initConfigs();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		getServer().getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
 		registerGadgets();
 		registerGadetEvents();
-		
 		
 		MobCannon mobCannon = new MobCannon(this, null);
 		mobCannon.reloadCannon();
@@ -43,24 +56,58 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	private void registerGadgets() {
-		addGadget(new GUIGadget());
-		addGadget(new HorseGadget());
+		addGadget(new HorseGadget(this));
+		
+		
+		GUIGadget g = new GUIGadget(this);
+		addGadget(g);
+		getServer().getPluginManager().registerEvents(new GUIGadgetListener(this, g), this);
 	}
 
 	private void registerGadetEvents() {
-		getServer().getPluginManager().registerEvents(new GUIGadgetListener(this), this);
 		getServer().getPluginManager().registerEvents(new HorseListener(this), this);
 	}
 	
+	private void initConfigs() throws IOException{
+		//Messages.yml
+		File messagesFile = new File(this.getDataFolder(), "messages.yml");
+		if (!messagesFile.exists()){
+			messagesFile.createNewFile();
+			//Couldn't find an easy way with YamlConfiguration, so I did this the old-fashioned way
+			InputStream in = getResource("messages.yml");
+			OutputStream out = new FileOutputStream(messagesFile);
+			
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while((bytesRead = in.read(buffer)) !=-1){
+				out.write(buffer, 0, bytesRead);
+			}
+			in.close();
+			out.flush();
+			out.close();
+		}
+		messages = YamlConfiguration.loadConfiguration(messagesFile);
+		//End messages.yml
+		
+	}
+	
+	public YamlConfiguration getMessages(){
+		return messages;
+	}
+	
 	public static void addGadgetStatic(Gadget g){
-		if (availableGadgets.contains(g))
+		if (availableGadgets.contains(g)){
+			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
 			return;
+		}
 		availableGadgets.add(g);
 	}
 
 	public void addGadget(Gadget g){
-		if (availableGadgets.contains(g))
+		if (availableGadgets.contains(g)){
+			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
 			return;
+		}
 		availableGadgets.add(g);
 	}
 	
@@ -68,7 +115,12 @@ public class MVPGadgets extends JavaPlugin {
 		return availableGadgets;
 	}
 	
+	public String getMessageFromConfig(String messagePath){
+		return ChatColor.translateAlternateColorCodes('&', getMessages().getString(messagePath));
+	}
+	
 	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+	@SuppressWarnings({ "unused", "unchecked" })
 	@Deprecated
     private void loadGadgetClasses() {
         File basePath = new File(this.getDataFolder() + "/mods");
@@ -95,7 +147,8 @@ public class MVPGadgets extends JavaPlugin {
 
                 try {
 
-                    Class clazz = cl.loadClass(fileName.replace(".class",""));
+                    @SuppressWarnings("rawtypes")
+					Class clazz = cl.loadClass(fileName.replace(".class",""));
                     //Our .class file extends Gadget
                     if(clazz.isAssignableFrom(Gadget.class)){
                         Gadget gadget = (Gadget) clazz.newInstance();

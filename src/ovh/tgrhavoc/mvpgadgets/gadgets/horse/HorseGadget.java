@@ -2,7 +2,6 @@ package ovh.tgrhavoc.mvpgadgets.gadgets.horse;
 
 import java.util.Random;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
@@ -11,14 +10,13 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 
 public class HorseGadget extends Gadget{
 	
-	public HorseGadget(){
-		super();
-		ItemStack is = new ItemStack(Material.MONSTER_EGG, 1, (byte)100);
-		setItemStack(ChatColor.AQUA + "Spawn Horse" + ChatColor.GREEN, is);
+	public HorseGadget(MVPGadgets plugin){
+		super(plugin, "horseGadget", new ItemStack(Material.MONSTER_EGG, 1, (byte)100));
 	}
 	
 	@Override
