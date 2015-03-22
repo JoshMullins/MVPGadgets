@@ -1,13 +1,11 @@
 package ovh.tgrhavoc.mvpgadgets.events;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
@@ -29,7 +27,7 @@ public class GadgetHandler implements Listener{
 	@EventHandler
 	public void playerJoinEvent(PlayerJoinEvent e){
 		//Used to give the player the GUI when they spawn
-		e.getPlayer().getInventory().setItem(4, (new GUIGadget()).getItemStack());
+		e.getPlayer().getInventory().setItem(4, (new GUIGadget(ref)).getItemStack());
 	}
 	
 	@EventHandler

@@ -1,0 +1,39 @@
+#This is the messages file for the plugin MVPGadgets.
+
+#The text " (Gadget)" will automatically be appended to the names
+Gadgets:
+    #Gadget selector
+    guiGadget:
+        #Name to be displayed when the user hover over with mouse/selects in hotbar
+        name: "&6Open &2Gadget &6Selector&1"
+        #Text to display in the GUI menu
+        inventory_name: "&cSelect a gadget:"
+    #Horse Gadget
+    horseGadget:
+        name: "&bSpawn Horse&a"
+Messages:
+    #Message that appears when the player selects a gadget
+    SELECTED: "You have selected to use {GADGET}"
+    MobCannon:
+        NO_PERMISSION: "&c&lOops! &7You don't have permission to do this!"
+        CONSOLE: "Sorry, this is a player only command"
+        mobcannon:
+            TITLE: "MobCannon commands"
+            HELP: "&e/mobcannon (mbc) - This help menu."
+            RELOAD: "&e/mobcannonreload (mobcannonrl, mcreload, mcrl) - Reload the MobCannon config."
+            LAUNCH_MOB: "&e/launchmob (launch, lmob, lm) [mob name] - Launch a mob."
+            MOBLIST: "&e/moblist - List all available mob projectiles."
+            MOBNAMES: "&e/mobnames <mob name> - Get all alternate names for the given mob."
+        mobcannonreload:
+            RELOADED: "&2MobCannon reloaded successfully!"
+        moblist:
+            AVAILABLE_MOBS: "Available mob projectiles: {MOB_NAMES}"
+        mobnames:
+            INVALID_MOB: "\"{NAME}\" is not a valid mob name"
+            ALTERNATIVE_NAMES: "Alternative names for {NAME}: {NAMES}"
+            LITTLE_ARGUMENTS: "Too few arguments. Usage: /mobnames <mob name>"
+        launchmob:
+            NO_PERMISSION_MOB: "You don't have the permission to launch a(n) {MOB_NAME}"
+            NO_PERMISSION: "You don't have permission for any mobs"
+            INVALID_MOB: "{MOB_NAME} is an invalid mob :("
+            SPECIFY_MOB: "You must specify a creature to launch"

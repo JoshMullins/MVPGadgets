@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,19 +50,33 @@ public class HorseListener implements Listener {
 			Horse h = (Horse) e.getVehicle();
 			if (h.isCustomNameVisible()
 					&& h.getCustomName().equals(player.getName() + "'s horse")) {
-				createExplosion(player.getLocation());
+				createExplosion(h.getVariant(), player.getLocation());
 				h.remove();
 			}
 		}
 	}
 	
-	private void createExplosion(Location loc){
+	private void createExplosion(Variant variant, Location loc){
 		List<Item> itemsSpanwed = new ArrayList<Item>();
+		
+		Material projectileMaterial = Material.LEATHER;
+		switch(variant){
+		case SKELETON_HORSE:
+			projectileMaterial = Material.BONE;
+			break;
+		case UNDEAD_HORSE:
+			projectileMaterial = Material.ROTTEN_FLESH;
+			break;
+		default:
+			break;
+		}
+		
 		for (int i=0; i<=50; i++){
 			float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
 			double y = 0.5;
 			float z = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
-			Item bone = loc.getWorld().dropItem(loc, new ItemStack(Material.BONE, 64));
+			Item bone = loc.getWorld().dropItem(loc, new ItemStack(projectileMaterial, 64));
+			
 			bone.setPickupDelay(Integer.MAX_VALUE);
 			bone.setVelocity(new Vector(x, y, z));
 			itemsSpanwed.add(bone);
