@@ -715,4 +715,8 @@ public class MobCannon implements CommandExecutor, Listener {
 				blockList.remove(blockstate);
 		}
 	}
+
+	public Map<String, EntityType> getUsedNames() {
+		return usedNames;
+	}
 }

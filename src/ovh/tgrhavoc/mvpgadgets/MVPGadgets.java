@@ -24,13 +24,16 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadgetListener;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseListener;
+import ovh.tgrhavoc.mvpgadgets.gadgets.mobcannon.MobCannonGadget;
 import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
 	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
 	
-	YamlConfiguration messages;
+	private YamlConfiguration messages;
+	
+	private MobCannon mobCannon;
 	
 	public void onEnable(){
 		saveDefaultConfig();
@@ -46,7 +49,7 @@ public class MVPGadgets extends JavaPlugin {
 		registerGadgets();
 		registerGadetEvents();
 		
-		MobCannon mobCannon = new MobCannon(this, null);
+		
 		mobCannon.reloadCannon();
 		getCommand("mobcannon").setExecutor(mobCannon);
 		getCommand("mobcannonreload").setExecutor(mobCannon);
@@ -56,14 +59,21 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	private void registerGadgets() {
-		addGadget(new HorseGadget(this));
+		mobCannon = new MobCannon(this, null);
 		
+		addGadget(new HorseGadget(this));
+		addGadget(new MobCannonGadget(this));
+				
 		
 		GUIGadget g = new GUIGadget(this);
 		addGadget(g);
 		getServer().getPluginManager().registerEvents(new GUIGadgetListener(this, g), this);
 	}
-
+	
+	public MobCannon getMobCannon(){
+		return mobCannon;
+	}
+	
 	private void registerGadetEvents() {
 		getServer().getPluginManager().registerEvents(new HorseListener(this), this);
 	}
