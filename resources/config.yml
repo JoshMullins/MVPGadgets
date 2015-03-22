@@ -1,5 +1,4 @@
 ## Mob Cannon Settings ##
-
 # Available mob types (caps don't matter):
 # BAT
 # BLAZE
@@ -47,3 +46,4 @@ OCELOT:
 - cat
 PIG:
 - pig
+## End of MobCannon settings ##

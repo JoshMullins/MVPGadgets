@@ -14,6 +14,9 @@ Gadgets:
     #Allows the player to use the mobcannon
     mobcannonGadget:
         name: "Mob Cannon! (Freaking Awesome)"
+    #Paintball gadget
+    paintballGadget:
+        name: "Paintball Gun"
 Messages:
     #Message that appears when the player selects a gadget
     SELECTED: "You have selected to use {GADGET}"
