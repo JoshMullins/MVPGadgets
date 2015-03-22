@@ -1,6 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.guigadget;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,14 +17,18 @@ public class GUIGadgetListener implements Listener {
 	static Inventory guiInv;
 	
 	MVPGadgets mainPlugin;
+	Gadget guiGadget;
 
-	public GUIGadgetListener(MVPGadgets mainPlugin) {
+	public GUIGadgetListener(MVPGadgets mainPlugin, Gadget guiGadget) {
 		this.mainPlugin = mainPlugin; 
+		this.guiGadget = guiGadget;
 		
 		int slot = 0;
 		//Bukkit.broadcastMessage( ((16/9) +1) +"");
-		guiInv = Bukkit.createInventory(null, (9 * ((mainPlugin.getGadgets().size()/9)+1)), "Select a gadget:");
+		guiInv = Bukkit.createInventory(null, (9 * ((mainPlugin.getGadgets().size()/9)+1)),
+				guiGadget.getInvTextFromConfig() );
 		for (Gadget g: mainPlugin.getGadgets()){
+			//System.out.println("Gadget looped: " + g.getNamePath());
 			if (!g.isGUI){
 				addItemToInv(g.getItemStack(), slot);
 				slot++;
@@ -44,14 +49,21 @@ public class GUIGadgetListener implements Listener {
 					if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){
 						event.getWhoClicked().getInventory().setItem(5, g.getItemStack());
 						event.getWhoClicked().closeInventory();
+						//TODO: Use messages.yml for message
 						if (event.getWhoClicked() instanceof Player)
-							((Player)event.getWhoClicked()).sendMessage("You have selected to use the " + g.getItemStack().getItemMeta().getDisplayName());
+							((Player)event.getWhoClicked()).sendMessage(
+									formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
 					}
 				}
 			}
 			
 		}
 	}
+	
+	private String formatMessage(String unformatted, Gadget gadget){
+		return ChatColor.translateAlternateColorCodes('&', unformatted.replace("{GADGET}", gadget.getNameFromConfig()));
+	}
+	
 	public static Inventory getInv(){
 		return guiInv;
 	}
