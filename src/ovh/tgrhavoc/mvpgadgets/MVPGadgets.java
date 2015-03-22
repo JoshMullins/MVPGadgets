@@ -63,7 +63,6 @@ public class MVPGadgets extends JavaPlugin {
 		
 		addGadget(new HorseGadget(this));
 		addGadget(new MobCannonGadget(this));
-				
 		
 		GUIGadget g = new GUIGadget(this);
 		addGadget(g);
