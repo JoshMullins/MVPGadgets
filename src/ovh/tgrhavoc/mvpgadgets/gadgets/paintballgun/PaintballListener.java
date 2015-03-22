@@ -48,7 +48,7 @@ public class PaintballListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPaintballHit(ProjectileHitEvent e){
-		System.out.println("PHE Called");
+		
 		if (! (e.getEntity() instanceof Snowball) )
 			return;
 		
