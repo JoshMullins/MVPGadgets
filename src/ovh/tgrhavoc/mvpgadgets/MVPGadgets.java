@@ -32,12 +32,13 @@ import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 public class MVPGadgets extends JavaPlugin {
 	
 	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
-	
 	private YamlConfiguration messages;
-	
 	private MobCannon mobCannon;
-	
 	private PaintballListener paintListener = new PaintballListener(this);
+	
+	private static Permission permission = null;
+	private static Economy economy = null;
+	private static Chat chat = null;
 	
 	@Override
 	public void onDisable(){
@@ -53,6 +54,9 @@ public class MVPGadgets extends JavaPlugin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		if (getConfig().getBoolean("vault"))
+			initVault();
 		
 		getServer().getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
@@ -139,6 +143,23 @@ public class MVPGadgets extends JavaPlugin {
 	public String getMessageFromConfig(String messagePath){
 		return ChatColor.translateAlternateColorCodes('&', getMessages().getString(messagePath));
 	}
+	
+	//Start Vault hook
+	private void initVault(){
+		if (!setupEconomy())
+			System.out.println("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");
+		else
+			System.out.println("Vault economy hook successful.");
+	}
+	private boolean setupEconomy(){
+        	RegisteredServiceProvider<Economy> economyProvider = 
+        		getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+	        if (economyProvider != null) {
+	            economy = economyProvider.getProvider();
+	        }
+	        return (economy != null);
+    	}
+	//End vault hook
 	
 	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
 	@SuppressWarnings({ "unused", "unchecked" })
