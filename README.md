@@ -1,6 +1,7 @@
 MVP Gadgets
+An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
 ------------
-## Current Developers:
+### Current Developers:
 [pookeythekid](https://github.com/pookeythekid)
 
 [TGRHavoc](https://github.com/TGRHavoc)
@@ -12,7 +13,7 @@ MVP Gadgets
 [TheFreakLord](http://github.com/TheFreakLord)
 
 
-## Features:
+### Features:
 
 1. Personalized Chat Configuration (i.e. The ability to change response messages when equipping, un-equipping, and purchasing gadgets.) **DONE** [(See #21)](pull/21/)
 2. GUI Menu Configuration (i.e. The ability to change the names of the items in the GUI.) **DONE** [(See #21)](pull/21/)
