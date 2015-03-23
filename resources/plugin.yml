@@ -1,6 +1,8 @@
 main: ovh.tgrhavoc.mvpgadgets.MVPGadgets
 name: MVPGadgets
 version: 1.0
+softdepend: [Vault]
+authors: [pookeythekid, TGRHavoc, JoshMullins, 97WaterPolom, TheFreakLord, AdamQpzm]
 
 commands:
   mvpgadgets:

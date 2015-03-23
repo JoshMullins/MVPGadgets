@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="libs/craftbukkit-1.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jordan Dalton/Desktop/Folders &amp; Files/MC_Servers/Spigot New/craftbukkit-1.8.jar"/>
+	<classpathentry kind="lib" path="libs/Vault.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

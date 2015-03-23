@@ -35,4 +35,6 @@ An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
   1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE** [(See #21)](pull/21/)
   2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE** [(See #21)](pull/21/)
   3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE** [(See #21)](pull/21/)
+11. Vault intergration **DONE** [(See #26)](pull/26)
+12. Customizable description for the gadgets inside the GUI. **DONE** [(See #26)](pull/26)
 
