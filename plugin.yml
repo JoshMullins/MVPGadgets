@@ -10,7 +10,7 @@ commands:
     aliases: [mbc]
     description: Help menu for Mob Cannon.
   mobcannonreload:
-    aliases: [mobcannonrl, mcreload, mcrl]
+    aliases: [mobcannonrl, mcreload, mcrl, reloadmobcannon]
     description: Reload Mob Cannon.
   launchmob:
     aliases: [launch,lmob,lm]
