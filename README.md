@@ -1,6 +1,7 @@
 MVP Gadgets
-An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
 ------------
+An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
+
 ### Current Developers:
 [pookeythekid](https://github.com/pookeythekid)
 
