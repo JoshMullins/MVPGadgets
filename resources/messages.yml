@@ -2,6 +2,13 @@
 
 #The text " (Gadget)" will automatically be appended to the names
 Gadgets:
+    #General messages for the gadgets. These will automatically be added to the item's lore
+    #How do you want to display the price (If any) to the user?
+    PRICE: "Price: ${COST}"
+    #How do you want to display whether the user has permission or not
+    #Default: "Permission: {&2Yes|&cNo}"
+    PERMISSION: "Permission: {&2Yes|&cNo}"
+    
     #Gadget selector
     guiGadget:
         #Name to be displayed when the user hover over with mouse/selects in hotbar
@@ -15,8 +22,7 @@ Gadgets:
         #Description of the item. Will only be displayed inside the GUI
         description: [
             "Spawn a horse.",
-            "Dismounting the horse will make it explode!",
-            "Permission: {&2Yes|&cNo}"
+            "Dismounting the horse will make it explode!"
         ]
     #Allows the player to use the mobcannon
     mobcannonGadget:
@@ -24,16 +30,14 @@ Gadgets:
         #Description of the item. Will only be displayed inside the GUI
         description: [
             "Get the cannons ready!",
-            "This will allow you to fire exploding creatures.",
-            "Permission: {&2Yes|&cNo}"
+            "This will allow you to fire exploding creatures."
         ]
     #Paintball gadget
     paintballGadget:
         name: "Paintball Gun"
         #Description of the item. Will only be displayed inside the GUI
         description: [
-            "Temporaraly change blocks to coloured clay.",
-            "Permission: {&2Yes|&cNo}"
+            "Temporaraly change blocks to coloured clay."
         ]
 Messages:
     #Message that appears when the player selects a gadget
