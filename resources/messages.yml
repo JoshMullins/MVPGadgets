@@ -10,7 +10,7 @@ Gadgets:
     PERMISSION: "Permission: {HAS_PERMISSION}"
     #Must follow format of "Positive|Negative"
     #Positive is what to display if player has the permission
-    Positive: "&2Yes"
+    Positive: "&aYes"
     #Negative is what to display if the player doesn't have permission
     Negative: "&cNo"
     
