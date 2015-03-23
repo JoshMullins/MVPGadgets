@@ -7,7 +7,11 @@ Gadgets:
     PRICE: "Price: ${COST}"
     #How do you want to display whether the user has permission or not
     #Default: "Permission: {&2Yes|&cNo}"
-    PERMISSION: "Permission: {&2Yes|&cNo}"
+    PERMISSION: "Permission: {HAS_PERMISSION}"
+    #Must follow format of "Positive | Negative"
+    #Positive is what to display if player has the permission
+    #Negative is what to display if the player doesn't have permission
+    HAS_PERMISSION: "&2Yes | &cNo"
     
     #Gadget selector
     guiGadget:
