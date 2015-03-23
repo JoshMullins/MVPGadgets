@@ -118,6 +118,14 @@ public class MVPGadgets extends JavaPlugin {
 		return messages;
 	}
 	
+	public double getGadgetPrice(Gadget gadget){
+		return getConfig().getDouble(gadget.getPricePath());
+	}
+	
+	public double getGadgetPrice(String gadgetName){
+		return getConfig().getDouble("Gadget_Prices." + gadgetName);
+	}
+	
 	public static void addGadgetStatic(Gadget g){
 		if (availableGadgets.contains(g)){
 			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
