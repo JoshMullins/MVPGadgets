@@ -80,8 +80,10 @@ public class MVPGadgets extends JavaPlugin {
 		addGadget(new PaintballGunGadget(this));
 		
 		GUIGadget g = new GUIGadget(this);
+		GUIGadgetListener l = new GUIGadgetListener(this, g);
+		g.setListener(l);
 		addGadget(g);
-		getServer().getPluginManager().registerEvents(new GUIGadgetListener(this, g), this);
+		getServer().getPluginManager().registerEvents(l, this);
 	}
 	
 	public MobCannon getMobCannon(){
