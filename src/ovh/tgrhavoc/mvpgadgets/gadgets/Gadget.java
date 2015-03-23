@@ -9,8 +9,13 @@ import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 
 public abstract class Gadget {
 	
+	//Messages.yml paths
 	static final String MESSAGE_PATH = "Gadgets.{gadget_name}";
 	static final String NAME_PATH = MESSAGE_PATH +".name";
+	static final String DESCRIPTION_PATH = MESSAGE_PATH+".description";
+	
+	//config.yml paths
+	static final String PRICE = "Gadget_Prices.{gadget_name}";
 	
 	protected ItemStack gadgetItem;
 	private MVPGadgets plugin;
@@ -46,12 +51,46 @@ public abstract class Gadget {
 	public abstract void execute(Player player);
 	
 	/**
-	 * Get the ItemStack that represents this gadget
+	 * Get the ItemStack that represents this gadget (Non GUI, this is the item the player holds.)
 	 * @return {@link ItemStack} that represents this gadget (Can be set by using setItemStack(String, ItemStack) method)
 	 */
 	public ItemStack getItemStack(){
 		return gadgetItem;
 	}
+	
+	public ItemStack getGUIItem(Player player){
+		ItemStack guiItem = gadgetItem.clone(); //Make sure we don't edit the original itemstack
+		ItemMeta meta = guiItem.getItemMeta();
+		
+		//Description from message.yml with colour codes applied
+		List<String> lore = new ArrayList<String>();
+		for (String s: getDescriptionFromConfig()){
+			lore.add( ChatColor.translateAlternateColorCodes('&', s) );
+		}
+		String permissionMsg = getPlugin().getMessageFromConfig("Gadgets.PERMISSION");
+		String decision = getPlugin().getMessageFromConfig("Gadgets.HAS_PERMISSION");
+		String pos = decision.split("|")[0];
+		String neg = decision.split("|")[1];
+		
+		if (player.hasPermission("mvpgadgets." + getPlainName() ))
+			lore.add(permissionMsg.replace("{HAS_PERMISSION}", pos));
+		else
+			lore.add(permissionMsg.replace("{HAS_PERMISSION}", neg));
+		
+		if (MVPGadgets.hookedVault()){
+			//Add price
+		}
+		
+		meta.setLore(lore);//Apply lore
+		guiItem.setMeta(meta); //Apply meta
+		
+		return guiItem;
+	}
+	
+	public String getPlainName(){
+		return ChatColor.stripColor(getNameFromConfig());
+	}
+	
 	/**
 	 * Get the name of the gadget as defined in the config file
 	 * 
@@ -62,16 +101,24 @@ public abstract class Gadget {
 				plugin.getMessages().getString(getNamePath()));
 	}
 	
-	
 	public String getInvTextFromConfig(){
 		return ChatColor.translateAlternateColorCodes('&', 
 				plugin.getMessages().getString(getInvText()));
 	}
 	
+	public List<String> getDescriptionFromConfig(){
+		return plugin.getMessages().getStringList(getDescriptionPath());
+	}
+	
 	private String getNamePath(){
 		return NAME_PATH.replace("{gadget_name}", gadgetName);
 	}
-	
+	private String getDescriptionPath(){
+		return DESCRIPTION_PATH.replace("{gadget_name}", gadgetName);
+	}
+	private String getPricePath(){
+		return PRICE.replace("{gadget_name", gadgetName);
+	}
 	private String getInvText(){
 		if(isGUI){
 			return MESSAGE_PATH.replace("{gadget_name}", gadgetName) + ".inventory_name";
