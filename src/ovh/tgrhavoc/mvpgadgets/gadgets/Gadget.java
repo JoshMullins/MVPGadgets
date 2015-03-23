@@ -1,5 +1,8 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -84,7 +87,7 @@ public abstract class Gadget {
 		}
 		
 		meta.setLore(lore);//Apply lore
-		guiItem.setMeta(meta); //Apply meta
+		guiItem.setItemMeta(meta); //Apply meta
 		
 		return guiItem;
 	}

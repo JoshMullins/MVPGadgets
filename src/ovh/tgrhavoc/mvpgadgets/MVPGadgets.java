@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.pookeythekid.MobCannon.MobCannon;
+import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
