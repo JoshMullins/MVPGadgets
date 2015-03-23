@@ -36,10 +36,8 @@ public class MVPGadgets extends JavaPlugin {
 	private MobCannon mobCannon;
 	private PaintballListener paintListener = new PaintballListener(this);
 	
-	private static Permission permission = null;
 	private static Economy economy = null;
-	private static Chat chat = null;
-	
+
 	@Override
 	public void onDisable(){
 		paintListener.disable();
@@ -145,6 +143,12 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	//Start Vault hook
+	public static boolean hookedVault(){
+		return (economy != null);
+	}
+	public static Economy getEconomy(){
+		return economy;
+	}
 	private void initVault(){
 		if (!setupEconomy())
 			System.out.println("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");
