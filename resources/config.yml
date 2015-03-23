@@ -1,3 +1,15 @@
+## General Plugin Configuration ##
+#Do you want to use an economy plugin? If so, install vault and set this to "true" (Without qoutes)
+vault: false
+#If vault is set to true, then you can set the prices for the gadgets here
+Gadget_Prices:
+    # 0 will be classed as "Free"
+    #The price of the gadget will be added to the item's lore automatically. If you want to change the message, you can find
+    # it in the messages.yml file.
+    horseGadget: 0
+    paintballGunGadget: 10.19
+    mobCannonGadget: 100000
+
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
 # BAT
@@ -46,4 +58,3 @@ OCELOT:
 - cat
 PIG:
 - pig
-## End of MobCannon settings ##
