@@ -67,18 +67,20 @@ public abstract class Gadget {
 		for (String s: getDescriptionFromConfig()){
 			lore.add( ChatColor.translateAlternateColorCodes('&', s) );
 		}
+		//Whether the user has permission
 		String permissionMsg = getPlugin().getMessageFromConfig("Gadgets.PERMISSION");
 		String decision = getPlugin().getMessageFromConfig("Gadgets.HAS_PERMISSION");
 		String pos = decision.split("|")[0];
 		String neg = decision.split("|")[1];
 		
-		if (player.hasPermission("mvpgadgets." + getPlainName() ))
+		if (player.hasPermission("mvpgadgets." + gadgetName) ) //Eg. mvpgadgets.horseGadget
 			lore.add(permissionMsg.replace("{HAS_PERMISSION}", pos));
 		else
 			lore.add(permissionMsg.replace("{HAS_PERMISSION}", neg));
-		
+		//If vault is hooked then display price
 		if (MVPGadgets.hookedVault()){
-			//Add price
+			String priceMsg = getPlugin().getMessageFromConfig("Gadgets.PRICE");
+			lore.add(priceMsg.replace("{COST}", getPlugin().getGadgetPrice(this)+""));
 		}
 		
 		meta.setLore(lore);//Apply lore
@@ -105,7 +107,6 @@ public abstract class Gadget {
 		return ChatColor.translateAlternateColorCodes('&', 
 				plugin.getMessages().getString(getInvText()));
 	}
-	
 	public List<String> getDescriptionFromConfig(){
 		return plugin.getMessages().getStringList(getDescriptionPath());
 	}
@@ -116,8 +117,8 @@ public abstract class Gadget {
 	private String getDescriptionPath(){
 		return DESCRIPTION_PATH.replace("{gadget_name}", gadgetName);
 	}
-	private String getPricePath(){
-		return PRICE.replace("{gadget_name", gadgetName);
+	public String getPricePath(){
+		return PRICE.replace("{gadget_name}", gadgetName);
 	}
 	private String getInvText(){
 		if(isGUI){
@@ -136,6 +137,10 @@ public abstract class Gadget {
 		m.setDisplayName(ChatColor.translateAlternateColorCodes('&', name + " (Gadget)"));
 		gadgetItem.setItemMeta(m);
 		this.gadgetItem = gadgetItem;
+	}
+	
+	public String getGadgetName(){
+		return gadgetName;
 	}
 	
 	/**
