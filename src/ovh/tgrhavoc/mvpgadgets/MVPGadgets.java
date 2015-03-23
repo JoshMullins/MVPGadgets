@@ -13,6 +13,7 @@ import java.util.List;
 
 import me.pookeythekid.MobCannon.MobCannon;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +31,7 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.mobcannon.MobCannonGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballGunGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballListener;
 import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
+import ovh.tgrhavoc.utils.VaultUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
@@ -39,7 +41,8 @@ public class MVPGadgets extends JavaPlugin {
 	private PaintballListener paintListener = new PaintballListener(this);
 	
 	private static Economy economy = null;
-
+	public static Permission permission = null;
+	
 	@Override
 	public void onDisable(){
 		paintListener.disable();
@@ -123,11 +126,11 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	public double getGadgetPrice(Gadget gadget){
-		return getConfig().getDouble(gadget.getPricePath());
+		return getGadgetPrice(gadget.getGadgetName());
 	}
 	
 	public double getGadgetPrice(String gadgetName){
-		return getConfig().getDouble("Gadget_Prices." + gadgetName);
+		return getConfig().getDouble("Gadget_Prices." + gadgetName, 10.0d);
 	}
 	
 	public static void addGadgetStatic(Gadget g){
@@ -155,26 +158,42 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	//Start Vault hook
-	public static boolean hookedVault(){
-		return (economy != null);
+	public boolean hookedVault(){
+		return (economy != null && permission != null);
 	}
-	public static Economy getEconomy(){
+	public Economy getEconomy(){
 		return economy;
+	}
+	public Permission getPermission(){
+		return permission;
 	}
 	private void initVault(){
 		if (!setupEconomy())
 			System.out.println("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");
 		else
 			System.out.println("Vault economy hook successful.");
+		if(!setupPermissions())
+			System.out.println("Sorry, couldn't hook permissions plugin.");
+		else
+			System.out.println("Vault permissions hooked");
+		VaultUtil.setPlugin(this);
+	}
+	private boolean setupPermissions() {
+		RegisteredServiceProvider<Permission> permissionProvider = 
+				getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+		if (permissionProvider != null) { 
+			permission = permissionProvider.getProvider(); 
+		} 
+		return (permission != null);
 	}
 	private boolean setupEconomy(){
-        	RegisteredServiceProvider<Economy> economyProvider = 
-        		getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-	        if (economyProvider != null) {
-	            economy = economyProvider.getProvider();
-	        }
-	        return (economy != null);
-    	}
+		RegisteredServiceProvider<Economy> economyProvider = 
+				getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+	    if (economyProvider != null) {
+	    	economy = economyProvider.getProvider();
+	    }
+	    return (economy != null);
+    }
 	//End vault hook
 	
 	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets

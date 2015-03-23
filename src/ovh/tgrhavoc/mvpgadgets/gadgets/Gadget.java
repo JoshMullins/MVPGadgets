@@ -75,15 +75,13 @@ public abstract class Gadget {
 		String pos = getPlugin().getMessageFromConfig("Gadgets.Positive");
 		String neg = getPlugin().getMessageFromConfig("Gadgets.Negative");
 		
-		if (player.hasPermission("mvpgadgets." + gadgetName) ){ //Eg. mvpgadgets.horseGadget
-			System.out.println("Player has permission: " + gadgetName);
+		if (player.hasPermission("mvpgadgets." + gadgetName) ) //Eg. mvpgadgets.horseGadget
 			lore.add(permissionMsg.replace("{HAS_PERMISSION}", pos));
-		}else{
-			System.out.println("Player doesn't have permission: " + gadgetName);
+		else
 			lore.add(permissionMsg.replace("{HAS_PERMISSION}", neg));
-		}
+		
 		//If vault is hooked then display price
-		if (MVPGadgets.hookedVault()){
+		if (plugin.hookedVault()){
 			String priceMsg = getPlugin().getMessageFromConfig("Gadgets.PRICE");
 			lore.add(priceMsg.replace("{COST}", getPlugin().getGadgetPrice(this)+""));
 		}

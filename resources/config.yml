@@ -6,10 +6,9 @@ Gadget_Prices:
     # 0 will be classed as "Free"
     #The price of the gadget will be added to the item's lore automatically. If you want to change the message, you can find
     # it in the messages.yml file.
-    horseGadget: 0
-    paintballGunGadget: 10.19
-    mobCannonGadget: 100000
-
+    horseGadget: 10.00
+    paintballGadget: 10.19
+    mobcannonGadget: 100.00
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
 # BAT

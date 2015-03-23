@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
+import ovh.tgrhavoc.utils.VaultUtil;
 
 public class GUIGadgetListener implements Listener {
 		
@@ -32,12 +33,29 @@ public class GUIGadgetListener implements Listener {
 			if (event.getCurrentItem().hasItemMeta()){
 				for (Gadget g: mainPlugin.getGadgets()){
 					if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){
-						event.getWhoClicked().getInventory().setItem(5, g.getItemStack());
-						event.getWhoClicked().closeInventory();
-						//TODO: Use messages.yml for message
-						if (event.getWhoClicked() instanceof Player)
+						
+
+						if (event.getWhoClicked() instanceof Player){
+							if(mainPlugin.hookedVault() && !event.getWhoClicked().hasPermission("mvpgadgets." + g.getGadgetName())){
+								if (!VaultUtil.transaction((Player)event.getWhoClicked(), mainPlugin.getGadgetPrice(g))){
+									((Player)event.getWhoClicked()).sendMessage(
+											formatMessage(mainPlugin.getMessageFromConfig("Messages.UNABLE_BUY"), g));
+									return;
+								}else{
+									mainPlugin.getPermission().playerAdd((Player)event.getWhoClicked(), "mvpgadgets." +g.getGadgetName());
+									((Player)event.getWhoClicked()).sendMessage(
+											formatMessage(mainPlugin.getMessageFromConfig("Messages.BOUGHT"), g));
+								}
+							}
+							
 							((Player)event.getWhoClicked()).sendMessage(
 									formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
+							event.getWhoClicked().getInventory().setItem(5, g.getItemStack());
+						}else{
+							((Player)event.getWhoClicked()).sendMessage(
+									mainPlugin.getMessageFromConfig("Messages.MobCannon.NO_PERMISSION")); //CBA making a new node for this message, just going to use the already made one :P
+						}
+						event.getWhoClicked().closeInventory();
 					}
 				}
 			}
@@ -46,7 +64,9 @@ public class GUIGadgetListener implements Listener {
 	}
 	
 	private String formatMessage(String unformatted, Gadget gadget){
-		return ChatColor.translateAlternateColorCodes('&', unformatted.replace("{GADGET}", gadget.getNameFromConfig()));
+		return ChatColor.translateAlternateColorCodes('&',
+				unformatted.replace("{GADGET}", gadget.getNameFromConfig())
+							.replace("{COST}", mainPlugin.getGadgetPrice(gadget.getGadgetName())+"") );
 	}
 	
 	public Inventory getInv(Player player){
