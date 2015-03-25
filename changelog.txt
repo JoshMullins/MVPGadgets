@@ -1,4 +1,4 @@
-Changelog - Please add your changes here
+ChangeLog - Please create an issue to log your changes.
 =====
 
 ### A big update
