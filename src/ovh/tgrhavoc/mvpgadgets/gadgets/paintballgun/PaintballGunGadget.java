@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
@@ -20,6 +21,11 @@ public class PaintballGunGadget extends Gadget {
 	public void execute(Player player) {
 		Snowball projectile = (Snowball)player.launchProjectile(Snowball.class);
 		projectile.setMetadata("isPaintball", new FixedMetadataValue(getPlugin(), true));
+	}
+
+	@Override
+	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
+		return; //Listener is registered in MVPGadgets.java
 	}
 
 }

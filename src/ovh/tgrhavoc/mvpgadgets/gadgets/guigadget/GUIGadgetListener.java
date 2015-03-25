@@ -30,6 +30,9 @@ public class GUIGadgetListener implements Listener {
 			if ( event.getRawSlot() > ((9 * ((mainPlugin.getGadgets().size()/9)+1))) )
 				return;
 			
+			if (event.getCurrentItem() == null) //Fix for a NPE (when user clicks outside inv)
+				return;
+			
 			if (event.getCurrentItem().hasItemMeta()){
 				for (Gadget g: mainPlugin.getGadgets()){
 					if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){

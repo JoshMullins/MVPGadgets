@@ -3,6 +3,7 @@ package ovh.tgrhavoc.mvpgadgets.gadgets.guigadget;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
@@ -23,6 +24,14 @@ public class GUIGadget extends Gadget {
 	@Override
 	public void execute(Player player) {
 		player.openInventory(listener.getInv(player));
+	}
+
+	@Override
+	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
+		GUIGadgetListener l = new GUIGadgetListener(plugin, this);
+		pm.registerEvents(l, plugin);
+		
+		this.listener = l;
 	}
 
 }

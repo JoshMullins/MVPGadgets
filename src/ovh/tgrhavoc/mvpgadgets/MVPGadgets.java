@@ -23,10 +23,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
+import ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget.DisguiseGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadget;
-import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadgetListener;
 import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseGadget;
-import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseListener;
 import ovh.tgrhavoc.mvpgadgets.gadgets.mobcannon.MobCannonGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballGunGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballListener;
@@ -81,12 +80,9 @@ public class MVPGadgets extends JavaPlugin {
 		addGadget(new HorseGadget(this));
 		addGadget(new MobCannonGadget(this));
 		addGadget(new PaintballGunGadget(this));
+		addGadget(new DisguiseGadget(this));
 		
-		GUIGadget g = new GUIGadget(this);
-		GUIGadgetListener l = new GUIGadgetListener(this, g);
-		g.setListener(l);
-		addGadget(g);
-		getServer().getPluginManager().registerEvents(l, this);
+		addGadget(new GUIGadget(this));
 	}
 	
 	public MobCannon getMobCannon(){
@@ -94,8 +90,7 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	private void registerGadetEvents() {
-		getServer().getPluginManager().registerEvents(new HorseListener(this), this);
-		getServer().getPluginManager().registerEvents(paintListener, this);
+		getServer().getPluginManager().registerEvents(paintListener, this); //Going to keep this here for now.
 	}
 	
 	private void initConfigs() throws IOException{
