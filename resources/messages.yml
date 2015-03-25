@@ -5,12 +5,14 @@ Gadgets:
     #General messages for the gadgets. These will automatically be added to the item's lore
     #How do you want to display the price (If any) to the user?
     PRICE: "Price: ${COST}"
+    
     #How do you want to display whether the user has permission or not
-    #Default: "Permission: {&2Yes|&cNo}"
+    #Default: "Permission: {HAS_PERMISSION}"
     PERMISSION: "Permission: {HAS_PERMISSION}"
-    #Must follow format of "Positive|Negative"
+
     #Positive is what to display if player has the permission
     Positive: "&aYes"
+    
     #Negative is what to display if the player doesn't have permission
     Negative: "&cNo"
     
@@ -42,16 +44,27 @@ Gadgets:
         name: "Paintball Gun"
         #Description of the item. Will only be displayed inside the GUI
         description: [
-            "Temporaraly change blocks to coloured clay."
+            "Temporarily change blocks to coloured clay."
+        ]
+    #Allows players to disguise as a mob
+    disguisegadget:
+        name: "Disguiser 5000"
+        inventory_name: "&cSelect a disguise:"
+        #Description of the item. Will only be displayed inside the GUI
+        description: [
+            "Disguise yourself as a mob"
         ]
 Messages:
     #Message that appears when the player selects a gadget
     SELECTED: "You have selected to use {GADGET}"
+    
     #Vault messages. These will only be used if vault is being used by the plugin
     #Message that appears when the user buys the gadget
     BOUGHT: "You have bough {GADGET} for ${COST}"
+    
     #Message that appears when the user isn't able to buy the gadget
     UNABLE_BUY: "Sorry, you weren't able to buy a {GADGET} for ${COST}"
+    
     MobCannon:
         NO_PERMISSION: "&c&lOops! &7You don't have permission to do this!"
         CONSOLE: "Sorry, this is a player only command"

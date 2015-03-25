@@ -9,6 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
@@ -40,5 +41,10 @@ public class HorseGadget extends Gadget{
 		horse.setJumpStrength(1.0D);
 		horse.setAdult();
 		horse.setPassenger(player);
+	}
+
+	@Override
+	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
+		pm.registerEvents(new HorseListener(plugin), plugin);
 	}
 }

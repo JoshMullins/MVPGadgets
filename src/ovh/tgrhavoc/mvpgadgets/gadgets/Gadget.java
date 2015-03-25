@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 
@@ -46,12 +47,14 @@ public abstract class Gadget {
 		
 		this.plugin = plugin;
 		setItemStack(plugin.getMessages().getString(getNamePath()), itemStack);
+		registerEvents(plugin, plugin.getServer().getPluginManager());
 	}
 	
 	public boolean isGUI = false;
 	private String gadgetName; //Name of gadget for use in messages.yml file
 	
 	public abstract void execute(Player player);
+	public abstract void registerEvents(MVPGadgets plugin, PluginManager pm);
 	
 	/**
 	 * Get the ItemStack that represents this gadget (Non GUI, this is the item the player holds.)
@@ -104,6 +107,11 @@ public abstract class Gadget {
 	public String getNameFromConfig(){
 		return ChatColor.translateAlternateColorCodes('&', 
 				plugin.getMessages().getString(getNamePath()));
+	}
+	
+	public String getMessageFromMessages(String message){
+		return ChatColor.translateAlternateColorCodes('&', 
+				plugin.getMessageFromConfig(MESSAGE_PATH.replace("{gadget_name}", gadgetName) + "." + message));
 	}
 	
 	public String getInvTextFromConfig(){

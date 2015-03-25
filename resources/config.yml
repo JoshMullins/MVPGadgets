@@ -6,9 +6,15 @@ Gadget_Prices:
     # 0 will be classed as "Free"
     #The price of the gadget will be added to the item's lore automatically. If you want to change the message, you can find
     # it in the messages.yml file.
-    horseGadget: 10.00
-    paintballGadget: 10.19
-    mobcannonGadget: 100.00
+    horseGadget: 0
+    paintballGadget: 0
+    mobcannonGadget: 0
+    disguisegadget: 0
+
+## Disguise Gadget Settings ##
+#This is a list of mobs that the players can disguise as (Look at mob cannon settings for a list of mobs)
+Disguises_List: ["BLAZE", "SHEEP", "WOLF", "IRON_GOLEM", "ZOMBIE", "SKELETON"]
+
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
 # BAT
