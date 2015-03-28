@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
+
 import com.darkblade12.particleeffect.ReflectionUtils;
 import com.darkblade12.particleeffect.ReflectionUtils.PackageType;
 
@@ -317,6 +319,19 @@ enum EntityDisguise {
 
 	EntityDisguise(String cls) {
 		this.cls = cls;
+	}
+	
+	public String getName(MVPGadgets plugin){
+		return plugin.getMessageFromConfig("Messages.Disguises.Names." + this.name());
+	}
+	
+	public static EntityDisguise getByName(MVPGadgets plugin, String name){
+		for (EntityDisguise d: EntityDisguise.values()){
+			if(d.getName(plugin).equals(name))
+				return d;
+		}
+		
+		return null;
 	}
 
 	public String getClassName() {

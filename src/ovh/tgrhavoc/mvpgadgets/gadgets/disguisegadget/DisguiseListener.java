@@ -32,20 +32,23 @@ public class DisguiseListener implements Listener{
 		Inventory check = disguiseGadget.getInv();
 		if (event.getInventory().getName().equals( check.getName() )){
 			event.setCancelled(true);
-			System.out.println("Disguise inventory clicked");
+			
 			
 			if ( event.getRawSlot() > ((9 * (((disguiseGadget.getDisguiseList().size()+1)/9)+1))) )
 				return;
-			System.out.println("Clicked inside inv");
+			
 			if (event.getCurrentItem() == null) //Fix for a NPE (when user clicks outside inv)
 				return;
 			
 			System.out.println("Didn't click null item");
 			
-			if (event.getCurrentItem().hasItemMeta() && 
-					(disguiseGadget.getDisguiseList().contains(event.getCurrentItem().getItemMeta().getDisplayName()) 
-							|| event.getCurrentItem().getItemMeta().getDisplayName().equals("Remove Disguise"))){
-				disguise((Player)event.getWhoClicked(), event.getCurrentItem().getItemMeta().getDisplayName());
+			if (event.getCurrentItem().hasItemMeta()){
+				for (EntityDisguise d: disguiseGadget.getDisguiseList())
+					if (d.getName(plugin).equals(event.getCurrentItem().getItemMeta().getDisplayName())
+							|| event.getCurrentItem().getItemMeta().getDisplayName().equals("Remove Disguise")){
+						disguise((Player)event.getWhoClicked(), event.getCurrentItem().getItemMeta().getDisplayName());
+					}else
+						continue;
 			}
 			
 		}
@@ -75,7 +78,7 @@ public class DisguiseListener implements Listener{
 	}
 	
 	public EntityDisguise getEntityDisguiseFromString(String type){
-		EntityDisguise ed = EntityDisguise.valueOf(type);
+		EntityDisguise ed = EntityDisguise.getByName(plugin, type);
 		return ed;
 	}
 	
@@ -94,11 +97,11 @@ public class DisguiseListener implements Listener{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			p.sendMessage("Your disguise has now changed to a(n) " + type.name());
+			p.sendMessage(plugin.getMessageFromConfig("Messages.Disguises.DISGUISED").replace("{ENTITY}", type.getName(plugin)));
 		}else{
 			//Add them with a disguise
 			disguised.put(p, new MyDisguise(p, type, displayName));			
-			p.sendMessage("You have been disguised as a(n) " + type.name());
+			p.sendMessage(plugin.getMessageFromConfig("Messages.Disguises.UPDATED").replace("{ENTITY}", type.getName(plugin)));
 		}
 		
 		disguised.get(p).updateDisguise(Bukkit.getOnlinePlayers());
@@ -107,16 +110,15 @@ public class DisguiseListener implements Listener{
 	
 	public void removeDisguise(Player p){
 		if (!disguised.containsKey(p))
-			throw new IllegalArgumentException("Sorry, player isn't disguised");
+			return;
 		MyDisguise md = disguised.get(p);
 		try {
 			md.removeDisguise();
-			md.updateDisguise(Bukkit.getOnlinePlayers());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		disguised.remove(p);
-		p.sendMessage("You have been undisguised");
+		p.sendMessage(plugin.getMessageFromConfig("Messages.Disguises.REMOVED"));
 	}
 	
 }

@@ -17,12 +17,14 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 public class DisguiseGadget extends Gadget {
 	//This gadget will also have a GUI selection 
 	
-	List<String> disguiseList = new ArrayList<String>();
+	List<EntityDisguise> disguiseList = new ArrayList<EntityDisguise>();
 	
 	public DisguiseGadget(MVPGadgets plugin) {
 		super(plugin, "disguisegadget", new ItemStack(Material.SKULL_ITEM));
 		
-		disguiseList = plugin.getConfig().getStringList("Disguises_List");
+		for (String s: plugin.getConfig().getStringList("Disguises_List")){
+			disguiseList.add(EntityDisguise.valueOf(s));
+		}
 	}
 	
 	@Override
@@ -34,10 +36,10 @@ public class DisguiseGadget extends Gadget {
 		Inventory inv = Bukkit.createInventory(null, (9 * (((disguiseList.size()+1)/9)+1)),
 				this.getMessageFromMessages("inventory_name"));
 		int slot = 0;
-		for (String disguise: disguiseList){
+		for (EntityDisguise disguise: disguiseList){
 			ItemStack i = new ItemStack(Material.SKULL_ITEM);
 			ItemMeta m = i.getItemMeta();
-			m.setDisplayName(disguise);
+			m.setDisplayName(disguise.getName(getPlugin()));
 			i.setItemMeta(m);
 			inv.setItem(slot, i);
 			slot ++;
@@ -57,7 +59,7 @@ public class DisguiseGadget extends Gadget {
 		pm.registerEvents(new DisguiseListener(plugin, this), plugin);
 	}
 
-	public List<String> getDisguiseList() {
+	public List<EntityDisguise> getDisguiseList() {
 		return disguiseList;
 	}
 }
