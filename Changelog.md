@@ -1,6 +1,15 @@
 Changelog - Please add your changes here
 =====
 
+### Disguises now work (Tested on 1.8 if someone could test on earlier versions that would be great!)
+###### Date: 28-Mar-2015
+###### Developer: TGRHavoc
+- Disguises now work (Tested on 1.8) with no errors.
+- Messsages.yml
+  - Disguises names so server owner can customize them if they want.
+  - Added messages for when player disguises, changes disguise or
+removes disguise.
+
 ### A big update
 ###### Date: 22-Mar-2015
 ###### Developer: TGRHavoc
