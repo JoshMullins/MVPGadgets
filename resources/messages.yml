@@ -65,6 +65,47 @@ Messages:
     #Message that appears when the user isn't able to buy the gadget
     UNABLE_BUY: "Sorry, you weren't able to buy a {GADGET} for ${COST}"
     
+    Disguises:
+        #When a player disguises themselves
+        DISGUISED: "You are now disguised as a(n) {ENTITY}"
+       
+        #When player switches disguises
+        UPDATED: "Your disguise has been updated to a(n) {ENTITY}"
+        
+        #When player removes their disguise
+        REMOVED: "Your disguise has been removed"
+        #Names of the entites (Displayed in the GUI)
+        Names:
+            ZOMBIE: "Zambie"
+            WITHER_SKELETON: "Wither Skeleton"
+            SKELETON: "Skeleton"
+            ZOMBIEPIG: "Zombie Pigman"
+            BLAZE: "Blaze (So hot)"
+            ENDERMAN: "Slenderman"
+            CREEPER: "Creeper"
+            SPIDER: "Spider (Ahh)"
+            WITCH: "Wicked witch of the west"
+            WITHER_BOSS: "Wither boss (Run away)"
+            GHAST: "Ghast"
+            GIANT: "Giant (From Jack and the beanstalk)"
+            SLIME: "Slime (Eww, so slimey)"
+            CAVE_SPIDER: "Cave Spider"
+            SILVERFISH: "Silver Fich (Noone likes these)"
+            MAGMA_CUBE: "Magma Cube (Like slimes but magmatic)"
+            BAT: "Bat(man)"
+            PIG: "Pigu"
+            SHEEP: "Baaaa (Sheep)"
+            COW: "Cow (Don't call me that!)"
+            CHICKEN: "Chicken (No-one calls me a chicken)"
+            SQUID: "Squid"
+            WOLF: "Dog (Wolf)"
+            OCELOT: "Cat (Ocelot)"
+            HORSE: "Horse"
+            VILLAGER: "Villager"
+            IRON_GOLEM: "Iron Golem"
+            SNOWMAN: "Snowman"
+            ENDER_DRAGON: "Ender Dragon"
+            MOOSHROOM: "Mooo shroom"
     MobCannon:
         NO_PERMISSION: "&c&lOops! &7You don't have permission to do this!"
         CONSOLE: "Sorry, this is a player only command"
