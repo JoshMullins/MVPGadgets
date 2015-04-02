@@ -10,7 +10,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.guigadget.GUIGadget;
-
+/**
+ * Handles the main events for this plugin.
+ * Events handled by this class:
+ * 		GadgetEvent - Executes the gadget (Calls {@link ovh.tgrhavoc.mvpgadgets.gadgets.Gadget#execute(org.bukkit.entity.Player) Gadget#execute})
+ * 		PlayerJoinEvent - Adds the gadget selector to the player's inventory when they join
+ * 		PlayerInteractEvent - Calls the GadgetEvent event
+ * 		
+ * @author Jordan Dalton
+ *
+ */
 public class GadgetHandler implements Listener{
 	
 	MVPGadgets ref;

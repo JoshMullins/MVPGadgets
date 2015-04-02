@@ -15,6 +15,12 @@ import org.bukkit.inventory.Inventory;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 
+/**
+ * Event listener for the {@link DisguiseGadget DisguiseGadget}
+ * 
+ * @author Jordan Dalton
+ *
+ */
 public class DisguiseListener implements Listener{
 	
 	MVPGadgets plugin; 
@@ -32,8 +38,6 @@ public class DisguiseListener implements Listener{
 		Inventory check = disguiseGadget.getInv();
 		if (event.getInventory().getName().equals( check.getName() )){
 			event.setCancelled(true);
-			
-			
 			if ( event.getRawSlot() > ((9 * (((disguiseGadget.getDisguiseList().size()+1)/9)+1))) )
 				return;
 			
