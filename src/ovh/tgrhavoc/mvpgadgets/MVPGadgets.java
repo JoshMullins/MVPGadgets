@@ -40,7 +40,7 @@ public class MVPGadgets extends JavaPlugin {
 	private PaintballListener paintListener = new PaintballListener(this);
 	
 	private static Economy economy = null;
-	public static Permission permission = null;
+	private static Permission permission = null;
 	
 	@Override
 	public void onDisable(){
@@ -50,12 +50,7 @@ public class MVPGadgets extends JavaPlugin {
 	@Override
 	public void onEnable(){
 		saveDefaultConfig();
-		
-		try {
-			initConfigs();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		initConfigs();
 		
 		if (getConfig().getBoolean("vault"))
 			initVault();
@@ -64,14 +59,7 @@ public class MVPGadgets extends JavaPlugin {
 		
 		registerGadgets();
 		registerGadetEvents();
-		
-		
-		mobCannon.reloadCannon();
-		getCommand("mobcannon").setExecutor(mobCannon);
-		getCommand("mobcannonreload").setExecutor(mobCannon);
-		getCommand("launchmob").setExecutor(mobCannon);
-		getCommand("moblist").setExecutor(mobCannon);
-		getCommand("mobnames").setExecutor(mobCannon);
+		registerCommands();
 	}
 	
 	private void registerGadgets() {
@@ -84,50 +72,84 @@ public class MVPGadgets extends JavaPlugin {
 		
 		addGadget(new GUIGadget(this));
 	}
+	@Deprecated
+	private void registerGadetEvents() {
+		getServer().getPluginManager().registerEvents(paintListener, this); //Going to keep this here for now.
+	}
+	private void registerCommands(){
+		mobCannon.reloadCannon();
+		getCommand("mobcannon").setExecutor(mobCannon);
+		getCommand("mobcannonreload").setExecutor(mobCannon);
+		getCommand("launchmob").setExecutor(mobCannon);
+		getCommand("moblist").setExecutor(mobCannon);
+		getCommand("mobnames").setExecutor(mobCannon);
+	}
 	
+	/**
+	 * Get the instance of the {@link me.pookeythekid.MobCannon.MobCannon MobCannon} class used by this plugin.
+	 * @return MobCannon used by the plugin
+	 */
 	public MobCannon getMobCannon(){
 		return mobCannon;
 	}
 	
-	private void registerGadetEvents() {
-		getServer().getPluginManager().registerEvents(paintListener, this); //Going to keep this here for now.
-	}
-	
-	private void initConfigs() throws IOException{
+	private void initConfigs(){
 		//Messages.yml
 		File messagesFile = new File(this.getDataFolder(), "messages.yml");
-		if (!messagesFile.exists()){
-			messagesFile.createNewFile();
-			//Couldn't find an easy way with YamlConfiguration, so I did this the old-fashioned way
-			InputStream in = getResource("messages.yml");
-			OutputStream out = new FileOutputStream(messagesFile);
-			
-			byte[] buffer = new byte[1024];
-			int bytesRead;
-			while((bytesRead = in.read(buffer)) !=-1){
-				out.write(buffer, 0, bytesRead);
-			}
-			in.close();
-			out.flush();
-			out.close();
+		try {
+			writeToFile(getResource("messages.yml"), messagesFile);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		messages = YamlConfiguration.loadConfiguration(messagesFile);
 		//End messages.yml
 		
 	}
 	
+	private void writeToFile(InputStream in, File file) throws IOException{
+		OutputStream out = new FileOutputStream(file);
+		
+		byte[] buffer = new byte[1024];
+		int bytesRead;
+		while((bytesRead = in.read(buffer)) !=-1){
+			out.write(buffer, 0, bytesRead);
+		}
+		in.close();
+		out.flush();
+		out.close();
+		
+	}
+	
+	/**
+	 * Get the messages.yml file in a YamlConfiguration class.
+	 * @return YamlConfiguration that represnts the Messages.yml file in the resources folder
+	 */
 	public YamlConfiguration getMessages(){
 		return messages;
 	}
 	
+	/**
+	 * Get the price of a gadget.
+	 * @param gadget Gadget you want to get the price for
+	 * @return The price of the gadget as defined in the config file as a double
+	 */
 	public double getGadgetPrice(Gadget gadget){
 		return getGadgetPrice(gadget.getGadgetName());
 	}
 	
+	/**
+	 * Get the price of a gadget.
+	 * @param gadgetName The gadget's name you want to check. You can do this by calling the {@link gadgets.Gadget#getGadgetName getGadgetName()} method in the Gadget
+	 * @return The price of the gadget as defined in the config file as a double
+	 */
 	public double getGadgetPrice(String gadgetName){
 		return getConfig().getDouble("Gadget_Prices." + gadgetName, 10.0d);
 	}
 	
+	/**
+	 * Add a gadget to the list (This will allow it to appear in the Gadget selector)
+	 * @param g Gadget to add to the list.
+	 */
 	public static void addGadgetStatic(Gadget g){
 		if (availableGadgets.contains(g)){
 			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
@@ -136,6 +158,10 @@ public class MVPGadgets extends JavaPlugin {
 		availableGadgets.add(g);
 	}
 
+	/**
+	 * Add a gadget to the list (This will allow it to appear in the Gadget selector)
+	 * @param g Gadget to add to the list.
+	 */
 	public void addGadget(Gadget g){
 		if (availableGadgets.contains(g)){
 			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
@@ -144,24 +170,49 @@ public class MVPGadgets extends JavaPlugin {
 		availableGadgets.add(g);
 	}
 	
+	/**
+	 * Get the list of the gadgets that are available to use
+	 * @return A list of gadgets that are available
+	 */
 	public List<Gadget> getGadgets(){
 		return availableGadgets;
 	}
 	
+	/**
+	 * Get a message from the messages.yml file
+	 * This method automatically translates the character '&' in the string to the proper colour code.
+	 * @param messagePath Node to the string you want to get (e.g. Message.MyGadget.Message)
+	 * @return Returns a colour-translated string
+	 */
 	public String getMessageFromConfig(String messagePath){
 		return ChatColor.translateAlternateColorCodes('&', getMessages().getString(messagePath));
 	}
 	
 	//Start Vault hook
+	/**
+	 * Check if this plugin was able to successfully hook into the vault plugin (Permission and Economy)
+	 * @return True if the plugin was able to hook into vault
+	 */
 	public boolean hookedVault(){
 		return (economy != null && permission != null);
 	}
+	
+	/**
+	 * Get the Economy class
+	 * @return Economy class as provided by Vault
+	 */
 	public Economy getEconomy(){
 		return economy;
 	}
+	
+	/**
+	 * Get the Permission class
+	 * @return Permission class as provided by Vault
+	 */
 	public Permission getPermission(){
 		return permission;
 	}
+	
 	private void initVault(){
 		if (!setupEconomy())
 			System.out.println("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");

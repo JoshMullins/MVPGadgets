@@ -13,10 +13,17 @@ import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
-
+/**
+ * Disguise gadget.
+ * Allows players to disguise themselves as any mob.
+ * 
+ * @author Jordan Dalton
+ *
+ */
 public class DisguiseGadget extends Gadget {
-	//This gadget will also have a GUI selection 
-	
+	/**
+	 * List of disguises the player can use.
+	 */
 	List<EntityDisguise> disguiseList = new ArrayList<EntityDisguise>();
 	
 	public DisguiseGadget(MVPGadgets plugin) {
@@ -32,6 +39,10 @@ public class DisguiseGadget extends Gadget {
 		player.openInventory(getInv());
 	}
 	
+	/**
+	 * Get the inventory that this gadget uses to allow the player to select their disguise.
+	 * @return Inventory the player uses to select their disguise
+	 */
 	public Inventory getInv(){
 		Inventory inv = Bukkit.createInventory(null, (9 * (((disguiseList.size()+1)/9)+1)),
 				this.getMessageFromMessages("inventory_name"));
@@ -58,7 +69,11 @@ public class DisguiseGadget extends Gadget {
 	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
 		pm.registerEvents(new DisguiseListener(plugin, this), plugin);
 	}
-
+	
+	/**
+	 * Get the list if disguises the player can use.
+	 * @return List<EntityDisguise> the player can use.
+	 */
 	public List<EntityDisguise> getDisguiseList() {
 		return disguiseList;
 	}
