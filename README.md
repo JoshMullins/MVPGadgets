@@ -1,6 +1,6 @@
 MVP Gadgets
 ------------
-An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
+An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot and Bukkit servers.
 
 ### Current Developers:
 [pookeythekid](https://github.com/pookeythekid)
@@ -24,13 +24,7 @@ An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot servers.
 6. Melon Bomb (ex. The dropping/throwing of a melon and it exploding into glistening melons.)
 7. Flame Thrower (ex. A item exerting fire towards other players, mobs, or ground.)
 8. Black Hole (ex. A collection of black and grey particles to symbolize a black hole.)
-9. Disguises
-  1. Blaze
-  2. Sheep
-  3. Wolf
-  4. Iron Golem
-  5. Zombie
-  6. Skeleton
+9. Disguises **DONE**[(See #29)](https://github.com/JoshMullins/MVPGadgets/pull/29)
 10. Mounts:
   1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
   2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
