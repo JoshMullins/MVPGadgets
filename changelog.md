@@ -1,6 +1,11 @@
 ChangeLog - Please create an issue to log your changes.
 =====
 
+### JavaDocs been added
+###### Date: 4-Apr-2015
+###### Developer: TGRHavoc
+- Added the JavaDocs to the gh-pages branch
+
 ### Disguises now work (Tested on 1.8 if someone could test on earlier versions that would be great!)
 ###### Date: 28-Mar-2015
 ###### Developer: TGRHavoc

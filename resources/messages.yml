@@ -54,6 +54,7 @@ Gadgets:
         description: [
             "Disguise yourself as a mob"
         ]
+    
 Messages:
     #Message that appears when the player selects a gadget
     SELECTED: "You have selected to use {GADGET}"
