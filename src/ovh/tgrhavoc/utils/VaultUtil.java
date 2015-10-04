@@ -21,5 +21,4 @@ public class VaultUtil {
 		EconomyResponse response = plugin.getEconomy().withdrawPlayer(player.getPlayer(), amount);
 		return response.transactionSuccess() && response.type == EconomyResponse.ResponseType.SUCCESS;
 	}
-	
 }
