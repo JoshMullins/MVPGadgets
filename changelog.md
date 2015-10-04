@@ -1,6 +1,18 @@
 ChangeLog - Please create an issue to log your changes.
 =====
 
+### Disguises Updated
+###### Date: 4-Oct-2015
+###### Developer: TGRHavoc
+- Changed the way disguises are implemented. Instead of being dependant on
+reflection utils, disguises can now have direct access to NMS code. To
+implement, just do the following:
+    1. Create folder in "ovh.tgrhavoc.mvpgadgets.disguisegadget.nms" that is
+the name of the version you want to implment (e.g. v1_8_R3 for 1.8.8).
+    2. Add "Disguise.java" (Case-sensitive)
+    3. Implement the methods, using the NMS code for you perticular version.
+    4. Win
+
 ### JavaDocs been added
 ###### Date: 4-Apr-2015
 ###### Developer: TGRHavoc
