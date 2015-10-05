@@ -1,5 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget;
 
+import java.util.Collection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +15,8 @@ import com.darkblade12.particleeffect.ReflectionUtils.PackageType;
  * @author fillpant, Blame him!
  * 
  */
-public class MyDisguise {
+@Deprecated
+public class MyDisguise_DEPRECATED {
 	private static final String bukkitversion = Bukkit.getServer().getClass()
 			.getPackage().getName().substring(23);
 	private String customName;
@@ -27,7 +30,7 @@ public class MyDisguise {
 	 * @param type
 	 *            Entity type of disguise
 	 */
-	public MyDisguise(Player p, EntityDisguise type) {
+	public MyDisguise_DEPRECATED(Player p, EntityDisguise type) {
 		this(p, type, null);
 	}
 
@@ -40,7 +43,7 @@ public class MyDisguise {
 	 *            the display name of the disguised player (chat color is
 	 *            supported)
 	 */
-	public MyDisguise(Player p, EntityDisguise type, String name) {
+	public MyDisguise_DEPRECATED(Player p, EntityDisguise type, String name) {
 		this(p, type, name, null, null, null, null, null);
 	}
 
@@ -64,7 +67,7 @@ public class MyDisguise {
 	 *            boots armor item <b>If You dont want a armor item like boots
 	 *            or something, provide 'null'</b>
 	 */
-	public MyDisguise(Player p, EntityDisguise type, String name,
+	public MyDisguise_DEPRECATED(Player p, EntityDisguise type, String name,
 			ItemStack inhand, ItemStack helmet, ItemStack chestplate,
 			ItemStack leggings, ItemStack boots) {
 		this.customName = name;
@@ -78,23 +81,25 @@ public class MyDisguise {
 	}
 
 	/**
-	 * @param to
+	 * @param collection
 	 *            Player that will see the disguise (where the packets will be
 	 *            sent to.)
 	 * @throws Exception
 	 *             Many exceptions can occur due to reflection used.
 	 */
-	public void sendDisguise(Player to) throws Exception {
-		if (to.equals(disguised))
-			throw new IllegalArgumentException(
-					"Target Player cannot be the same as the disguised player");
+	public void sendDisguise(Collection<? extends Player> collection) throws Exception {
+		if (collection.equals(disguised))
+			throw new IllegalArgumentException("Target Player cannot be the same as the disguised player");
+		
 		Object packetplayoutentitydestroy = ReflectionUtils.instantiateObject(
 				"PacketPlayOutEntityDestroy", PackageType.MINECRAFT_SERVER,
 				new int[] { disguised.getEntityId() });
 		Object world = ReflectionUtils.invokeMethod(disguised.getWorld(),
 				"getHandle", null);
 		Class<?> entity = Class.forName(type.getClassName());
+		
 		Object ent = ReflectionUtils.instantiateObject(entity, world);
+		
 		ReflectionUtils.invokeMethod(ent, "setPosition", disguised
 				.getLocation().getX(), disguised.getLocation().getY(),
 				disguised.getLocation().getZ());
@@ -111,18 +116,18 @@ public class MyDisguise {
 				.instantiateObject("PacketPlayOutSpawnEntityLiving",
 						PackageType.MINECRAFT_SERVER, ent);
 
-		sendPacket(to, packetplayoutentitydestroy);
-		sendPacket(to, packetplayoutspawnentityliving);
+		sendPacket(collection, packetplayoutentitydestroy);
+		sendPacket(collection, packetplayoutspawnentityliving);
 		if (hand != null)
-			sendArmorContentPackets(to, disguised.getEntityId(), 0, hand);
+			sendArmorContentPackets(collection, disguised.getEntityId(), 0, hand);
 		if (helm != null)
-			sendArmorContentPackets(to, disguised.getEntityId(), 1, helm);
+			sendArmorContentPackets(collection, disguised.getEntityId(), 1, helm);
 		if (chst != null)
-			sendArmorContentPackets(to, disguised.getEntityId(), 2, chst);
+			sendArmorContentPackets(collection, disguised.getEntityId(), 2, chst);
 		if (leg != null)
-			sendArmorContentPackets(to, disguised.getEntityId(), 3, leg);
+			sendArmorContentPackets(collection, disguised.getEntityId(), 3, leg);
 		if (boot != null)
-			sendArmorContentPackets(to, disguised.getEntityId(), 4, boot);
+			sendArmorContentPackets(collection, disguised.getEntityId(), 4, boot);
 	}
 
 	/**
@@ -163,15 +168,15 @@ public class MyDisguise {
 	/**
 	 * @param type
 	 *            the new Disguise type
-	 * @param sendto
+	 * @param collection
 	 *            the player who will see the change
 	 * @throws Exception
 	 *             Reflection exceptions
 	 */
-	public void changePlayerDisguise(EntityDisguise type, Player sendto)
+	public void changePlayerDisguise(EntityDisguise type, Collection<? extends Player> collection)
 			throws Exception {
 		this.type = type;
-		sendDisguise(sendto);
+		sendDisguise(collection);
 	}
 
 	/*
@@ -187,16 +192,17 @@ public class MyDisguise {
 		sendDisguise(sendto);
 	}
 
-	private void sendPacket(Player p, Object pack) throws Exception {
+	private void sendPacket(Collection<? extends Player> collection, Object pack) throws Exception {
 		Class<?> packet = Class.forName("net.minecraft.server." + bukkitversion
 				+ ".Packet");
 		Class<?> craftPlayer = Class.forName("org.bukkit.craftbukkit."
 				+ bukkitversion + ".entity.CraftPlayer");
-		Object handle = craftPlayer.getMethod("getHandle").invoke(p);
+		Object handle = craftPlayer.getMethod("getHandle").invoke(collection);
 		Object con = handle.getClass().getField("playerConnection").get(handle);
 		con.getClass().getMethod("sendPacket", packet).invoke(con, pack);
 	}
-	private void sendArmorContentPackets(Player to, int entityID, int slot,
+	
+	private void sendArmorContentPackets(Collection<? extends Player> collection, int entityID, int slot,
 			ItemStack item) throws Exception {
 		PackageType type;
 		if (bukkitversion.startsWith("v1_7_"))
@@ -208,7 +214,7 @@ public class MyDisguise {
 		Object metadarapacket = ReflectionUtils.instantiateObject(
 				"PacketPlayOutEntityEquipment", PackageType.MINECRAFT_SERVER,
 				entityID, slot, craftitmstk);
-		sendPacket(to, metadarapacket);
+		sendPacket(collection, metadarapacket);
 	}
 
 	// Forget this as well :3
@@ -293,8 +299,8 @@ public class MyDisguise {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.equals(disguised))
 				continue;
-			sendPacket(p, ppoed);
-			sendPacket(p, ppones);
+			//sendPacket(p, ppoed);
+			//sendPacket(p, ppones);
 		}
 	}
 }
