@@ -3,15 +3,15 @@ MVP Gadgets
 An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot and Bukkit servers.
 
 ### Current Developers:
-[pookeythekid](https://github.com/pookeythekid)
+[pookeythekid](https://github.com/pookeythekid) (Retired, thank you for your service.)
 
 [TGRHavoc](https://github.com/TGRHavoc)
 
-[SlaydeVentures](https://github.com/SlaydeVentures)
+[JoshMullins](https://github.com/JoshMullins)
 
-[97WaterPolo](https://github.com/97WaterPolo)
+[97WaterPolo](https://github.com/97WaterPolo) (Retired, thank you for your service.)
 
-[TheFreakLord](http://github.com/TheFreakLord)
+[TheFreakLord](http://github.com/TheFreakLord) (Retired, thank you for your service.)
 
 
 ### Features:
