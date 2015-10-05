@@ -1,17 +1,10 @@
 MVP Gadgets
 ------------
-An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot and Bukkit servers.
+A centralized server administration plugin including player punishment administration, player donor perks, and much more.
 
-### Current Developers:
-[pookeythekid](https://github.com/pookeythekid) (Retired, thank you for your service.)
-
+### Owners:
 [TGRHavoc](https://github.com/TGRHavoc)
-
 [JoshMullins](https://github.com/JoshMullins)
-
-[97WaterPolo](https://github.com/97WaterPolo) (Retired, thank you for your service.)
-
-[TheFreakLord](http://github.com/TheFreakLord) (Retired, thank you for your service.)
 
 
 ### Features:
@@ -31,3 +24,7 @@ An enhanced hub gadgets, morph, wardrobe, and effects plugin for Spigot and Bukk
   3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
 11. Vault intergration **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26)
 12. Customizable description for the gadgets inside the GUI. **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26)
+
+### Additional Features
+1. Server Player Administration Panel; including the ability to mute, kick, tempban, and ban players. Possible dependecies. Bungeecord capibilty/ability to make punishments through networked servers?
+2. 
