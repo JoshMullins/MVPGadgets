@@ -16,8 +16,11 @@ public interface IDisguise {
 	public void updateDisguise(Player...players);
 	public void updateDisguise(Collection<? extends Player> player);
 	
+	@SuppressWarnings("rawtypes")
 	public void sendPacket(Player player, Packet packet);
+	@SuppressWarnings("rawtypes")
 	public void sendPacket(Collection<? extends Player> players, Packet packet);
+	@SuppressWarnings("rawtypes")
 	public void sendPacket(Packet packet, Player...players);
 	
 	public void changeDisguise(EntityDisguises newDisguise);

@@ -2,6 +2,7 @@ package ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,8 +27,16 @@ public class DisguiseGadget extends Gadget {
 	 */
 	List<EntityDisguise> disguiseList = new ArrayList<EntityDisguise>();
 	
+	public DisguiseGadget(MVPGadgets plugin, UUID owningPlayer) {
+		super(plugin, "disguiseGadget", new ItemStack(Material.SKULL_ITEM), owningPlayer);
+		
+		for (String s: plugin.getConfig().getStringList("Disguises_List")){
+			disguiseList.add(EntityDisguise.valueOf(s));
+		}
+	}
+	
 	public DisguiseGadget(MVPGadgets plugin) {
-		super(plugin, "disguisegadget", new ItemStack(Material.SKULL_ITEM));
+		super(plugin, "disguiseGadget", new ItemStack(Material.SKULL_ITEM));
 		
 		for (String s: plugin.getConfig().getStringList("Disguises_List")){
 			disguiseList.add(EntityDisguise.valueOf(s));
@@ -55,7 +64,7 @@ public class DisguiseGadget extends Gadget {
 			inv.setItem(slot, i);
 			slot ++;
 		}
-		//Allow player to unisguise
+		//Allow player to undisguise
 		ItemStack i = new ItemStack(Material.SKULL_ITEM);
 		ItemMeta m = i.getItemMeta();
 		m.setDisplayName("Remove Disguise");

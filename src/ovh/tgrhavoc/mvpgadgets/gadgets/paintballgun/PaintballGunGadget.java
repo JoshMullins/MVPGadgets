@@ -1,5 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun;
 
+import java.util.UUID;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -12,9 +14,12 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 
 public class PaintballGunGadget extends Gadget {
 
+	public PaintballGunGadget(MVPGadgets plugin, UUID owningPlayer) {
+		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING), owningPlayer);
+	}
+	
 	public PaintballGunGadget(MVPGadgets plugin) {
 		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING));
-		
 	}
 
 	@Override
@@ -25,7 +30,7 @@ public class PaintballGunGadget extends Gadget {
 
 	@Override
 	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
-		return; //Listener is registered in MVPGadgets.java
+		pm.registerEvents(new PaintballListener(plugin), plugin);
 	}
 
 }

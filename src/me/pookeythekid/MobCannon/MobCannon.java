@@ -1,4 +1,4 @@
-package me.pookeythekid.MobCannon;
+package me.pookeythekid.mobcannon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +11,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +26,6 @@ import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.EntityBlockFormEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
@@ -41,7 +38,7 @@ import com.darkblade12.particleeffect.ParticleEffect;
 /**
  * 
  * @author pookeythekid
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 public class MobCannon implements CommandExecutor, Listener {
@@ -56,14 +53,19 @@ public class MobCannon implements CommandExecutor, Listener {
 	private MVPGadgets plugin;
 	public Map<String, EntityType> usedNames = new HashMap<>();
 	private List<Snowman> snowmen = new ArrayList<>();
-	private List<BlockState> blockList = new ArrayList<>();
+	/* All things pertaining to blockList (list of launched-snowman-created snow blocks)
+	 * were removed (or at least commented out) in v1.1.1 .
+	 * They used to be necessary on top of cancelling the create event, but
+	 * for reasons unknown they are now redundant (at least in MC 1.8+).
+	 */
+	// private List<BlockState> blockList = new ArrayList<>();
 	private final Random rand = new Random();
 	public boolean enabledOnce = false;
 	private boolean registeredPerms = false;
 	private PluginManager pluginManager;
 	
 	/**
-	 * Simple constructor. Will add EntityTypes and mob aliases to the class by itself, instead of having them inputted.
+	 * Simple constructor. Will add EntityTypes and mob aliases to the instance by itself, instead of having them inputted.
 	 * Use the other constructor to customize mob aliases.
 	 * 
 	 * @param plugin The plugin that's using this cannon.
@@ -127,7 +129,8 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * Exact same thing as the mobCannon(plugin, mobAliases, giants) method, except it's a constructor.
 	 * 
 	 * @param plugin The plugin that's using this cannon.
-	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> String will work, since the default names (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
+	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> String will work, since the default names
+	 * (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
 	 * @param giants Defines whether the plugin allows giants (hundred-foot-tall zombies) or not. Giants are not at all recommended.
 	 */
 	public MobCannon(MVPGadgets plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
@@ -135,10 +138,12 @@ public class MobCannon implements CommandExecutor, Listener {
 	}
 
 	/**
-	 * More complex constructing method. Has input for alternate mob names and use of boss mobs and giants. Do NOT use null for any parameters.
+	 * More complex constructing method. Has input for alternate mob names and use of boss mobs and giants.
+	 * Do NOT use null for any parameters.
 	 * 
 	 * @param plugin The plugin that's using this cannon.
-	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> will work, since the default names (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
+	 * @param mobAliases Keys of actual mobs, values of acceptable mob names. An empty Set<String> will work, since the default names
+	 * (i.e. IRON_GOLEM will look like "iron_golem" and "irongolem") are generated regardless.
 	 * @param giants Defines whether the plugin allows giants (hundred-foot-tall zombies) or not.
 	 */
 	public void mobCannon(MVPGadgets plugin, Map<EntityType, Set<String>> mobAliases, boolean giants) {
@@ -175,16 +180,19 @@ public class MobCannon implements CommandExecutor, Listener {
 		pluginManager = plugin.getServer().getPluginManager();
 		if (!enabledOnce) {
 			pluginManager.registerEvents(this, plugin);
-			enabledOnce = true; // Without this check, the events will register multiple times, making them fire as many times as this is called.
+			enabledOnce = true;
+			// Without this check, the events will register multiple times, making them fire as many times as this is called.
 		}
-		registerPerms(pluginManager);
+		//registerPerms(pluginManager);
 	}
 
 	/**
 	 * Register permissions to the server.
 	 * 
 	 * @param pm PluginManager to use.
+	 * @deprecated In favor of String-based permissions.
 	 */
+	@Deprecated
 	public void registerPerms(PluginManager pm) {
 		/*
 		 * Permissions layout
@@ -267,7 +275,9 @@ public class MobCannon implements CommandExecutor, Listener {
 	 * Unregister permissions from the server.
 	 * 
 	 * @param pm PluginManager to use.
+	 * @deprecated In favor of String-based permissions.
 	 */
+	@Deprecated
 	public void removePerms(PluginManager pm) {
 		if (registeredPerms) {
 			pm.removePermission("mvpgadgets.mobcannon.use");
@@ -287,12 +297,12 @@ public class MobCannon implements CommandExecutor, Listener {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("launchmob")) {
 			if (!sender.hasPermission("mvpgadgets.mobcannon.launchmob")) {
-				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH+".NO_PERMISSION"));
+				sender.sendMessage(plugin.getMessageFromConfig("Messages.GENERIC_NO_PERMISSION"));
 				return true;
 			}
 
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".CONSOLE"));
+				sender.sendMessage(plugin.getMessageFromConfig("Messages.CONSOLE"));
 				return true;
 			}
 
@@ -316,7 +326,7 @@ public class MobCannon implements CommandExecutor, Listener {
 				if (sender.hasPermission("mobcannon.mobnames"))
 					sender.sendMessage(plugin.getMessageFromConfig(MOBCANNON + ".MOBNAMES"));
 			} else
-				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
+				sender.sendMessage(plugin.getMessageFromConfig("Messages.GENERIC_NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("mobcannonreload")) {
@@ -324,7 +334,7 @@ public class MobCannon implements CommandExecutor, Listener {
 				reloadCannon();
 				sender.sendMessage(plugin.getMessageFromConfig(MOBCANNONRELOAD + ".RELOADED"));
 			} else
-				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
+				sender.sendMessage(plugin.getMessageFromConfig("Messages.GENERIC_NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("moblist")) {
@@ -335,14 +345,14 @@ public class MobCannon implements CommandExecutor, Listener {
 						mobNames.append(name.toLowerCase() + ", ");
 				}
 				if (mobNames.length() == 0) {
-					sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
+					sender.sendMessage(plugin.getMessageFromConfig("Messages.GENERIC_NO_PERMISSION"));
 					return true;
 				}
 				mobNames.setLength(mobNames.length() - 2); // Remove the extra comma and space at the end
 				sender.sendMessage(
 						plugin.getMessageFromConfig(MOBLIST + ".AVAILABLE_MOBS").replace("{MOB_NAMES}", mobNames.toString()));
 			} else
-				sender.sendMessage(plugin.getMessageFromConfig(BASE_PATH + ".NO_PERMISSION"));
+				sender.sendMessage(plugin.getMessageFromConfig("Messages.GENERIC_NO_PERMISSION"));
 		}
 
 		if (cmd.getName().equalsIgnoreCase("mobnames")) {
@@ -375,7 +385,7 @@ public class MobCannon implements CommandExecutor, Listener {
 	public void reloadCannon() {
 		plugin.reloadConfig();
 		pluginManager = plugin.getServer().getPluginManager(); // Can't hurt to reinitialize it
-		removePerms(pluginManager);
+		//removePerms(pluginManager);
 		mobCannon(plugin, null);
 
 		Set<EntityType> blacklist = new HashSet<>();
@@ -537,7 +547,7 @@ public class MobCannon implements CommandExecutor, Listener {
 
 				Damageable entityD = (Damageable) entity;
 				entityD.setMaxHealth(Double.MAX_VALUE);
-				entityD.setHealth(Double.MAX_VALUE);
+				entityD.setHealth(1024D); //apparently 1.8 only allows a max of 1024.0, but setMaxHealth can far exceed that...
 
 				final Entity entity2 = entity;
 				new BukkitRunnable() {
@@ -548,10 +558,12 @@ public class MobCannon implements CommandExecutor, Listener {
 						ParticleEffect.EXPLOSION_LARGE.display(1, 1, 1, 1, 5, eloc, 100);
 						eloc.getWorld().playSound(eloc, Sound.EXPLODE, 1, 1);
 						entity2.remove();
+						/*
 						for (BlockState blockstate : blockList) {
 							blockstate.setType(Material.AIR);
 							blockstate.update(true, true);
 						}
+						 */
 					}
 				}.runTaskLater(plugin, 20);
 			} else
@@ -622,7 +634,7 @@ public class MobCannon implements CommandExecutor, Listener {
 
 			Damageable entityD = (Damageable) entity;
 			entityD.setMaxHealth(Double.MAX_VALUE);
-			entityD.setHealth(Double.MAX_VALUE);
+			entityD.setHealth(1024D);
 
 			final Entity entity2 = entity;
 			entity.setVelocity(ploc.getDirection().multiply(2));
@@ -635,10 +647,12 @@ public class MobCannon implements CommandExecutor, Listener {
 					ParticleEffect.EXPLOSION_LARGE.display(1, 1, 1, 1, 5, eloc, 100);
 					eloc.getWorld().playSound(eloc, Sound.EXPLODE, 1, 1);
 					entity2.remove();
+					/*
 					for (BlockState blockstate : blockList) {
 						blockstate.setType(Material.AIR);
 						blockstate.update(true, true);
 					}
+					 */
 				}
 
 			}.runTaskLater(plugin, 20);
@@ -689,10 +703,11 @@ public class MobCannon implements CommandExecutor, Listener {
 		Entity entity = e.getEntity();
 		if (entity.getType().equals(EntityType.SNOWMAN)) {
 			if (snowmen.contains((Snowman) entity)) {
-				blockList.add(e.getBlock().getState());
+				// blockList.add(e.getBlock().getState());
 				e.setCancelled(true);
 				e.getBlock().getState().update(true, true);
 
+				/*
 				new BukkitRunnable() {
 
 					@Override
@@ -703,18 +718,19 @@ public class MobCannon implements CommandExecutor, Listener {
 					}
 
 				}.runTaskLater(plugin, 22);
+				 */
 			}
 		}
 	}
 
+	/*
 	@EventHandler
-	public void onInteract(PlayerInteractEvent e) {
-		if (e.hasBlock()) {
-			BlockState blockstate = e.getClickedBlock().getState();
-			if (blockList.contains(blockstate))
-				blockList.remove(blockstate);
-		}
+	public void onBlockEvent(BlockEvent ev) {
+		BlockState blockstate = ev.getBlock().getState();
+		if (blockList.contains(blockstate))
+			blockList.remove(blockstate);
 	}
+	 */
 
 	public Map<String, EntityType> getUsedNames() {
 		return usedNames;

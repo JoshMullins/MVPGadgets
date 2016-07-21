@@ -1,19 +1,34 @@
 ## General Plugin Configuration ##
-#Do you want to use an economy plugin? If so, install vault and set this to "true" (Without qoutes)
+# Do you want to use an economy plugin? If so, install vault and set this to "true" (Without qoutes)
 vault: false
-#If vault is set to true, then you can set the prices for the gadgets here
+
+# If vault is set to true, then you can set the prices for the gadgets here.
 Gadget_Prices:
     # 0 will be classed as "Free"
-    #The price of the gadget will be added to the item's lore automatically. If you want to change the message, you can find
+    # The price of the gadget will be added to the item's lore automatically. If you want to change the message, you can find
     # it in the messages.yml file.
     horseGadget: 0
     paintballGadget: 0
     mobcannonGadget: 0
-    disguisegadget: 0
+    disguiseGadget: 0
+
+# In which worlds will players receive the Gadget Selector gadget upon login?
+# You should put your hub worlds in this setting. Delete the original list if you want to; it's just an example.
+guiGadgetWorlds:
+- Hub
+- Spawn
+# In which slot in the player's hotbar should the Gadget Selector be placed? (5 is the middle)
+guiGadgetSlot: 5
 
 ## Disguise Gadget Settings ##
-#This is a list of mobs that the players can disguise as (Look at mob cannon settings for a list of mobs)
-Disguises_List: ["BLAZE", "SHEEP", "WOLF", "IRON_GOLEM", "ZOMBIE", "SKELETON"]
+# This is a list of mobs that the players can disguise as (Look at mob cannon settings for a list of mobs)
+Disguises_List:
+- BLAZE
+- SHEEP
+- WOLF
+- IRON_GOLEM
+- ZOMBIE
+- SKELETON
 
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
@@ -36,7 +51,7 @@ Disguises_List: ["BLAZE", "SHEEP", "WOLF", "IRON_GOLEM", "ZOMBIE", "SKELETON"]
 # SKELETON
 # SNOWMAN
 # SPIDER
-# SQUID (Notice: Squid doens't launch very far, just spawns and drops.)
+# SQUID (Notice: Squid doesn't launch very far, just spawns and drops.)
 # VILLAGER
 # WITCH
 # WOLF
@@ -50,8 +65,8 @@ simpleBlacklist: true
 
 # Which of the mobs above should be impossible to use?
 # If simpleBlacklist is set to false, this will still override the mobs you
-# have listed below. If you want mobs listed below to be usable, be sure that
-# they're not present in this list.
+# have listed in the next setting. If you want mobs listed farther down to
+# be usable, be sure that they're not present in this list.
 blacklist:
 - GIANT
 

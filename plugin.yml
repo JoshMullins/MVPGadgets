@@ -1,6 +1,6 @@
 main: ovh.tgrhavoc.mvpgadgets.MVPGadgets
 name: MVPGadgets
-version: 1.0
+version: 1.1.0
 softdepend: [Vault]
 authors: [pookeythekid, TGRHavoc, JoshMullins, 97WaterPolom, TheFreakLord, AdamQpzm]
 
@@ -8,9 +8,11 @@ commands:
   mvpgadgets:
     aliases: [mvp, mvpg]
     description: The main commmand for MVPGadgets!
+  gadget:
+    description: Open the Gadget GUI.
   mobcannon:
     aliases: [mbc]
-    description: Help menu for Mob Cannon.
+    description: Help menu for the Mob Cannon commands.
   mobcannonreload:
     aliases: [mobcannonrl, mcreload, mcrl, reloadmobcannon]
     description: Reload Mob Cannon.

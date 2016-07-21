@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
@@ -16,10 +17,16 @@ public class GUIGadgetListener implements Listener {
 		
 	MVPGadgets mainPlugin;
 	Gadget guiGadget;
+	
+	private static MVPGadgets staticMainPlugin;
+	private static Gadget staticGuiGadget;
 
 	public GUIGadgetListener(MVPGadgets mainPlugin, Gadget guiGadget) {
 		this.mainPlugin = mainPlugin; 
 		this.guiGadget = guiGadget;
+		
+		staticMainPlugin = mainPlugin;
+		staticGuiGadget = guiGadget;
 	}
 	
 	@EventHandler
@@ -27,38 +34,57 @@ public class GUIGadgetListener implements Listener {
 		if (event.getInventory().getName().equals( guiGadget.getInvTextFromConfig() )){
 			event.setCancelled(true);
 			
-			if ( event.getRawSlot() > ((9 * ((mainPlugin.getGadgets().size()/9)+1))) )
+			if ( event.getRawSlot() > (9 * ((mainPlugin.getGadgets().size()/9)+1)) )
 				return;
 			
-			if (event.getCurrentItem() == null) //Fix for a NPE (when user clicks outside inv)
+			try {
+			if (event.getCurrentItem() == null)
 				return;
+			} catch (NullPointerException ex) { return; }
 			
 			if (event.getCurrentItem().hasItemMeta()){
-				for (Gadget g: mainPlugin.getGadgets()){
-					if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){
-						
-
-						if (event.getWhoClicked() instanceof Player){
-							if(mainPlugin.hookedVault() && !event.getWhoClicked().hasPermission("mvpgadgets." + g.getGadgetName())){
-								if (!VaultUtil.transaction((Player)event.getWhoClicked(), mainPlugin.getGadgetPrice(g))){
-									((Player)event.getWhoClicked()).sendMessage(
-											formatMessage(mainPlugin.getMessageFromConfig("Messages.UNABLE_BUY"), g));
-									return;
-								}else{
-									mainPlugin.getPermission().playerAdd((Player)event.getWhoClicked(), "mvpgadgets." +g.getGadgetName());
-									((Player)event.getWhoClicked()).sendMessage(
-											formatMessage(mainPlugin.getMessageFromConfig("Messages.BOUGHT"), g));
-								}
-							}
+				if (event.getWhoClicked() instanceof Player){
+					Player player = (Player) event.getWhoClicked();
+					
+					for (Gadget g : Gadget.getOwnerGadgets(player.getUniqueId())){
+						if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){
 							
-							((Player)event.getWhoClicked()).sendMessage(
-									formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
-							event.getWhoClicked().getInventory().setItem(5, g.getItemStack());
-						}else{
-							((Player)event.getWhoClicked()).sendMessage(
-									mainPlugin.getMessageFromConfig("Messages.MobCannon.NO_PERMISSION")); //CBA making a new node for this message, just going to use the already made one :P
+								if(mainPlugin.hookedVault() && !player.hasPermission("mvpgadgets." + g.getGadgetName())){
+									
+									if (!VaultUtil.transaction(player, mainPlugin.getGadgetPrice(g))){
+										player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.UNABLE_BUY"), g));
+										return;
+									}else{
+										mainPlugin.getPermission().playerAdd(player, "mvpgadgets." +g.getGadgetName().toLowerCase());
+										player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.BOUGHT"), g));
+									}
+									
+								}
+								
+								player.sendMessage(formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
+								
+								int slot;
+								if (mainPlugin.getConfig().getInt("guiGadgetSlot") < 1)
+									slot = 0;
+								else if (mainPlugin.getConfig().getInt("guiGadgetSlot") > 9)
+									slot = 8;
+								else slot = mainPlugin.getConfig().getInt("guiGadgetSlot") - 1;
+								
+								player.getInventory().setItem(slot, g.getItemStack());
+							
+							// According to Bukkit JavaDocs, it's unsafe to close the inventory in an InventoryClickEvent until the next tick.
+							// https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/InventoryClickEvent.html
+							final Player pl = (Player)event.getWhoClicked();
+							new BukkitRunnable() {
+								@Override
+								public void run() {
+									pl.closeInventory();
+								}
+							}.runTaskLater(mainPlugin, 1);
+							
+							break;
+							
 						}
-						event.getWhoClicked().closeInventory();
 					}
 				}
 			}
@@ -72,13 +98,13 @@ public class GUIGadgetListener implements Listener {
 							.replace("{COST}", mainPlugin.getGadgetPrice(gadget.getGadgetName())+"") );
 	}
 	
-	public Inventory getInv(Player player){
-		Inventory inv = Bukkit.createInventory(null, (9 * ((mainPlugin.getGadgets().size()/9)+1)),
-				guiGadget.getInvTextFromConfig() );
+	public static Inventory getInv(Player player){
+		Inventory inv = Bukkit.createInventory(null, (9 * ((staticMainPlugin.getGadgets().size()/9)+1)),
+				staticGuiGadget.getInvTextFromConfig() );
 		
 		int slot = 0;
 
-		for (Gadget g: mainPlugin.getGadgets()){
+		for (Gadget g: staticMainPlugin.getGadgets()){
 			if (!g.isGUI){
 				inv.setItem(slot, g.getGUIItem(player));
 				slot++;

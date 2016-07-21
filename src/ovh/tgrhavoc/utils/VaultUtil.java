@@ -10,7 +10,7 @@ public class VaultUtil {
 	public static MVPGadgets plugin;
 	
 	/**
-	 * Set the plugin reference (Should be called in the onEnable method of MVPGadgets class
+	 * Set the plugin reference (Should be called in the onEnable method of MVPGadgets class)
 	 * @param plugin Plugin reference
 	 */
 	public static void setPlugin(MVPGadgets plugin){

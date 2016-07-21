@@ -1,5 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.guigadget;
 
+import java.util.UUID;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +14,11 @@ public class GUIGadget extends Gadget {
 	
 	GUIGadgetListener listener;
 	
+	public GUIGadget(MVPGadgets plugin, UUID owningPlayer) {
+		super(plugin, "guiGadget", new ItemStack(Material.CHEST), owningPlayer);
+		isGUI = true;
+	}
+	
 	public GUIGadget(MVPGadgets plugin) {
 		super(plugin, "guiGadget", new ItemStack(Material.CHEST));
 		isGUI = true;
@@ -23,7 +30,7 @@ public class GUIGadget extends Gadget {
 	
 	@Override
 	public void execute(Player player) {
-		player.openInventory(listener.getInv(player));
+		player.openInventory(GUIGadgetListener.getInv(player));
 	}
 
 	@Override
