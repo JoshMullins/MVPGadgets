@@ -95,7 +95,7 @@ public class MyDisguise_DEPRECATED {
 				"PacketPlayOutEntityDestroy", PackageType.MINECRAFT_SERVER,
 				new int[] { disguised.getEntityId() });
 		Object world = ReflectionUtils.invokeMethod(disguised.getWorld(),
-				"getHandle", null);
+				"getHandle", (Object[]) null);
 		Class<?> entity = Class.forName(type.getClassName());
 		
 		Object ent = ReflectionUtils.instantiateObject(entity, world);
@@ -218,6 +218,7 @@ public class MyDisguise_DEPRECATED {
 	}
 
 	// Forget this as well :3
+	@SuppressWarnings("incomplete-switch")
 	private Object handleSpecialTypes(EntityDisguise type, Object entity)
 			throws Exception {
 		switch (type) {
@@ -290,12 +291,15 @@ public class MyDisguise_DEPRECATED {
 	}
 
 	public void removeDisguise() throws Exception {
+		// Unused variables
+		/*
 		Object ppoed = ReflectionUtils.instantiateObject(
 				"PacketPlayOutEntityDestroy", PackageType.MINECRAFT_SERVER,
 				new int[] { disguised.getEntityId() });
 		Object ppones = ReflectionUtils.instantiateObject(
 				"PacketPlayOutNamedEntitySpawn", PackageType.MINECRAFT_SERVER,
 				ReflectionUtils.invokeMethod(disguised, "getHandle", null));
+		 */
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.equals(disguised))
 				continue;

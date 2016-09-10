@@ -12,6 +12,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -54,6 +55,17 @@ public class HorseListener implements Listener {
 				h.remove();
 			}
 		}
+	}
+	
+	// Don't want people stealing saddles now, do we.
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent ev) {
+		try {
+		if (ev.getInventory().getName().equals(ev.getWhoClicked().getName() + "'s horse")
+				&& ev.getCurrentItem().getType().equals(Material.SADDLE)
+				&& ev.getCurrentItem().getItemMeta().getDisplayName().equals(ev.getWhoClicked().getName()+"'s horse's saddle"))
+			ev.setCancelled(true);
+		} catch (NullPointerException ex){ return; } // If player clicks outside inventory. Thanks Jordan :)
 	}
 	
 	private void createExplosion(Variant variant, Location loc){

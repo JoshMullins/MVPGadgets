@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<title>MVPGadgets Guide</title>
+<style>
+body{
+	//background-color:rgb(200,234,255);
+}
+.main{
+	margin-left: 15%;
+	margin-right: 15%;
+	margin-bottom: 5%;
+	height: 200%;
+	font-family: "arial";
+	font-size: 120%;
+}
+code {
+	background-color: rgb(238,238,238);
+	padding-left: 3px;
+	padding-right: 3px;
+}
+</style>
+<body>
+<div class="main">
+<h1 style="text-align:center">MVPGadgets Usage Guide</h1>
+<hr>
+<p>This is a reference to commands and permissions which you as an administator should be aware of.</p>
+<h2>Commands</h2>
+<ul style="list-style-type:none;">
+	<li>
+	<h3>/mvpgadgets reload</h3>
+		<ul style="font-size:90%">
+		<li>Reloads all MVPGadgets config files.</li>
+		<li>Aliases: <code>mvp, mvpg</code></li>
+		<li>Permission: <code>mvpgadgets.reload</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/gadget</h3>
+		<ul style="font-size:90%">
+		<li>Displays Gadget Selector GUI, sets item in hand to GUI Gadget.</li>
+		<li>Permission: <code>mvpgadgets.gadget</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/mobcannon</h3>
+		<ul style="font-size:90%">
+		<li>Help menu for the MobCannon commands.</li>
+		<li>Aliases: <code>mbc</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.use</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/mobcannonreload</h3>
+		<ul style="font-size:90%">
+		<li>Reloads the MVPGadgets main config file, which contains MobCannon settings.</li>
+		<li>Aliases: <code>mobcannonrl, mcreload, mcrl, reloadmobcannon</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.reload</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/launchmob</h3>
+		<ul style="font-size:90%">
+		<li>If player does not specify a mob, this will launch a random mob.</li>
+		<li>Aliases: <code>launch, lmob, lm</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.launchmob.random</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/launchmob <span><</span>mob name<span>></span></h3>
+		<ul style="font-size:90%">
+		<li>Launches a specific mob.</li>
+		<li>Aliases: <code>mobcannonrl, mcreload, mcrl, reloadmobcannon</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.launchmob</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/moblist</h3>
+		<ul style="font-size:90%">
+		<li>Lists all the mobs that the player has permission to launch.</li>
+		<li>Aliases: <code>listmobs, launcherlist, launchlist</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.moblist</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>/mobnames <span><</span>mob name<span>></span></h3>
+		<ul style="font-size:90%">
+		<li>List all alternate names for a given mob name, according to the MVPGadgets config. (i.e. <i>ocelot</i> and <i>cat</i>)</li>
+		<li>Aliases: <code>altmobnames, altmobs</code></li>
+		<li>Permission: <code>mvpgadgets.mobcannon.mobnames</code></li>
+		</ul>
+	</li>
+</ul>
+<br><hr>
+<h2>Permissions</h2>
+<ul style="list-style-type:none;">
+	<li>
+	<h3>mvpgadgets.reload</h3>
+		<ul style="font-size:90%;">
+		<li>Use <code>/mvpgadgets reload</code></li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.gadget</h3>
+		<ul style="font-size:90%;">
+		<li>Use <code>/gadget</code></li>
+		</ul>
+	</li>
+	<h3>mvpgadgets.<span><</span>gadgetName<span>></span></h3>
+		<ul style="font-size:90%;">
+		<li>Grants the usage of a particular gadget based on its name in the config (or messages) file.</li>
+			<ul>
+			<li>The gadget name should be in a programming-variable format, with the first letter lowercased. Ex: <code>mvpgadgets.horseGadget</code></li>
+			<li>This is <b>case-sensitive</b>. Again, look in the config (or messages) file for exact names.</li>
+			</ul>
+		</ul>
+	</li>
+</ul>
+<p>This last bunch is all MobCannon <i>command</i> permissions (not to be confused with the MobCannon Gadget).</p>
+<ul style="list-style-type:none;">
+	<li>
+	<h3>mvpgadgets.mobcannon.use</h3>
+		<ul style="font-size:90%">
+		<li>Base help command for MobCannon.</li>
+		<li>Parents: all other <code>mvpgadgets.mobcannon.<span><</span>node<span>></span></code> permissions</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.launchmob</h3>
+		<ul style="font-size:90%">
+		<li>Base permission to be able to launch a mob.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.launchmob.random</code></li>
+			<li><code>mvpgadgets.mobcannon.launchmob.all</code></li>
+			<li><code>mvpgadgets.mobcannon.launchmob.*</code></li>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.launchmob.random</h3>
+		<ul style="font-size:90%">
+		<li>Launch random mobs without specification in the <code>/launchmob [mob]</code> command.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.launchmob.*</code></li>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children:
+			<ul>
+			<li><code>mvpgadgets.launchmob</code></li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.launchmob.all</h3>
+		<ul style="font-size:90%">
+		<li>Permission to all mobs, but does not grant access to the random launcher.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.launchmob.*</code></li>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children:
+			<ul>
+			<li><code>mvpgadgets.launchmob</code></li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.launchmob.*</h3>
+		<ul style="font-size:90%">
+		<li>Permission to all mobs, as well as the random launcher.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children:
+			<ul>
+			<li><code>mvpgadgets.launchmob</code></li>
+			<li><code>mvpgadgets.launchmob.random</code></li>
+			<li><code>mvpgadgets.launchmob.all</code></li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.moblist</h3>
+		<ul style="font-size:90%">
+		<li>List all available mobs, meaning those that the user has permission for and, ultimately, that the config file allows.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.mobnames</h3>
+		<ul style="font-size:90%">
+		<li>List all alternate names for a given mob name.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.reload</h3>
+		<ul style="font-size:90%">
+		<li>Reload MobCannon.</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+	<li>
+	<h3>mvpgadgets.mobcannon.*</h3>
+		<ul style="font-size:90%">
+		<li>Grants all permissions related to MobCannon (aside from the usage of the MobCannon Gadget).</li>
+		<li>Parents:
+			<ul>
+			<li><code>mvpgadgets.mobcannon.*</code></li>
+			</ul>
+		</li>
+		<li>Children: none</li>
+		</ul>
+	</li>
+</ul>
+</div>
+</body>
+</html>

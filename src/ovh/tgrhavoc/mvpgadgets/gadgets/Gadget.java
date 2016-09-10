@@ -1,7 +1,12 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,15 +34,63 @@ public abstract class Gadget {
 	
 	protected ItemStack gadgetItem;
 	private MVPGadgets plugin;
+	private UUID owningPlayer;
+	
+	private static Map<UUID, Set<Gadget>> gadgetOwners = new HashMap<>();
 	
 	/**
-	 * Main constructor for the gadgets.
+	 * Main constructor for the gadgets. Registers gadget events to the server. This constructor
+	 * has safety checks to avoid redundant registration, but try not to abuse it anyway. :)
 	 * @param plugin
 	 * 				Main plugin reference
 	 * @param name 
-	 * 				Name of the gadget in the messages.yml file (Doesn't have to represent gadget but, it helps if it does.
+	 * 				Name of the gadget in the messages.yml file (Doesn't have to represent gadget, but it helps if it does).
 	 * @param itemStack
 	 * 				ItemStack that represents this gadget
+	 * @param owningPlayer
+	 * 				The player who is to use this Gadget. Each player owns multiple gadgets, each of which have
+	 * their own event registration to the server; this design helps avoid multiple and redundant event registrations (which are bad).
+	 */
+	public Gadget(MVPGadgets plugin, String name, ItemStack itemStack, UUID owningPlayer){
+		if (plugin == null)
+			throw new IllegalArgumentException("plugin cannot be null!");
+		
+		if (name == null || name.equals(""))
+			throw new IllegalArgumentException("name cannot be null or empty for the gadgets!");
+		
+		if (itemStack == null)
+			throw new IllegalArgumentException("itemStack cannot be null!");
+		
+		if (owningPlayer == null)
+			throw new IllegalArgumentException("owningPlayer cannot be null!");
+		
+		if (gadgetOwners.containsKey(owningPlayer))
+			for (Gadget gadget : gadgetOwners.get(owningPlayer))
+				if (gadget.gadgetName.equals(name))
+					return;
+					
+		this.gadgetName = name;
+		this.plugin = plugin;
+		setItemStack(plugin.getMessages().getString(getNamePath()), itemStack);
+		registerEvents(plugin, plugin.getServer().getPluginManager());
+		this.owningPlayer = owningPlayer;
+		
+		Set<Gadget> set = new HashSet<>();
+		if (gadgetOwners.get(owningPlayer) != null)
+			set = gadgetOwners.get(owningPlayer);
+		set.add(this);
+		gadgetOwners.put(owningPlayer, set);
+	}
+	
+	/**
+	 * Secondary constructor for gadgets. Does not register gadget events to the main plugin.
+	 * Used mainly to get the instance of an unusable gadget when you don't need to register its events,
+	 * i.e. to see what ItemStack it has without re-registering events to the server.
+	 * <br><br>
+	 * Preferred that you don't use the main constructor when you do not need to register events and/or set an owner.
+	 * @param plugin Main plugin reference
+	 * @param name Name of the gadget in the messages.yml file (Doesn't have to represent gadget, but it helps if it does).
+	 * @param itemStack ItemStack that represents this gadget
 	 */
 	public Gadget(MVPGadgets plugin, String name, ItemStack itemStack){
 		if (plugin == null)
@@ -50,17 +103,19 @@ public abstract class Gadget {
 			throw new IllegalArgumentException("itemStack cannot be null!");
 		
 		this.gadgetName = name;
-		
 		this.plugin = plugin;
 		setItemStack(plugin.getMessages().getString(getNamePath()), itemStack);
-		registerEvents(plugin, plugin.getServer().getPluginManager());
 	}
 	
 	/**
 	 * If the plugin is a GUI or not (SHOULD ONLY EVER BE USED FOR THE GADGET SELECTOR)
 	 */
 	public boolean isGUI = false;
-	private String gadgetName; //Name of gadget for use in messages.yml file
+	
+	/**
+	 * Do not change this.
+	 */
+	public String gadgetName; //Name of gadget for use in messages.yml file
 	
 	/**
 	 * Called when the player right clicks the gadget.
@@ -68,7 +123,8 @@ public abstract class Gadget {
 	 * 
 	 * @param player Who triggered the event.
 	 */
-	public abstract void execute(Player player);	
+	public abstract void execute(Player player);
+	
 	/**
 	 * Called when the gadget is initialised.
 	 * Please use this method to register all listeners for your gadget.
@@ -215,6 +271,22 @@ public abstract class Gadget {
 	 */
 	public MVPGadgets getPlugin(){
 		return plugin;
+	}
+	
+	/**
+	 * Get the player who owns this gadget.
+	 */
+	public UUID getOwningPlayer() {
+		return owningPlayer;
+	}
+	
+	/**
+	 * Get the gadgets that belong to a certain player.
+	 * @param owner Gadget owner
+	 * @return A Set<Gadget> containing the owner's gadgets
+	 */
+	public static Set<Gadget> getOwnerGadgets(UUID owner) {
+		return gadgetOwners.get(owner);
 	}
 	
 }

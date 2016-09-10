@@ -1,81 +1,97 @@
-#This is the messages file for the plugin MVPGadgets.
+# This is the messages file for the plugin MVPGadgets.
 
-#The text " (Gadget)" will automatically be appended to the names
+# The text " (Gadget)" will automatically be appended to the names.
 Gadgets:
-    #General messages for the gadgets. These will automatically be added to the item's lore
-    #How do you want to display the price (If any) to the user?
+    # General messages for the gadgets. These will automatically be added to the item's lore
+    # How do you want to display the price (If any) to the user?
     PRICE: "Price: ${COST}"
     
-    #How do you want to display whether the user has permission or not
-    #Default: "Permission: {HAS_PERMISSION}"
+    # How do you want to display whether the user has permission or not
+    # Default: "Permission: {HAS_PERMISSION}"
     PERMISSION: "Permission: {HAS_PERMISSION}"
 
-    #Positive is what to display if player has the permission
+    # Positive is what to display if player has the permission
     Positive: "&aYes"
     
-    #Negative is what to display if the player doesn't have permission
+    # Negative is what to display if the player doesn't have permission
     Negative: "&cNo"
     
-    #Gadget selector
+    # Gadget selector
     guiGadget:
-        #Name to be displayed when the user hover over with mouse/selects in hotbar
+        # Name to be displayed when the user hover over with mouse/selects in hotbar
         name: "&6Open &2Gadget &6Selector&1"
-        #Text to display in the GUI menu
+        # Text to display in the GUI menu
         inventory_name: "&cSelect a gadget:"
-    #Horse Gadget. Allows players to ride a horse, when dismounted it will explode.
+    # Horse Gadget. Allows players to ride a horse, when dismounted it will explode.
     horseGadget:
-        #Name of the gadget to display to the user
+        # Name of the gadget to display to the user
         name: "&bSpawn Horse&a"
-        #Description of the item. Will only be displayed inside the GUI
+        # Description of the item. Will only be displayed inside the GUI.
         description: [
             "Spawn a horse.",
             "Dismounting the horse will make it explode!"
         ]
-    #Allows the player to use the mobcannon
+    # Gadget that allows the player to use the mobcannon
     mobcannonGadget:
         name: "Mob Cannon! (Freaking Awesome)"
-        #Description of the item. Will only be displayed inside the GUI
+        # Description of the item. Will only be displayed inside the GUI.
         description: [
             "Get the cannons ready!",
             "This will allow you to fire exploding creatures."
         ]
-    #Paintball gadget
+    # Paintball gadget
     paintballGadget:
         name: "Paintball Gun"
-        #Description of the item. Will only be displayed inside the GUI
+        # Description of the item. Will only be displayed inside the GUI.
         description: [
             "Temporarily change blocks to coloured clay."
         ]
-    #Allows players to disguise as a mob
-    disguisegadget:
+    # Allows players to disguise as a mob
+    disguiseGadget:
         name: "Disguiser 5000"
         inventory_name: "&cSelect a disguise:"
-        #Description of the item. Will only be displayed inside the GUI
+        # Description of the item. Will only be displayed inside the GUI.
         description: [
             "Disguise yourself as a mob"
         ]
     
 Messages:
-    #Message that appears when the player selects a gadget
+    # Message that appears when the player selects a gadget
     SELECTED: "You have selected to use {GADGET}"
     
-    #Vault messages. These will only be used if vault is being used by the plugin
-    #Message that appears when the user buys the gadget
-    BOUGHT: "You have bough {GADGET} for ${COST}"
+    # Vault messages. These will only be used if vault is being used by the plugin
+    # Message that appears when the user buys the gadget
+    BOUGHT: "You have bought {GADGET} for ${COST}"
     
-    #Message that appears when the user isn't able to buy the gadget
+    # Message that appears when the user isn't able to buy the gadget
     UNABLE_BUY: "Sorry, you weren't able to buy a {GADGET} for ${COST}"
+
+    # Message that the plugin sends when users don't have permission for non-specific tasks,
+    # such as a command. Example of specific task: launching a certain mob with MobCannon.
+    # This message is not exclusively for commands, so you shouldn't use something like
+    # "You don't have permission for that command!"
+    GENERIC_NO_PERMISSION: "&c&lOops! &7You don't have permission to do this!"
+
+    # When the console tries to execute a command that only players can use
+    CONSOLE: "Sorry, this is a player-only command."
+
+    # When an administrator reloads the plugin with /mvpgadgets reload
+    RELOADED: "&aAll MVPGadgets configs have been reloaded."
+
+    # For when people try to use /gadget or actual item-gadgets in worlds which are not listed in
+    # the MVPGadgets config as hub worlds. Leave this as empty quotes to remove the message.
+    WRONG_WORLD: "&cYou are not in a hub world! An admin can change this in the MVPGadgets config."
     
     Disguises:
-        #When a player disguises themselves
+        # When a player disguises themselves
         DISGUISED: "You are now disguised as a(n) {ENTITY}"
        
-        #When player switches disguises
+        # When player switches disguises
         UPDATED: "Your disguise has been updated to a(n) {ENTITY}"
         
-        #When player removes their disguise
+        # When player removes their disguise
         REMOVED: "Your disguise has been removed"
-        #Names of the entites (Displayed in the GUI)
+        # Names of the entites (Displayed in the GUI)
         Names:
             ZOMBIE: "Zambie"
             WITHER_SKELETON: "Wither Skeleton"
@@ -108,8 +124,6 @@ Messages:
             ENDER_DRAGON: "Ender Dragon"
             MOOSHROOM: "Mooo shroom"
     MobCannon:
-        NO_PERMISSION: "&c&lOops! &7You don't have permission to do this!"
-        CONSOLE: "Sorry, this is a player only command"
         mobcannon:
             TITLE: "MobCannon commands"
             HELP: "&e/mobcannon (mbc) - This help menu."

@@ -37,15 +37,17 @@ public class DisguiseListener implements Listener{
 	}
 	
 	@EventHandler
-	public void disguiseChoseEvent(InventoryClickEvent event){
+	public void disguiseChooseEvent(InventoryClickEvent event){
 		Inventory check = disguiseGadget.getInv();
 		if (event.getInventory().getName().equals( check.getName() )){
 			event.setCancelled(true);
 			if ( event.getRawSlot() > ((9 * (((disguiseGadget.getDisguiseList().size()+1)/9)+1))) )
 				return;
 			
-			if (event.getCurrentItem() == null) //Fix for a NPE (when user clicks outside inv)
+			try {
+			if (event.getCurrentItem() == null)
 				return;
+			} catch (NullPointerException ex){ return; }
 			
 			if (event.getCurrentItem().hasItemMeta()){
 				for (EntityDisguise d: disguiseGadget.getDisguiseList())
@@ -105,12 +107,12 @@ public class DisguiseListener implements Listener{
 			p.sendMessage(plugin.getMessageFromConfig("Messages.Disguises.UPDATED").replace("{ENTITY}", type.getName(plugin)));
 		}else{
 			//Add them with a disguise
-			disguised.put(p, DisguiseFactory.getDisguiseFor(p, type, "v1_8_R3"));	
+			disguised.put(p, DisguiseFactory.getDisguiseFor(p, type, MVPGadgets.nmsVersion));
 			
 			p.sendMessage(plugin.getMessageFromConfig("Messages.Disguises.DISGUISED").replace("{ENTITY}", type.getName(plugin)));
 		}
 		
-		Bukkit.broadcastMessage(disguised.get(p).getDisguise().getClassName());
+		// Bukkit.broadcastMessage(disguised.get(p).getDisguise().getClassName());
 		
 		disguised.get(p).updateDisguise(Bukkit.getOnlinePlayers());
 		

@@ -1,8 +1,7 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -20,26 +19,10 @@ import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 
 public class PaintballListener implements Listener {
 	
-	private class BlockData{
-		Material material;
-		byte data;
-		
-		@SuppressWarnings("deprecation")
-		public BlockData(Block block){
-			material = block.getType();
-			data = block.getData();
-		}
-		public Material getMaterial() {
-			return material;
-		}
-		public byte getData() {
-			return data;
-		}
-	}
-	
-	Map<Location, BlockData> previousData = new HashMap<Location, BlockData>();
+	List<Location> hitBlocks = new ArrayList<>();
 	
 	MVPGadgets plugin;
+	Random rand = new Random();
 	
 	public PaintballListener(MVPGadgets plugin) {
 		this.plugin = plugin;
@@ -62,33 +45,29 @@ public class PaintballListener implements Listener {
 			if (hitBlock.getType().isBlock() && hitBlock.getType().isSolid())
 				break;
 		}
-		if (previousData.containsKey(hitBlock.getLocation()))
+		if (hitBlocks.contains(hitBlock.getLocation()))
 			return;
-		previousData.put(hitBlock.getLocation(), new BlockData(hitBlock));
-		
-		hitBlock.setType(Material.STAINED_CLAY);
-		hitBlock.setData(DyeColor.values()[new Random().nextInt(DyeColor.values().length)].getData());
+
+		hitBlocks.add(hitBlock.getLocation());
+		PaintballHandler.updateBlock(Bukkit.getOnlinePlayers(), hitBlock, Material.STAINED_CLAY,
+				DyeColor.values()[rand.nextInt(DyeColor.values().length)].getData());
 		
 		final Location loc = hitBlock.getLocation();
+		final Block hitBlock2 = hitBlock;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 			@Override
 			public void run(){
-				if (loc.getBlock().getType() == Material.STAINED_CLAY){
-					BlockData prevData = previousData.get(loc);
-					loc.getBlock().setType(prevData.getMaterial());
-					loc.getBlock().setData(prevData.getData());
-					previousData.remove(loc);
-				}
+				hitBlock2.getState().update();
+				hitBlocks.remove(loc);
 			}
 			
 		}, 20L * 4);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void disable(){
-		for (Entry<Location, BlockData> entry: previousData.entrySet()){
-			entry.getKey().getBlock().setType(entry.getValue().getMaterial());
-			entry.getKey().getBlock().setData(entry.getValue().getData());
+		for (Location loc : hitBlocks) {
+			loc.getBlock().getState().update();
+			hitBlocks.remove(loc);
 		}
 	}
 	

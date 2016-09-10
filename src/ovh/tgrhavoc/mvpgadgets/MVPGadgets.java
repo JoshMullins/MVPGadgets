@@ -8,10 +8,10 @@ import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import me.pookeythekid.MobCannon.MobCannon;
+import me.pookeythekid.mobcannon.MobCannon;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
@@ -21,6 +21,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ovh.tgrhavoc.mvpgadgets.commands.GUIGadgetCommand;
+import ovh.tgrhavoc.mvpgadgets.commands.MVPGadgetsCommand;
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget.DisguiseGadget;
@@ -34,13 +36,15 @@ import ovh.tgrhavoc.utils.VaultUtil;
 
 public class MVPGadgets extends JavaPlugin {
 	
-	static List<Gadget> availableGadgets = new ArrayList<Gadget>();
+	static Set<Gadget> availableGadgets = new HashSet<Gadget>();
 	private YamlConfiguration messages;
 	private MobCannon mobCannon;
 	private PaintballListener paintListener = new PaintballListener(this);
 	
 	private static Economy economy = null;
 	private static Permission permission = null;
+	
+	public static String nmsVersion = "v1_8_R3";
 	
 	@Override
 	public void onDisable(){
@@ -58,7 +62,7 @@ public class MVPGadgets extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
 		registerGadgets();
-		registerGadetEvents();
+		//registerGadetEvents();
 		registerCommands();
 	}
 	
@@ -72,11 +76,15 @@ public class MVPGadgets extends JavaPlugin {
 		
 		addGadget(new GUIGadget(this));
 	}
+	@SuppressWarnings("unused")
 	@Deprecated
 	private void registerGadetEvents() {
 		getServer().getPluginManager().registerEvents(paintListener, this); //Going to keep this here for now.
 	}
 	private void registerCommands(){
+		getCommand("gadget").setExecutor(new GUIGadgetCommand(this));
+		getCommand("mvpgadgets").setExecutor(new MVPGadgetsCommand(this));
+		
 		mobCannon.reloadCannon();
 		getCommand("mobcannon").setExecutor(mobCannon);
 		getCommand("mobcannonreload").setExecutor(mobCannon);
@@ -86,14 +94,15 @@ public class MVPGadgets extends JavaPlugin {
 	}
 	
 	/**
-	 * Get the instance of the {@link me.pookeythekid.MobCannon.MobCannon MobCannon} class used by this plugin.
+	 * Get the instance of the {@link me.pookeythekid.mobcannon.MobCannon MobCannon} class used by this plugin.
 	 * @return MobCannon used by the plugin
 	 */
 	public MobCannon getMobCannon(){
 		return mobCannon;
 	}
 	
-	private void initConfigs(){
+	// Also used in MVPGadgetsCommand class as a reloading method
+	public void initConfigs(){
 		//Messages.yml
 		File messagesFile = new File(this.getDataFolder(), "messages.yml");
 		try {
@@ -155,6 +164,14 @@ public class MVPGadgets extends JavaPlugin {
 			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
 			return;
 		}
+		if (g.getOwningPlayer() != null) {
+			try {
+				// add simple-constructed gadget, not the kind that has its events registered
+				Gadget gadget = g.getClass().getConstructor(MVPGadgets.class).newInstance(g.getPlugin());
+				availableGadgets.add(gadget);
+				return;
+			} catch (Exception ex){ ex.printStackTrace(); }
+		}
 		availableGadgets.add(g);
 	}
 
@@ -167,14 +184,25 @@ public class MVPGadgets extends JavaPlugin {
 			Bukkit.getLogger().info("Someone tried to register a gadget that already exists");
 			return;
 		}
+		if (g.getOwningPlayer() != null) {
+			try {
+				// add simple-constructed gadget, not the kind that has its events registered
+				Gadget gadget = g.getClass().getConstructor(MVPGadgets.class).newInstance(g.getPlugin());
+				availableGadgets.add(gadget);
+				return;
+			} catch (Exception ex){ ex.printStackTrace(); }
+		}
 		availableGadgets.add(g);
 	}
 	
 	/**
-	 * Get the list of the gadgets that are available to use
+	 * Get the list of the gadgets that are available to use. These instances do not
+	 * have their events registered to the server, nor do they have a Player owner, so
+	 * you'll need to construct a new Gadget with its main (more complex) constructor
+	 * in order to register a new Gadget to the server.
 	 * @return A list of gadgets that are available
 	 */
-	public List<Gadget> getGadgets(){
+	public Set<Gadget> getGadgets(){
 		return availableGadgets;
 	}
 	
@@ -215,21 +243,23 @@ public class MVPGadgets extends JavaPlugin {
 	
 	private void initVault(){
 		if (!setupEconomy())
-			System.out.println("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");
+			Bukkit.getLogger().info("Sorry, couldn't hook economy plugin. Maybe you don't have one installed?");
 		else
-			System.out.println("Vault economy hook successful.");
+			Bukkit.getLogger().info("Vault economy hook successful.");
 		if(!setupPermissions())
-			System.out.println("Sorry, couldn't hook permissions plugin.");
+			Bukkit.getLogger().info("Sorry, couldn't hook permissions plugin.");
 		else
-			System.out.println("Vault permissions hooked");
+			Bukkit.getLogger().info("Vault permissions hooked");
 		VaultUtil.setPlugin(this);
 	}
 	private boolean setupPermissions() {
 		RegisteredServiceProvider<Permission> permissionProvider = 
 				getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-		if (permissionProvider != null) { 
-			permission = permissionProvider.getProvider(); 
-		} 
+		if (permissionProvider != null) {
+			permission = permissionProvider.getProvider();
+		}
+		if (permission.getName().equals("SuperPerms")) // Default Bukkit permissions manager, not a permissions plugin.
+			return false;
 		return (permission != null);
 	}
 	private boolean setupEconomy(){
@@ -242,7 +272,7 @@ public class MVPGadgets extends JavaPlugin {
     }
 	//End vault hook
 	
-	//Method which loads .class files found in the "mods" folder so you can dynamcaly add or remove gadgets
+	//Method which loads .class files found in the "mods" folder so you can dynamically add or remove gadgets
 	@SuppressWarnings({ "unused", "unchecked" })
 	@Deprecated
     private void loadGadgetClasses() {

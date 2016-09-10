@@ -22,7 +22,7 @@ public class Disguise extends AbstractDisguise {
 	public Disguise(Player toDisguise, EntityDisguises disguise) {
 		super(toDisguise, disguise);
 		
-		Bukkit.broadcastMessage("Reflectively created disguise class for " + toDisguise.getName() + " as " + disguise.name());
+		// Bukkit.broadcastMessage("Reflectively created disguise class for " + toDisguise.getName() + " as " + disguise.name());
 	}
 
 	@Override
@@ -99,12 +99,14 @@ public class Disguise extends AbstractDisguise {
 		sendDisguise(players);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void sendPacket(Player player, Packet packet) {
 		CraftPlayer cP = (CraftPlayer)player;
 		cP.getHandle().playerConnection.sendPacket(packet);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void sendPacket(Collection<? extends Player> players, Packet packet) {
 		for(Player p: players) {
@@ -112,6 +114,7 @@ public class Disguise extends AbstractDisguise {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void sendPacket(Packet packet, Player... players) {
 		for(Player p: players)
