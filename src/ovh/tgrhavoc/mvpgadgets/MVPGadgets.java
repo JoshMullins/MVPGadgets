@@ -5,14 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.Set;
-
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,6 +15,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.pookeythekid.mobcannon.MobCannon;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import ovh.tgrhavoc.mvpgadgets.commands.GUIGadgetCommand;
 import ovh.tgrhavoc.mvpgadgets.commands.MVPGadgetsCommand;
 import ovh.tgrhavoc.mvpgadgets.events.GadgetHandler;
@@ -31,7 +27,6 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.horse.HorseGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.mobcannon.MobCannonGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballGunGadget;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.PaintballListener;
-import ovh.tgrhavoc.mvpvpgadgets.tests.JarUtil;
 import ovh.tgrhavoc.utils.VaultUtil;
 
 public class MVPGadgets extends JavaPlugin {
@@ -63,8 +58,8 @@ public class MVPGadgets extends JavaPlugin {
 		
 		getServer().getPluginManager().registerEvents(new GadgetHandler(this), this);
 		
-		registerGadgets();
-		//registerGadetEvents();
+		registerGadgets(); // Gadgets should register their own events.
+		
 		registerCommands();
 		
 		Bukkit.getLogger().info("Hey, our NMS version is " + nmsVersion);
@@ -81,11 +76,7 @@ public class MVPGadgets extends JavaPlugin {
 		
 		addGadget(new GUIGadget(this));
 	}
-	@SuppressWarnings("unused")
-	@Deprecated
-	private void registerGadetEvents() {
-		getServer().getPluginManager().registerEvents(paintListener, this); //Going to keep this here for now.
-	}
+	
 	private void registerCommands(){
 		getCommand("gadget").setExecutor(new GUIGadgetCommand(this));
 		getCommand("mvpgadgets").setExecutor(new MVPGadgetsCommand(this));
@@ -136,7 +127,7 @@ public class MVPGadgets extends JavaPlugin {
 	
 	/**
 	 * Get the messages.yml file in a YamlConfiguration class.
-	 * @return YamlConfiguration that represnts the Messages.yml file in the resources folder
+	 * @return YamlConfiguration that represents the Messages.yml file in the resources folder
 	 */
 	public YamlConfiguration getMessages(){
 		return messages;
