@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget.nms.AbstractDisguise;
 import ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget.nms.EntityDisguises;
 
+// v1_8_R3 = 1.8.x
 public class Disguise extends AbstractDisguise {
 	
 	public Disguise(Player toDisguise, EntityDisguises disguise) {
@@ -60,6 +61,11 @@ public class Disguise extends AbstractDisguise {
 				entity = (EntityLiving) entityClass.getConstructor(World.class).newInstance(world);
 			}
 			
+			if (entity == null){
+				System.out.println("Error.. Entity is now null");
+				return;
+			}
+			
 			//Hopefully entity is now the entity the player wants to be!
 			entity.setPosition(getPlayer().getLocation().getX(), getPlayer().getLocation().getY(),
 					getPlayer().getLocation().getZ());
@@ -99,24 +105,29 @@ public class Disguise extends AbstractDisguise {
 		sendDisguise(players);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public void sendPacket(Player player, Packet packet) {
+	public void sendPacket(Player player, Object packet) {
+		if( ! (packet instanceof Packet) )
+			throw new IllegalArgumentException("sendPacket called without a Packet ");
 		CraftPlayer cP = (CraftPlayer)player;
-		cP.getHandle().playerConnection.sendPacket(packet);
+		cP.getHandle().playerConnection.sendPacket((Packet)packet);
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public void sendPacket(Collection<? extends Player> players, Packet packet) {
+	public void sendPacket(Collection<? extends Player> players, Object packet) {
+		if( ! (packet instanceof Packet) )
+			throw new IllegalArgumentException("sendPacket called without a Packet ");
+		
 		for(Player p: players) {
 			sendPacket(p, packet);
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
-	public void sendPacket(Packet packet, Player... players) {
+	public void sendPacket(Object packet, Player... players) {
+		if( ! (packet instanceof Packet) )
+			throw new IllegalArgumentException("sendPacket called without a Packet ");
+		
 		for(Player p: players)
 			sendPacket(p, packet);
 	}

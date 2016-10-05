@@ -24,6 +24,8 @@ import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
  */
 public abstract class Gadget {
 	
+	private static List<String> registeredEvents = new ArrayList<String>();
+
 	//Messages.yml paths
 	static final String MESSAGE_PATH = "Gadgets.{gadget_name}";
 	static final String NAME_PATH = MESSAGE_PATH +".name";
@@ -34,9 +36,6 @@ public abstract class Gadget {
 	
 	protected ItemStack gadgetItem;
 	private MVPGadgets plugin;
-	private UUID owningPlayer;
-	
-	private static Map<UUID, Set<Gadget>> gadgetOwners = new HashMap<>();
 	
 	/**
 	 * Main constructor for the gadgets. Registers gadget events to the server. This constructor
@@ -63,23 +62,16 @@ public abstract class Gadget {
 		
 		if (owningPlayer == null)
 			throw new IllegalArgumentException("owningPlayer cannot be null!");
-		
-		if (gadgetOwners.containsKey(owningPlayer))
-			for (Gadget gadget : gadgetOwners.get(owningPlayer))
-				if (gadget.gadgetName.equals(name))
-					return;
 					
 		this.gadgetName = name;
 		this.plugin = plugin;
 		setItemStack(plugin.getMessages().getString(getNamePath()), itemStack);
-		registerEvents(plugin, plugin.getServer().getPluginManager());
-		this.owningPlayer = owningPlayer;
 		
-		Set<Gadget> set = new HashSet<>();
-		if (gadgetOwners.get(owningPlayer) != null)
-			set = gadgetOwners.get(owningPlayer);
-		set.add(this);
-		gadgetOwners.put(owningPlayer, set);
+		if (! (registeredEvents.contains(name)) ){
+			registerEvents(plugin, plugin.getServer().getPluginManager());
+			registeredEvents.add(name);
+		}
+		
 	}
 	
 	/**
@@ -104,7 +96,10 @@ public abstract class Gadget {
 		
 		this.gadgetName = name;
 		this.plugin = plugin;
+		
 		setItemStack(plugin.getMessages().getString(getNamePath()), itemStack);
+		registerEvents(plugin, plugin.getServer().getPluginManager());
+		
 	}
 	
 	/**
@@ -271,22 +266,5 @@ public abstract class Gadget {
 	 */
 	public MVPGadgets getPlugin(){
 		return plugin;
-	}
-	
-	/**
-	 * Get the player who owns this gadget.
-	 */
-	public UUID getOwningPlayer() {
-		return owningPlayer;
-	}
-	
-	/**
-	 * Get the gadgets that belong to a certain player.
-	 * @param owner Gadget owner
-	 * @return A Set<Gadget> containing the owner's gadgets
-	 */
-	public static Set<Gadget> getOwnerGadgets(UUID owner) {
-		return gadgetOwners.get(owner);
-	}
-	
+	}	
 }

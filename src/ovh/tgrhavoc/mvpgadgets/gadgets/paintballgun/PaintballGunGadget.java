@@ -13,7 +13,7 @@ import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 
 public class PaintballGunGadget extends Gadget {
-
+		
 	public PaintballGunGadget(MVPGadgets plugin, UUID owningPlayer) {
 		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING), owningPlayer);
 	}
