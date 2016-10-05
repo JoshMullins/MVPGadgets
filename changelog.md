@@ -1,6 +1,15 @@
 ChangeLog - Please create an issue to log your changes.
 =====
 
+### Bukkit 1.8.x Release
+###### Date: 05-Oct-2016
+###### Developer: TGRHavoc
+- Set the default values to "guiGadgetWorlds" to an empty array, just to allow users to use the plugin out-of-the-box. I've also added a new config option to allow the users to set whether the players can drop the gadget items or not.
+
+- Because of the added config option I've also added a new message to tell the players they cannot drop items.
+
+- Re-done how the gadgets are registered on the server. The main gadget class (Gadget.java) checks to see if it's already called the Gadget#registerEvent method and shouldn't call it multiple times.
+
 ### Turned this into releasable, working plugin
 ###### Date: 21-Jul-2016
 ###### Developer: pookeythekid
