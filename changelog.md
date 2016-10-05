@@ -1,6 +1,39 @@
 ChangeLog - Please create an issue to log your changes.
 =====
 
+### Bukkit 1.8.x Release
+###### Date: 05-Oct-2016
+###### Developer: TGRHavoc
+- Set the default values to "guiGadgetWorlds" to an empty array, just to allow users to use the plugin out-of-the-box. I've also added a new config option to allow the users to set whether the players can drop the gadget items or not.
+
+- Because of the added config option I've also added a new message to tell the players they cannot drop items.
+
+- Re-done how the gadgets are registered on the server. The main gadget class (Gadget.java) checks to see if it's already called the Gadget#registerEvent method and shouldn't call it multiple times.
+
+### Turned this into releasable, working plugin
+###### Date: 21-Jul-2016
+###### Developer: pookeythekid
+- Recoded the entire paintball gun so that it uses packets now. This is much better at not destroying the contents of container blocks and signs.
+  - Also massively expanded PaintballGunListener's BlockData class (and made it its own separate class), though it turned out to be useless once I went to packets.
+
+- Redesigned the gadget-adding system. Players now own their individual sets of Gadgets; each players' gadgets have their events registered **once**. Re-registering gadgets was a major bug.
+  - The MVPGadgets class's _availableGadgets_ contains ownerless gadgets, for the sake of seeing what they are without having redundant listeners registered.
+
+- Added a few settings in messages.yml.
+
+- Made a bunch of OCD edits throughout the code and config files.
+
+- Wrote up an HTML file in the resources folder that covers all commands and permissions. Feel free to add to it if necessary.
+
+- Did I say I fixed a crapton of bugs?
+
+- Added commands /mvpgadgets reload and /gadget
+  - /gadget will swap your gadget out for the GUI Gadget and open the GUI display.
+
+- Added config settings guiGadgetWorlds and guiGadgetSlot (I think the latter is correct, too lazy to check right now). Basically self-explanatory.
+
+- Made gadgets functional after a plugin reload with players online, instead of the plugin vomiting NPEs everywhere.
+
 ### Disguises Updated
 ###### Date: 4-Oct-2015
 ###### Developer: TGRHavoc

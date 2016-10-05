@@ -29,7 +29,7 @@ public class DisguiseFactory {
 			return null;
 		}
 		
-		player.sendMessage("Null");
+		player.sendMessage("Null. Seriously. If you see this message, something bad has screwed up... And I mean something HUGE.");
 		return null;
 	}
 

@@ -82,6 +82,9 @@ Messages:
     # the MVPGadgets config as hub worlds. Leave this as empty quotes to remove the message.
     WRONG_WORLD: "&cYou are not in a hub world! An admin can change this in the MVPGadgets config."
     
+    # For when people try to throw a gadget when the throw_gadget option is set to false in the config file.
+    NO_THROW: "&cYou cannot throw gadgets on the floor! Who do you think you are, the Queen?"
+    
     Disguises:
         # When a player disguises themselves
         DISGUISED: "You are now disguised as a(n) {ENTITY}"

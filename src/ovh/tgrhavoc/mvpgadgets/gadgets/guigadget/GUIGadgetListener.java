@@ -46,31 +46,31 @@ public class GUIGadgetListener implements Listener {
 				if (event.getWhoClicked() instanceof Player){
 					Player player = (Player) event.getWhoClicked();
 					
-					for (Gadget g : Gadget.getOwnerGadgets(player.getUniqueId())){
+					for (Gadget g : mainPlugin.getGadgets() ){
 						if (g.getItemStack().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())){
 							
-								if(mainPlugin.hookedVault() && !player.hasPermission("mvpgadgets." + g.getGadgetName())){
-									
-									if (!VaultUtil.transaction(player, mainPlugin.getGadgetPrice(g))){
-										player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.UNABLE_BUY"), g));
-										return;
-									}else{
-										mainPlugin.getPermission().playerAdd(player, "mvpgadgets." +g.getGadgetName().toLowerCase());
-										player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.BOUGHT"), g));
-									}
-									
+							if(mainPlugin.hookedVault() && !player.hasPermission("mvpgadgets." + g.getGadgetName())){
+								
+								if (!VaultUtil.transaction(player, mainPlugin.getGadgetPrice(g))){
+									player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.UNABLE_BUY"), g));
+									return;
+								}else{
+									mainPlugin.getPermission().playerAdd(player, "mvpgadgets." +g.getGadgetName().toLowerCase());
+									player.sendMessage(formatMessage(mainPlugin.getMessageFromConfig("Messages.BOUGHT"), g));
 								}
+									
+							}
 								
-								player.sendMessage(formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
+							player.sendMessage(formatMessage(mainPlugin.getMessages().getString("Messages.SELECTED"), g));
 								
-								int slot;
-								if (mainPlugin.getConfig().getInt("guiGadgetSlot") < 1)
-									slot = 0;
-								else if (mainPlugin.getConfig().getInt("guiGadgetSlot") > 9)
-									slot = 8;
-								else slot = mainPlugin.getConfig().getInt("guiGadgetSlot") - 1;
+							int slot;
+							if (mainPlugin.getConfig().getInt("gadgetSlot") <= 1)
+								slot = 0;
+							else if (mainPlugin.getConfig().getInt("gadgetSlot") >= 9)
+								slot = 8;
+							else slot = mainPlugin.getConfig().getInt("gadgetSlot") - 1;
 								
-								player.getInventory().setItem(slot, g.getItemStack());
+							player.getInventory().setItem(slot, g.getItemStack());
 							
 							// According to Bukkit JavaDocs, it's unsafe to close the inventory in an InventoryClickEvent until the next tick.
 							// https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/inventory/InventoryClickEvent.html

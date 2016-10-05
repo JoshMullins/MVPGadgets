@@ -35,6 +35,7 @@ public class GUIGadget extends Gadget {
 
 	@Override
 	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
+		
 		GUIGadgetListener l = new GUIGadgetListener(plugin, this);
 		pm.registerEvents(l, plugin);
 		
