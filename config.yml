@@ -14,11 +14,22 @@ Gadget_Prices:
 
 # In which worlds will players receive the Gadget Selector gadget upon login?
 # You should put your hub worlds in this setting. Delete the original list if you want to; it's just an example.
-guiGadgetWorlds:
-- Hub
-- Spawn
+# If you want gadgets to be usable in all worlds, set it to an empty list e.g. guiGadgetWorlds: []
+# Example configuration:
+# guiGadgetWorlds:
+# - Spawn
+# - Hub
+guiGadgetWorlds: []
+
+# Do you want the players to be able to drop their gadgets?
+# If you do, set this to 'true'.
+allowDropping: false
+
 # In which slot in the player's hotbar should the Gadget Selector be placed? (5 is the middle)
 guiGadgetSlot: 5
+
+# In which slot in the player's hotbar should the other Gadgets be placed ( default = 6 )
+gadgetSlot: 6
 
 ## Disguise Gadget Settings ##
 # This is a list of mobs that the players can disguise as (Look at mob cannon settings for a list of mobs)
