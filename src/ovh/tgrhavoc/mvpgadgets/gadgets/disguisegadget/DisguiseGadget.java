@@ -13,6 +13,7 @@ import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
+import ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget.nms.EntityDisguises;
 /**
  * Disguise gadget.
  * Allows players to disguise themselves as any mob.
@@ -24,13 +25,13 @@ public class DisguiseGadget extends Gadget {
 	/**
 	 * List of disguises the player can use.
 	 */
-	List<EntityDisguise> disguiseList = new ArrayList<EntityDisguise>();
+	List<EntityDisguises> disguiseList = new ArrayList<EntityDisguises>();
 	
 	public DisguiseGadget(MVPGadgets plugin) {
 		super(plugin, "disguiseGadget", new ItemStack(Material.SKULL_ITEM));
 		
 		for (String s: plugin.getConfig().getStringList("Disguises_List")){
-			disguiseList.add(EntityDisguise.valueOf(s));
+			disguiseList.add(EntityDisguises.getByName(s));
 		}
 	}
 	
@@ -47,7 +48,7 @@ public class DisguiseGadget extends Gadget {
 		Inventory inv = Bukkit.createInventory(null, (9 * (((disguiseList.size()+1)/9)+1)),
 				this.getMessageFromMessages("inventory_name"));
 		int slot = 0;
-		for (EntityDisguise disguise: disguiseList){
+		for (EntityDisguises disguise: disguiseList){
 			ItemStack i = new ItemStack(Material.SKULL_ITEM);
 			ItemMeta m = i.getItemMeta();
 			m.setDisplayName(disguise.getName(getPlugin()));
@@ -74,7 +75,7 @@ public class DisguiseGadget extends Gadget {
 	 * Get the list if disguises the player can use.
 	 * @return List<EntityDisguise> the player can use.
 	 */
-	public List<EntityDisguise> getDisguiseList() {
+	public List<EntityDisguises> getDisguiseList() {
 		return disguiseList;
 	}
 }

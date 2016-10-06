@@ -126,6 +126,9 @@ Messages:
             SNOWMAN: "Snowman"
             ENDER_DRAGON: "Ender Dragon"
             MOOSHROOM: "Mooo shroom"
+            GUARDIAN: "Guardian"
+            ENDERMITE: "Endermite (They're worst then silverfish)"
+            
     MobCannon:
         mobcannon:
             TITLE: "MobCannon commands"

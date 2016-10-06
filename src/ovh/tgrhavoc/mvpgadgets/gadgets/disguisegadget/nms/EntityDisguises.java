@@ -33,7 +33,12 @@ public enum EntityDisguises {
 	IRON_GOLEM("EntityIronGolem"),
 	SNOWMAN("EntitySnowman"),
 	ENDER_DRAGON("EntityEnderDragon"),
-	MOOSHROOM("EntityMushroomCow");
+	MOOSHROOM("EntityMushroomCow"),
+	
+	// 1.9 Creatures
+	ENDERMITE("EntityEndermite"),
+	GUARDIAN("EntityGuardian");
+	//SHULKER("EntityShulker");
 	
 	private final String cls;
 	

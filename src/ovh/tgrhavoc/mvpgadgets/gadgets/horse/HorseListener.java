@@ -42,15 +42,13 @@ public class HorseListener implements Listener {
 
 	@EventHandler
 	public void dismound(VehicleExitEvent e) {
-		if (!e.getVehicle().isOnGround()){
-			e.setCancelled(true);
-			return;
-		}
+		
 		if (e.getExited() instanceof Player && e.getVehicle() instanceof Horse) {
 			Player player = (Player) e.getExited();
 			Horse h = (Horse) e.getVehicle();
 			if (h.isCustomNameVisible()
 					&& h.getCustomName().equals(player.getName() + "'s horse")) {
+				
 				createExplosion(h.getVariant(), player.getLocation());
 				h.remove();
 			}

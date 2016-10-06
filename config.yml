@@ -34,12 +34,32 @@ gadgetSlot: 6
 ## Disguise Gadget Settings ##
 # This is a list of mobs that the players can disguise as (Look at mob cannon settings for a list of mobs)
 Disguises_List:
+- BAT
 - BLAZE
-- SHEEP
-- WOLF
+- CAVE_SPIDER
+- CHICKEN
+- COW
+- CREEPER
+- ENDERMAN
+- GIANT
+- HORSE
 - IRON_GOLEM
-- ZOMBIE
+- MOOSHROOM
+- OCELOT
+- PIG
+- SHEEP
+- SILVERFISH
 - SKELETON
+- SNOWMAN
+- SPIDER
+- SQUID
+- VILLAGER
+- WITCH
+- WOLF
+- ZOMBIE
+- ZOMBIEPIG
+- GUARDIAN
+- ENDERMITE
 
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
