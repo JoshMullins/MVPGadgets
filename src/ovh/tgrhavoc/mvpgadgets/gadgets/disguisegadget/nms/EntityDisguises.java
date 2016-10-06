@@ -51,7 +51,6 @@ public enum EntityDisguises {
 	}
 	
 	public String getName(MVPGadgets plugin){
-		System.out.println("Name for " + this.name());
 		return plugin.getMessageFromConfig("Messages.Disguises.Names." + this.name());
 	}
 	
