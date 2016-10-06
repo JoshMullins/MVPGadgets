@@ -14,7 +14,7 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.nms.AbstractPaintHandler;
 import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.nms.PaintFactory;
 
 public class PaintballGunGadget extends Gadget {
-	
+    	
 	public PaintballGunGadget(MVPGadgets plugin) {
 		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING));
 	}
@@ -28,7 +28,7 @@ public class PaintballGunGadget extends Gadget {
 	@Override
 	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
 		AbstractPaintHandler pH = PaintFactory.getPaintHandler(MVPGadgets.getNmsVersion());
-		
+
 		if (pH != null)
 			pm.registerEvents(new PaintballListener(plugin, pH), plugin);
 		else
