@@ -8,7 +8,7 @@ public enum EntityDisguises {
 	ZOMBIE("EntityZombie"),
 	WITHER_SKELETON("EntitySkeleton"),
 	SKELETON("EntitySkeleton"),
-	ZOMBIEPIG("EntityPigZombie"),
+	ZOMBIE_PIG("EntityPigZombie"),
 	BLAZE("EntityBlaze"),
 	ENDERMAN("EntityEnderman"),
 	CREEPER("EntityCreeper"),
@@ -37,8 +37,12 @@ public enum EntityDisguises {
 	
 	// 1.9 Creatures
 	ENDERMITE("EntityEndermite"),
-	GUARDIAN("EntityGuardian");
-	//SHULKER("EntityShulker");
+	GUARDIAN("EntityGuardian"),
+	RABBIT("EntityRabbit"),
+	
+	// 1.10
+	POLAR_BEAR("EntityPolarBear");
+	
 	
 	private final String cls;
 	
@@ -47,6 +51,7 @@ public enum EntityDisguises {
 	}
 	
 	public String getName(MVPGadgets plugin){
+		System.out.println("Name for " + this.name());
 		return plugin.getMessageFromConfig("Messages.Disguises.Names." + this.name());
 	}
 	

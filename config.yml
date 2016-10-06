@@ -57,9 +57,10 @@ Disguises_List:
 - WITCH
 - WOLF
 - ZOMBIE
-- ZOMBIEPIG
+- ZOMBIE_PIG
 - GUARDIAN
 - ENDERMITE
+- POLAR_BEAR
 
 ## Mob Cannon Settings ##
 # Available mob types (caps don't matter):
