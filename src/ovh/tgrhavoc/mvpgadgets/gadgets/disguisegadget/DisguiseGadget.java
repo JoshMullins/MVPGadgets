@@ -2,7 +2,6 @@ package ovh.tgrhavoc.mvpgadgets.gadgets.disguisegadget;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,14 +25,6 @@ public class DisguiseGadget extends Gadget {
 	 * List of disguises the player can use.
 	 */
 	List<EntityDisguise> disguiseList = new ArrayList<EntityDisguise>();
-	
-	public DisguiseGadget(MVPGadgets plugin, UUID owningPlayer) {
-		super(plugin, "disguiseGadget", new ItemStack(Material.SKULL_ITEM), owningPlayer);
-		
-		for (String s: plugin.getConfig().getStringList("Disguises_List")){
-			disguiseList.add(EntityDisguise.valueOf(s));
-		}
-	}
 	
 	public DisguiseGadget(MVPGadgets plugin) {
 		super(plugin, "disguiseGadget", new ItemStack(Material.SKULL_ITEM));

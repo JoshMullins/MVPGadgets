@@ -1,7 +1,6 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun;
 
-import java.util.UUID;
-
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -11,12 +10,10 @@ import org.bukkit.plugin.PluginManager;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
+import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.nms.AbstractPaintHandler;
+import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.nms.PaintFactory;
 
 public class PaintballGunGadget extends Gadget {
-		
-	public PaintballGunGadget(MVPGadgets plugin, UUID owningPlayer) {
-		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING), owningPlayer);
-	}
 	
 	public PaintballGunGadget(MVPGadgets plugin) {
 		super(plugin, "paintballGadget", new ItemStack(Material.DIAMOND_BARDING));
@@ -30,7 +27,12 @@ public class PaintballGunGadget extends Gadget {
 
 	@Override
 	public void registerEvents(MVPGadgets plugin, PluginManager pm) {
-		pm.registerEvents(new PaintballListener(plugin), plugin);
+		AbstractPaintHandler pH = PaintFactory.getPaintHandler(MVPGadgets.getNmsVersion());
+		
+		if (pH != null)
+			pm.registerEvents(new PaintballListener(plugin, pH), plugin);
+		else
+			Bukkit.getLogger().warning("Couldn't create paintball handler... Paintball gadget won't work");
 	}
 
 }

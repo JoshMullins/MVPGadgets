@@ -16,19 +16,23 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.util.BlockIterator;
 
 import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
+import ovh.tgrhavoc.mvpgadgets.gadgets.paintballgun.nms.AbstractPaintHandler;
 
 public class PaintballListener implements Listener {
 	
 	List<Location> hitBlocks = new ArrayList<>();
 	
 	MVPGadgets plugin;
+	AbstractPaintHandler paintHandler;
 	Random rand = new Random();
 	
-	public PaintballListener(MVPGadgets plugin) {
+	public PaintballListener(MVPGadgets plugin, AbstractPaintHandler paintHandler) {
 		this.plugin = plugin;
+		this.paintHandler = paintHandler;
+		
+		plugin.setPaintListener(this);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPaintballHit(ProjectileHitEvent e){
 		
@@ -49,7 +53,8 @@ public class PaintballListener implements Listener {
 			return;
 
 		hitBlocks.add(hitBlock.getLocation());
-		PaintballHandler.updateBlock(Bukkit.getOnlinePlayers(), hitBlock, Material.STAINED_CLAY,
+		
+		paintHandler.updateBlock(Bukkit.getOnlinePlayers(), hitBlock, Material.STAINED_CLAY,
 				DyeColor.values()[rand.nextInt(DyeColor.values().length)].getData());
 		
 		final Location loc = hitBlock.getLocation();

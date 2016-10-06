@@ -34,7 +34,6 @@ public class MVPGadgets extends JavaPlugin {
 	static Set<Gadget> availableGadgets = new HashSet<Gadget>();
 	private YamlConfiguration messages;
 	private MobCannon mobCannon;
-	private PaintballListener paintListener = new PaintballListener(this);
 	
 	private static Economy economy = null;
 	private static Permission permission = null;
@@ -42,11 +41,7 @@ public class MVPGadgets extends JavaPlugin {
 	private static String nmsVersion = Bukkit.getServer().getClass().getPackage().getName()
 			.substring(23);
 	
-	
-	@Override
-	public void onDisable(){
-		paintListener.disable();
-	}
+	private PaintballListener paintListener;
 	
 	@Override
 	public void onEnable(){
@@ -63,6 +58,13 @@ public class MVPGadgets extends JavaPlugin {
 		registerCommands();
 		
 		Bukkit.getLogger().info("Hey, our NMS version is " + nmsVersion);
+		
+	}
+	
+	@Override
+	public void onDisable(){
+		if (paintListener != null)
+			paintListener.disable();
 		
 	}
 	
@@ -255,6 +257,13 @@ public class MVPGadgets extends JavaPlugin {
 	    return (economy != null);
     }
 	//End vault hook
+	
+	public void setPaintListener(PaintballListener listener){
+		if (this.paintListener != null)
+			return;
+		
+		this.paintListener = listener;
+	}
 		
 	public static String getNmsVersion(){
 		return nmsVersion;
