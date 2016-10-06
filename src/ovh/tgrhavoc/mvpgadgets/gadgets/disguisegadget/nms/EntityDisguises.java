@@ -8,7 +8,7 @@ public enum EntityDisguises {
 	ZOMBIE("EntityZombie"),
 	WITHER_SKELETON("EntitySkeleton"),
 	SKELETON("EntitySkeleton"),
-	ZOMBIEPIG("EntityPigZombie"),
+	ZOMBIE_PIG("EntityPigZombie"),
 	BLAZE("EntityBlaze"),
 	ENDERMAN("EntityEnderman"),
 	CREEPER("EntityCreeper"),
@@ -33,7 +33,16 @@ public enum EntityDisguises {
 	IRON_GOLEM("EntityIronGolem"),
 	SNOWMAN("EntitySnowman"),
 	ENDER_DRAGON("EntityEnderDragon"),
-	MOOSHROOM("EntityMushroomCow");
+	MOOSHROOM("EntityMushroomCow"),
+	
+	// 1.9 Creatures
+	ENDERMITE("EntityEndermite"),
+	GUARDIAN("EntityGuardian"),
+	RABBIT("EntityRabbit"),
+	
+	// 1.10
+	POLAR_BEAR("EntityPolarBear");
+	
 	
 	private final String cls;
 	

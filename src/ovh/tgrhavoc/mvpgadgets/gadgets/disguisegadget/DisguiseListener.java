@@ -50,7 +50,7 @@ public class DisguiseListener implements Listener{
 			} catch (NullPointerException ex){ return; }
 			
 			if (event.getCurrentItem().hasItemMeta()){
-				for (EntityDisguise d: disguiseGadget.getDisguiseList())
+				for (EntityDisguises d: disguiseGadget.getDisguiseList())
 					if (d.getName(plugin).equals(event.getCurrentItem().getItemMeta().getDisplayName())
 							|| event.getCurrentItem().getItemMeta().getDisplayName().equals("Remove Disguise")){
 						disguise((Player)event.getWhoClicked(), event.getCurrentItem().getItemMeta().getDisplayName());

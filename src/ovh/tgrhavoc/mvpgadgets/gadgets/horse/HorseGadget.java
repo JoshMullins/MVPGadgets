@@ -1,7 +1,6 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.horse;
 
 import java.util.Random;
-import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.entity.AnimalTamer;
@@ -17,10 +16,6 @@ import ovh.tgrhavoc.mvpgadgets.MVPGadgets;
 import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 
 public class HorseGadget extends Gadget{
-	
-	public HorseGadget(MVPGadgets plugin, UUID owningPlayer){
-		super(plugin, "horseGadget", new ItemStack(Material.MONSTER_EGG, 1, (byte)100), owningPlayer);
-	}
 	
 	public HorseGadget(MVPGadgets plugin) {
 		super(plugin, "horseGadget", new ItemStack(Material.MONSTER_EGG, 1, (byte)100));

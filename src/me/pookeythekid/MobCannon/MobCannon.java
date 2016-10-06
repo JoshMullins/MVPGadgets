@@ -556,7 +556,7 @@ public class MobCannon implements CommandExecutor, Listener {
 					public void run() {
 						Location eloc = entity2.getLocation();
 						ParticleEffect.EXPLOSION_LARGE.display(1, 1, 1, 1, 5, eloc, 100);
-						eloc.getWorld().playSound(eloc, Sound.EXPLODE, 1, 1);
+						eloc.getWorld().playSound(eloc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 						entity2.remove();
 						/*
 						for (BlockState blockstate : blockList) {
@@ -645,7 +645,7 @@ public class MobCannon implements CommandExecutor, Listener {
 				public void run() {
 					Location eloc = entity2.getLocation();
 					ParticleEffect.EXPLOSION_LARGE.display(1, 1, 1, 1, 5, eloc, 100);
-					eloc.getWorld().playSound(eloc, Sound.EXPLODE, 1, 1);
+					eloc.getWorld().playSound(eloc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 					entity2.remove();
 					/*
 					for (BlockState blockstate : blockList) {

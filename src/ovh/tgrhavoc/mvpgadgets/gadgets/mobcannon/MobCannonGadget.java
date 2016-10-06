@@ -1,7 +1,5 @@
 package ovh.tgrhavoc.mvpgadgets.gadgets.mobcannon;
 
-import java.util.UUID;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,10 +10,6 @@ import ovh.tgrhavoc.mvpgadgets.gadgets.Gadget;
 
 
 public class MobCannonGadget extends Gadget {
-
-	public MobCannonGadget(MVPGadgets plugin, UUID owningPlayer) {
-		super(plugin, "mobcannonGadget", new ItemStack(Material.TRIPWIRE_HOOK), owningPlayer);
-	}
 	
 	public MobCannonGadget(MVPGadgets plugin) {
 		super(plugin, "mobcannonGadget", new ItemStack(Material.TRIPWIRE_HOOK));

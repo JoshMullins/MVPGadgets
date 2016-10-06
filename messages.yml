@@ -99,7 +99,7 @@ Messages:
             ZOMBIE: "Zambie"
             WITHER_SKELETON: "Wither Skeleton"
             SKELETON: "Skeleton"
-            ZOMBIEPIG: "Zombie Pigman"
+            ZOMBIE_PIG: "Zombie Pigman"
             BLAZE: "Blaze (So hot)"
             ENDERMAN: "Slenderman"
             CREEPER: "Creeper"
@@ -126,6 +126,11 @@ Messages:
             SNOWMAN: "Snowman"
             ENDER_DRAGON: "Ender Dragon"
             MOOSHROOM: "Mooo shroom"
+            GUARDIAN: "Guardian"
+            ENDERMITE: "Endermite (They're worst then silverfish)"
+            RABBIT: "Rabbit (Bong, Boing!)"
+            POLAR_BEAR: "Bear from the pole"
+            
     MobCannon:
         mobcannon:
             TITLE: "MobCannon commands"
