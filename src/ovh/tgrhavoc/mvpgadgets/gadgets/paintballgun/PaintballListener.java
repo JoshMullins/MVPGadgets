@@ -55,7 +55,7 @@ public class PaintballListener implements Listener {
 		hitBlocks.add(hitBlock.getLocation());
 		
 		paintHandler.updateBlock(Bukkit.getOnlinePlayers(), hitBlock, Material.STAINED_CLAY,
-				DyeColor.values()[rand.nextInt(DyeColor.values().length)].getData());
+				DyeColor.values()[rand.nextInt(DyeColor.values().length)].getDyeData());
 		
 		final Location loc = hitBlock.getLocation();
 		final Block hitBlock2 = hitBlock;
