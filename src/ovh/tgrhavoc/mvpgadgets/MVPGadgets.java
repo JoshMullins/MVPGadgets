@@ -14,7 +14,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.pookeythekid.mobcannon.MobCannon;
+import me.pookeythekid.MobCannon.MobCannon;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import ovh.tgrhavoc.mvpgadgets.commands.GUIGadgetCommand;

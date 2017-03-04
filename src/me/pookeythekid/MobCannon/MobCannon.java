@@ -1,4 +1,4 @@
-package me.pookeythekid.mobcannon;
+package me.pookeythekid.MobCannon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
