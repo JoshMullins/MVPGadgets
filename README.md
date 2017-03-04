@@ -45,8 +45,8 @@ When you start your server, you should see something like the image below in the
 ## Authors
 
 * **Josh Mullins** - *Inital work* - [JoshMullins](https://github.com/JoshMullins)
-* **Jordan Dalton** - *Various gadgets* - [TGRHavoc](https://github.com/TGRHavoc)
-* **Luke Fuller** - ** - [ldfuller01](https://github.com/ldfuller01)
+* **Jordan Dalton** - *Various gadgets, updates and bugs (some bug fixes as well)* - [TGRHavoc](https://github.com/TGRHavoc)
+* **Luke Fuller** - *Various updates and MobCannon* - [ldfuller01](https://github.com/ldfuller01)
 
 
 See also a list of [contributors](https://github.com/JoshMullins/MVPGadgets/contributors) who participated in this project.
