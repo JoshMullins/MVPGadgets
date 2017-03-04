@@ -16,6 +16,7 @@ If you want to give the Gadgets prices, you will need to have [Vault](https://de
 
 That's it, you have now installed MVPGadgets :smile:.
 When you start your server, you should see something like the image below in the console
+
 ![Console output](http://i.imgur.com/3mPSH8b.png)
 
 
