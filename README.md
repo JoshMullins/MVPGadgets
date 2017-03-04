@@ -2,29 +2,58 @@ MVP Gadgets
 ------------
 A centralized server administration plugin including player punishment administration, player donor perks, and much more.
 
-### Owners:
-[TGRHavoc](https://github.com/TGRHavoc)
-[JoshMullins](https://github.com/JoshMullins)
+## Prerequisites
+
+In order to use this plugin, you will need to have a Spigot/Bukkit server.
+
+This plugin doesn't require any other plugins to be installed to function.
+If you want to give the Gadgets prices, you will need to have [Vault](https://dev.bukkit.org/projects/vault) installed.
+
+## Installing
+
+1. Download the latest JAR file from the [releases page](https://github.com/JoshMullins/MVPGadgets/releases) for your server version.
+2. Move the JAR file into the plugins folder.
+
+That's it, you have now installed MVPGadgets :smile:.
+When you start your server, you should see something like the image below in the console
+![Console output](http://i.imgur.com/3mPSH8b.png)
 
 
-### Features:
+## Contributing
 
-1. Personalized Chat Configuration (i.e. The ability to change response messages when equipping, un-equipping, and purchasing gadgets.) **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21/)
-2. GUI Menu Configuration (i.e. The ability to change the names of the items in the GUI.) **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
-3. Permission Per Gadget (i.e. The requirement of a permission to use a certain gadget.) **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26/)
-4. Mob Cannon (Allow player to launch mobs at random or allow them to select the mob) - **DONE** [(See #17)](https://github.com/JoshMullins/MVPGadgets/pull/17)
-5. Paintball Gun (ex. A horse amour being right clicked towards blocks and temporarily changing the block into a colored wool.) **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26/)
-6. Melon Bomb (ex. The dropping/throwing of a melon and it exploding into glistening melons.)
-7. Flame Thrower (ex. A item exerting fire towards other players, mobs, or ground.)
-8. Black Hole (ex. A collection of black and grey particles to symbolize a black hole.)
-9. Disguises **DONE**[(See #29)](https://github.com/JoshMullins/MVPGadgets/pull/29)
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :grin:
+
+## Features:
+
+1. Personalized Chat Configuration
+2. GUI Menu Configuration
+3. Permission Per Gadget
+4. Mob Cannon (Allow player to launch mobs at random or allow them to select the mob)
+5. Paintball Gun
+9. Mob Disguises
 10. Mounts:
-  1. Normal Horse, (RightClick: The horse will despawn and an explosion of leather will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
-  2. Skeleton Horse, (RightClick: The horse will despawn and an explosion of bone will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
-  3. Zombie Horse, (RightClick: The horse will despawn and an explosion of rotten flesh will occur.) - **DONE** [(See #21)](https://github.com/JoshMullins/MVPGadgets/pull/21)
-11. Vault intergration **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26)
-12. Customizable description for the gadgets inside the GUI. **DONE** [(See #26)](https://github.com/JoshMullins/MVPGadgets/pull/26)
+  1. Normal Horse
+  2. Skeleton Horse
+  3. Zombie Horse
+11. Vault integration
+12. Customizable description for the gadgets inside the GUI.
 
-### Additional Features
-1. Server Player Administration Panel; including the ability to mute, kick, tempban, and ban players. Possible dependecies. Bungeecord capibilty/ability to make punishments through networked servers?
-2. 
+## Authors
+
+* **Josh Mullins** - *Inital work* - [JoshMullins](https://github.com/JoshMullins)
+* **Jordan Dalton** - *Various gadgets* - [TGRHavoc](https://github.com/TGRHavoc)
+* **Luke Fuller** - ** - [ldfuller01](https://github.com/ldfuller01)
+
+
+See also a list of [contributors](https://github.com/JoshMullins/MVPGadgets/contributors) who participated in this project.
+
+
+### TODO
+- Server Player Administration Panel; including the ability to mute, kick, tempban, and ban players. Possible dependencies. Bungeecord capability/ability to make punishments through networked servers?
+- Melon Bomb (ex. The dropping/throwing of a melon and it exploding into glistening melons.)
+- Flame Thrower (ex. A item exerting fire towards other players, mobs, or ground.)
+- Black Hole (ex. A collection of black and grey particles to symbolize a black hole.)

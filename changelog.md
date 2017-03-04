@@ -1,6 +1,14 @@
 ChangeLog - Please create an issue to log your changes.
 =====
 
+### v1.4.0
+###### Date: 04-Mar-2017
+###### Developer: TGRHavoc
+- Fix package declaration for MobCannon
+- Update PaintballListener for 1.11
+- Add PaintballHandler for 1.11
+- Update Disguise to 1.11
+
 ### Bukkit 1.8.x Release
 ###### Date: 05-Oct-2016
 ###### Developer: TGRHavoc
@@ -68,22 +76,22 @@ removes disguise.
   - PRICE: The price of the gadget.
   - PERMISSION: Permission message (As suggested by @JoshMullins)
   - HAS_PERMISSION: Allows the server owner to change what is displayed when the user does/doesn't have permission for the gadget.
--plugin.yml 
+-plugin.yml
   - Added "authors" to credit the developer that have contributed to the plugin (Feel free to add anyone I've missed out)
   - Added "softdepend" for vault intergration
   - Added "Gadget_Prices" so owner can change prices of gadgets.
-- config.yml 
+- config.yml
   - Added "vault" to allow the server owner to enable/disable vault integration as they wish.
-- MVPGadgets.java 
+- MVPGadgets.java
   - Added vault hook.
   - If you want to check if Vaults is enabled/has been hooked then do MVPGadgets#hookedVault() this will return a Boolean (False if server owner has set config to false/Vault isn't installed) - I will add another check to see if it's a vault problem or if config is set to false.
   - Added methods getGadgetPrice(Gadget) and getGadgetPrice(String) to get prices of gadgets.
-- Gadgets.java 
+- Gadgets.java
   - Added a method to get the GUI item for the gadget (This has description, permission and price (If enabled) added to it).
   - Added some more string to help getting certain paths in configs.
-- ReadMe.md 
+- ReadMe.md
   - Updated to include extra features added
-- .classpath 
+- .classpath
   - Added the vault as a lib
 - players cannon use a gadget without permission (mvpgadgets.<gadgetName> (gadgetName is defined in the gadget class))
 - Add the "purchasing" mechanism
@@ -126,7 +134,7 @@ removes disguise.
 ### Multiple updates to MobCannon.java
 ###### Date: 12-Feb-2015
 ###### Developer: AdamQpzm
-- Update new lines - It's generally not conventional to have so many new lines. It's also not consistent with the other files in the project. There seems to be a new blank line after most, if not all, lines. I've removed a lot of the unnecessary blank lines, and have left some in to aid in readability. 
+- Update new lines - It's generally not conventional to have so many new lines. It's also not consistent with the other files in the project. There seems to be a new blank line after most, if not all, lines. I've removed a lot of the unnecessary blank lines, and have left some in to aid in readability.
 - Update the fields to be private and not needlessly static - This is another simple one. Convention dictates the correct use of access modifiers. Since I didn't really see a reason any of the fields should be public (and certainly not public and non-final) I made them private. There was also a static field - static should only really be used when there's a good reason for it (and the main reason being immutable constants). Since a good reason for this wasn't clear, I removed it.
 - Updated EntityType map in simple constructor - The way the EntityType map was set up before was using the same HashSet for every EntityType. So far as I could tell, this was meant to represent mob aliases. Using the same Object for that doesn't really make sense - if at any point one tries to add a mob alias, then the alias will be applied to every EntityType (as it uses the same Object). I also altered the system to loop over an array of EntityTypes to reduce code duplication - this also makes it easier to add an EntityType at any point - simply add the EntityType to the array.
 - Added null check for constructor - It makes more sense to throw an IllegalArgumentException with a helpful message than to just include in the JavaDocs comment not to pass null values. At best, that approach would cause NPEs to be thrown and would be harder to debug for develoers. At worst, it could cause even more damage to other parts.
@@ -181,7 +189,7 @@ removes disguise.
   - All per-mob launch permission: mvpgadgets.launchmob.all
   - Per-mob launch permssions: mvpgadgets.launchmob.mob_name (all lower case)
   - Random mob launch permission: mvpgadgets.launchmob.random
-  
+
 ### Update HorseListener.java
 ###### Date: 2-Dec-2014
 ###### Developer: 97WaterPolo
@@ -198,4 +206,3 @@ removes disguise.
   - Abstract gadget class was created
   - GUIGadget was created (Allows players to select a gadget)
   - Horse gadget was created
-  
